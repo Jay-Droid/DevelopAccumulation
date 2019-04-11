@@ -1,0 +1,48 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <FrameLayout
+            android:id="@+id/framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/btn_tab1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Tab1"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_tab2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Tab2"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_tab3"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Tab3"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_tab4"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Tab4"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:showIn="@layout/activity_fragment">
+
+    <LinearLayout
+            android:id="@+id/ll_btn"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/btn_add"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Add"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_remove"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Remove"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_replace"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Replease"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_btn2"
+            android:layout_below="@+id/ll_btn"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/btn_hide"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Hide"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_show"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Show"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_btn3"
+            android:layout_below="@+id/ll_btn2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/btn_attach"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Attach"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/btn_detach"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Detach"
+                android:textAllCaps="false"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_below="@+id/ll_btn3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+</RelativeLayout>

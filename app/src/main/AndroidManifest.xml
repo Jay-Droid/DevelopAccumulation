@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:dist="http://schemas.android.com/apk/distribution"
+          package="com.jay.developaccumulation">
+    <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <dist:module dist:instant="true"/>
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name=".android.View.EventActivity">
+        </activity>
+        <activity android:name=".android.View.ViewActivity">
+        </activity>
+        <activity android:name=".android.Handler.IntentServiceActivity">
+        </activity>
+        <activity android:name=".android.Handler.HandlerThreadActivity">
+        </activity>
+        <activity android:name=".android.Handler.AsyncTaskActivity">
+        </activity>
+
+        <receiver
+                android:name=".android.BroadcastReceiver.StaticBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+                android:name=".android.BroadcastReceiver.DynamicBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true">
+        </receiver>
+
+        <activity android:name=".android.BroadcastReceiver.BroadcastReceiverActivity">
+        </activity>
+        <activity
+                android:name=".android.Fragment.NavigationActivity"
+                android:label="NavigationActivity">
+        </activity>
+        <activity
+                android:name=".android.Fragment.backstack.BackStackActivity"
+                android:label="BackStackActivity">
+        </activity>
+
+        <service
+                android:name=".android.Service.ForegroundService"
+                android:enabled="true"
+                android:exported="true"/>
+        <service
+                android:name=".android.Service.IntentTestService"
+                android:exported="false"/>
+        <service
+                android:name=".android.Service.StartService"
+                android:enabled="true"
+                android:exported="true"/>
+        <service
+                android:name=".android.Service.BindService"
+                android:enabled="true"
+                android:exported="true"/>
+
+        <activity android:name=".android.Service.ServiceActivity"/>
+        <activity android:name=".android.Handler.HandlerActivity"/>
+        <activity android:name=".android.Fragment.FragmentTestActivity"/>
+        <activity
+                android:name=".android.Activity.lunchmode.StandardActivity"
+                android:label="StandardActivity"
+                android:launchMode="standard"/>
+        <activity
+                android:name=".android.Activity.lunchmode.SingleTopActivity"
+                android:label="SingleTopActivity"
+                android:launchMode="singleTop"/>
+        <activity
+                android:name=".android.Activity.lunchmode.SingleTaskActivity"
+                android:label="SingleTaskActivity"
+                android:launchMode="singleTask"/>
+        <activity
+                android:name=".android.Activity.lunchmode.SingleInstanceActivity"
+                android:label="SingleInstanceActivity"
+                android:launchMode="singleInstance"/>
+        <activity
+                android:name=".android.Activity.lifecycle.DialogActivity"
+                android:label=""
+                android:theme="@style/Base.Theme.AppCompat.Dialog"/>
+        <activity android:name=".android.Activity.lifecycle.NormalActivity"/>
+        <!--
+        configChanges属性可以设置多个值，中间使用竖线分割；
+        1.orientation 屏幕在纵向和横向间旋转
+        2.keyboardHidden 键盘显示或隐藏
+        3.screenSize 屏幕大小改变了
+        4.fontScale 用户变更了首选的字体大小
+        5.locale 用户选择了不同的语言设定
+        6.keyboard 键盘类型变更，例如手机从12键盘切换到全键盘
+        7.touchscreen或navigation 键盘或导航方式变化，一般不会发生这样的事件
+        -->
+        <!--
+        screenOrientation有如下选项：
+        1.unspecified 默认值，由系统判断状态自动切换
+        2.landscape 横屏
+        3.portrait 竖屏
+        4.user 用户当前设置的orientation值
+        5.behind 下一个要显示的Activity的orientation值
+        6.sensor 使用传感器 传感器的方向
+        7.nosensor 不使用传感器 基本等同于unspecified
+        -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:configChanges="orientation" -->
+        <activity android:name=".android.Activity.lifecycle.LifecycleActivity"/>
+        <activity
+                android:name=".java.JavaListActivity"
+                android:label="Java"/>
+        <activity
+                android:name=".android.AndroidListActivity"
+                android:label="Android"/>
+        <activity android:name=".main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".android.View.ViewActivity">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:gravity="center_horizontal"
+            android:layout_height="match_parent">
+        <Button
+                android:id="@+id/btn_event"
+                android:text="事件分发机制"
+                android:layout_marginBottom="20dp"
+                android:textSize="22sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:text="自定义ViewGroup"
+                android:layout_marginBottom="20dp"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.jay.developaccumulation.android.View.CustomViewGroup
+                android:background="@color/antiquewhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:text="AAAAAAAAAAAAA"
+                    android:textColor="@color/white"
+                    android:background="@color/red"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:background="@color/green"
+                    android:text="BBBBBBBBBBBBBB"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:background="@color/blue"
+                    android:text="CCCCCCCCCCCCCC"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"/>
+
+        </com.jay.developaccumulation.android.View.CustomViewGroup>
+
+        <TextView
+                android:text="自定义View"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <com.jay.developaccumulation.android.View.CustomView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</FrameLayout>
