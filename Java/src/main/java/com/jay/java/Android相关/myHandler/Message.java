@@ -1,4 +1,4 @@
-package com.jay.java.myHandler;
+package com.jay.java.Android相关.myHandler;
 
 public class Message {
     public String obj;

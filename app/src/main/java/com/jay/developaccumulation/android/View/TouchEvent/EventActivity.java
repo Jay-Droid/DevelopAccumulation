@@ -1,4 +1,4 @@
-package com.jay.developaccumulation.android.View;
+package com.jay.developaccumulation.android.View.TouchEvent;
 
 import android.util.Log;
 import android.view.MotionEvent;
@@ -34,6 +34,12 @@ public class EventActivity extends AppCompatActivity implements View.OnTouchList
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        Log.d(TAG, "onTouchEvent: acton: " + event.getAction());
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.d(TAG, "onTouchEvent: acton: " + event.getAction());
         return super.onTouchEvent(event);
@@ -42,11 +48,6 @@ public class EventActivity extends AppCompatActivity implements View.OnTouchList
     @Override
     public void onClick(View v) {
         Log.i(TAG, "onClick----view:" + v);
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        Log.d(TAG, "onPointerCaptureChanged: ");
     }
 
 }

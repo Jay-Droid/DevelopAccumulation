@@ -1,4 +1,4 @@
-package com.jay.java.view;
+package com.jay.java.Android相关.view;
 
 public class MeasureSpec {
     // 进位大小 = 2的30次方

@@ -16,7 +16,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".android.View.EventActivity">
+        <activity android:name=".android.View.TouchEvent.EventActivity">
         </activity>
         <activity android:name=".android.View.ViewActivity">
         </activity>

@@ -55,10 +55,10 @@ public class HandlerActivity extends AppCompatActivity {
     }
 
     private void initHandlerWithMyself() {
-        com.jay.java.myHandler.Looper.prepare();
-        myselfHandler = new com.jay.java.myHandler.Handler() {
+        com.jay.java.Android相关.myHandler.Looper.prepare();
+        myselfHandler = new com.jay.java.Android相关.myHandler.Handler() {
             @Override
-            public void handlerMessage(com.jay.java.myHandler.Message msg) {
+            public void handlerMessage(com.jay.java.Android相关.myHandler.Message msg) {
                 super.handlerMessage(msg);
                 Log.d(TAG, "myselfHandler-handleMessage: thread id=" + Thread.currentThread().getId());
                 Log.d(TAG, "myselfHandler-handleMessage: msg= " + msg.toString());
@@ -77,7 +77,7 @@ public class HandlerActivity extends AppCompatActivity {
 //        Looper.loop();
     }
 
-    com.jay.java.myHandler.Handler myselfHandler;
+    com.jay.java.Android相关.myHandler.Handler myselfHandler;
 
     class MyThread extends Thread {
         @Override
@@ -88,7 +88,7 @@ public class HandlerActivity extends AppCompatActivity {
                 Log.d(TAG, "开始发送");
                 Thread.sleep(5000);
                 Log.d(TAG, "发送完成");
-                com.jay.java.myHandler.Message message = new com.jay.java.myHandler.Message(UUID.randomUUID().toString());
+                com.jay.java.Android相关.myHandler.Message message = new com.jay.java.Android相关.myHandler.Message(UUID.randomUUID().toString());
                 myselfHandler.sendMessage(message);
             } catch (InterruptedException e) {
                 e.printStackTrace();
