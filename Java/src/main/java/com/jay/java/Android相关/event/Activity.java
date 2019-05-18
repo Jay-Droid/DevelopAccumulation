@@ -9,7 +9,7 @@ import com.jay.java.Android相关.event.listener.OnTouchListener;
  * Description: 模拟Android的Activity类
  */
 public class Activity {
-    
+
     public static void main(String[] args) {
         //创建一个ViewGroup
         ViewGroup viewGroup = new ViewGroup(0, 0, 1080, 1920);

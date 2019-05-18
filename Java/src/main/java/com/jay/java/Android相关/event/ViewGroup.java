@@ -76,7 +76,7 @@ public class ViewGroup extends View {
                 handled = dispatchTransformedTouchEvent(ev, null);
             }
         }
-        return false;
+        return handled;
     }
 
     /**
