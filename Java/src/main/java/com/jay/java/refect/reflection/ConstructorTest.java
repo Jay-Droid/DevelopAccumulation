@@ -1,4 +1,6 @@
-package com.jay.java.反射;
+package com.jay.java.refect.reflection;
+
+import com.jay.java.refect.Person;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,4 +1,4 @@
-package com.jay.java.反射;
+package com.jay.java.refect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
  * Author：Jay On 2019/5/18 15:13
  * <p>
  * Description: 反射的使用测试类
+ * 反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。
  */
 public class ReflectionUseTest {
 
@@ -21,7 +22,7 @@ public class ReflectionUseTest {
             //获取Class对象的三种方式
             Class personClass1 = Person.class;
             Class personClass2 = person1.getClass();
-            Class personClass3 = Class.forName("com.jay.java.反射.Person");//需要捕获ClassNotFoundException异常
+            Class personClass3 = Class.forName("com.jay.java.refect.Person");//需要捕获ClassNotFoundException异常
             //通过Class对象实例化Person实例
             Person person2 = (Person) personClass3.newInstance();//需要捕获IllegalAccessException和InstantiationException异常
             person2.setName("Jay-Reflect-Class");

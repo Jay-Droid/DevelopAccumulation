@@ -1,4 +1,4 @@
-package com.jay.java.反射;
+package com.jay.java.refect;
 
 /**
  * Author：Jay On 2019/5/18 15:54
@@ -26,7 +26,7 @@ public class ClassLoaderTest {
 
         //测试当前类的类加载器, 系统类加载器
         try {
-            classLoader = Class.forName("com.jay.java.反射.ClassLoaderTest").getClassLoader();
+            classLoader = Class.forName("com.jay.java.refect.ClassLoaderTest").getClassLoader();
             System.out.println("获取当前类的类加载器: " + classLoader);
             //sun.misc.Launcher$AppClassLoader@18b4aac2
         } catch (ClassNotFoundException e) {
