@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        <com.jay.developaccumulation.android.Activity.lifecycle.LifeCycleView
+        <com.jay.develop.android.Activity.lifecycle.LifeCycleView
                 android:id="@+id/tv_lifecycle"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
 
         <fragment
                 android:id="@+id/fragment_static"
-                android:name="com.jay.developaccumulation.android.Fragment.StaticFragment"
+                android:name="com.jay.develop.android.Fragment.StaticFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
