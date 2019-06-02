@@ -11,6 +11,9 @@ import com.jay.develop.android.AndroidListActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jay
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

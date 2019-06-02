@@ -5,6 +5,6 @@
             app:startDestination="@id/simpleFragment4">
 
     <fragment android:id="@+id/simpleFragment4"
-              android:name="com.jay.develop.android.Fragment.backstack.SimpleFragment4"
+              android:name="com.jay.develop.android.fragment.backstack.SimpleFragment4"
               android:label="fragment_simple" tools:layout="@layout/fragment_simple"/>
 </navigation>

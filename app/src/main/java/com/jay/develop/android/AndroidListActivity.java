@@ -6,12 +6,12 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.jay.develop.R;
-import com.jay.develop.android.Activity.lifecycle.LifecycleActivity;
-import com.jay.develop.android.BroadcastReceiver.BroadcastReceiverActivity;
-import com.jay.develop.android.Fragment.FragmentTestActivity;
-import com.jay.develop.android.Handler.HandlerActivity;
-import com.jay.develop.android.Service.ServiceActivity;
-import com.jay.develop.android.View.ViewActivity;
+import com.jay.develop.android.activity.lifecycle.LifecycleActivity;
+import com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity;
+import com.jay.develop.android.fragment.FragmentTestActivity;
+import com.jay.develop.android.handler.HandlerActivity;
+import com.jay.develop.android.service.ServiceActivity;
+import com.jay.develop.android.view.ViewActivity;
 import com.jay.develop.main.DemoListAdapter;
 
 import java.util.ArrayList;

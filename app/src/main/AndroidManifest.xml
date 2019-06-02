@@ -16,19 +16,19 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.jay.develop.android.View.TouchEvent.EventActivity">
+        <activity android:name="com.jay.develop.android.view.touchEvent.EventActivity">
         </activity>
-        <activity android:name="com.jay.develop.android.View.ViewActivity">
+        <activity android:name="com.jay.develop.android.view.ViewActivity">
         </activity>
-        <activity android:name="com.jay.develop.android.Handler.IntentServiceActivity">
+        <activity android:name="com.jay.develop.android.handler.IntentServiceActivity">
         </activity>
-        <activity android:name="com.jay.develop.android.Handler.HandlerThreadActivity">
+        <activity android:name="com.jay.develop.android.handler.HandlerThreadActivity">
         </activity>
-        <activity android:name="com.jay.develop.android.Handler.AsyncTaskActivity">
+        <activity android:name="com.jay.develop.android.handler.AsyncTaskActivity">
         </activity>
 
         <receiver
-                android:name="com.jay.develop.android.BroadcastReceiver.StaticBroadcastReceiver"
+                android:name="com.jay.develop.android.broadcastReceiver.StaticBroadcastReceiver"
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
@@ -36,62 +36,62 @@
             </intent-filter>
         </receiver>
         <receiver
-                android:name="com.jay.develop.android.BroadcastReceiver.DynamicBroadcastReceiver"
+                android:name="com.jay.develop.android.broadcastReceiver.DynamicBroadcastReceiver"
                 android:enabled="true"
                 android:exported="true">
         </receiver>
 
-        <activity android:name="com.jay.develop.android.BroadcastReceiver.BroadcastReceiverActivity">
+        <activity android:name="com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity">
         </activity>
         <activity
-                android:name="com.jay.develop.android.Fragment.NavigationActivity"
+                android:name="com.jay.develop.android.fragment.NavigationActivity"
                 android:label="NavigationActivity">
         </activity>
         <activity
-                android:name="com.jay.develop.android.Fragment.backstack.BackStackActivity"
+                android:name="com.jay.develop.android.fragment.backstack.BackStackActivity"
                 android:label="BackStackActivity">
         </activity>
 
         <service
-                android:name="com.jay.develop.android.Service.ForegroundService"
+                android:name="com.jay.develop.android.service.ForegroundService"
                 android:enabled="true"
                 android:exported="true"/>
         <service
-                android:name="com.jay.develop.android.Service.IntentTestService"
+                android:name="com.jay.develop.android.service.IntentTestService"
                 android:exported="false"/>
         <service
-                android:name="com.jay.develop.android.Service.StartService"
+                android:name="com.jay.develop.android.service.StartService"
                 android:enabled="true"
                 android:exported="true"/>
         <service
-                android:name="com.jay.develop.android.Service.BindService"
+                android:name="com.jay.develop.android.service.BindService"
                 android:enabled="true"
                 android:exported="true"/>
 
-        <activity android:name="com.jay.develop.android.Service.ServiceActivity"/>
-        <activity android:name="com.jay.develop.android.Handler.HandlerActivity"/>
-        <activity android:name="com.jay.develop.android.Fragment.FragmentTestActivity"/>
+        <activity android:name="com.jay.develop.android.service.ServiceActivity"/>
+        <activity android:name="com.jay.develop.android.handler.HandlerActivity"/>
+        <activity android:name="com.jay.develop.android.fragment.FragmentTestActivity"/>
         <activity
-                android:name="com.jay.develop.android.Activity.lunchmode.StandardActivity"
+                android:name="com.jay.develop.android.activity.lunchmode.StandardActivity"
                 android:label="StandardActivity"
                 android:launchMode="standard"/>
         <activity
-                android:name="com.jay.develop.android.Activity.lunchmode.SingleTopActivity"
+                android:name="com.jay.develop.android.activity.lunchmode.SingleTopActivity"
                 android:label="SingleTopActivity"
                 android:launchMode="singleTop"/>
         <activity
-                android:name="com.jay.develop.android.Activity.lunchmode.SingleTaskActivity"
+                android:name="com.jay.develop.android.activity.lunchmode.SingleTaskActivity"
                 android:label="SingleTaskActivity"
                 android:launchMode="singleTask"/>
         <activity
-                android:name="com.jay.develop.android.Activity.lunchmode.SingleInstanceActivity"
+                android:name="com.jay.develop.android.activity.lunchmode.SingleInstanceActivity"
                 android:label="SingleInstanceActivity"
                 android:launchMode="singleInstance"/>
         <activity
-                android:name="com.jay.develop.android.Activity.lifecycle.DialogActivity"
+                android:name="com.jay.develop.android.activity.lifecycle.DialogActivity"
                 android:label=""
                 android:theme="@style/Base.Theme.AppCompat.Dialog"/>
-        <activity android:name="com.jay.develop.android.Activity.lifecycle.NormalActivity"/>
+        <activity android:name="com.jay.develop.android.activity.lifecycle.NormalActivity"/>
         <!--
         configChanges属性可以设置多个值，中间使用竖线分割；
         1.orientation 屏幕在纵向和横向间旋转
@@ -114,7 +114,7 @@
         -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:configChanges="orientation" -->
-        <activity android:name="com.jay.develop.android.Activity.lifecycle.LifecycleActivity"/>
+        <activity android:name="com.jay.develop.android.activity.lifecycle.LifecycleActivity"/>
         <activity
                 android:name="com.jay.develop.java.JavaListActivity"
                 android:label="Java"/>

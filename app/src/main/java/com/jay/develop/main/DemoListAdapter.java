@@ -94,8 +94,7 @@ public class DemoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             description = view.findViewById(R.id.tv_description);
         }
 
-        void bind(final DemoItem demo,
-                  final OnItemClickListener onItemClickListener) {
+        void bind(final DemoItem demo, final OnItemClickListener onItemClickListener) {
             title.setText(demo.getTitle());
             description.setText(demo.getDescription());
             itemView.setOnClickListener(new View.OnClickListener() {

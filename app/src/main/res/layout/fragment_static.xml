@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.jay.develop.android.Activity.lifecycle.LifeCycleView
+    <com.jay.develop.android.activity.lifecycle.LifeCycleView
         android:id="@+id/tv_lifecycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

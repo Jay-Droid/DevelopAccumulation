@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".android.View.ViewActivity">
+        tools:context=".android.view.ViewActivity">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.jay.develop.android.View.CustomViewGroup
+        <com.jay.develop.android.view.CustomViewGroup
                 android:background="@color/antiquewhite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -52,7 +52,7 @@
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"/>
 
-        </com.jay.develop.android.View.CustomViewGroup>
+        </com.jay.develop.android.view.CustomViewGroup>
 
         <TextView
                 android:text="自定义View"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <com.jay.develop.android.View.CustomView
+        <com.jay.develop.android.view.CustomView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
