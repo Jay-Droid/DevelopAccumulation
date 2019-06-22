@@ -10,6 +10,7 @@ import com.jay.develop.android.activity.lifecycle.LifecycleActivity;
 import com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity;
 import com.jay.develop.android.fragment.FragmentTestActivity;
 import com.jay.develop.android.handler.HandlerActivity;
+import com.jay.develop.android.recycleview.XAdapterActivity;
 import com.jay.develop.android.service.ServiceActivity;
 import com.jay.develop.android.view.ViewActivity;
 import com.jay.develop.main.DemoListAdapter;
@@ -47,6 +48,8 @@ public class AndroidListActivity extends AppCompatActivity {
                 HandlerActivity.class));
         demoList.add(new DemoListAdapter.DemoItem("View", "View相关",
                 ViewActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("RecyclerView", "RecyclerView相关",
+                XAdapterActivity.class));
         return demoList;
     }
 
