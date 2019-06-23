@@ -1,4 +1,4 @@
-package com.kotlin.类
+package com.kotlin.语法学习.类
 
 fun main() {
     Person.instance

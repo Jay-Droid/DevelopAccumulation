@@ -1,4 +1,4 @@
-package com.kotlin.lamda表达式
+package com.kotlin.语法学习.lamda表达式
 
 fun main(args: Array<String>) {
     println("Hello Kotlin")
