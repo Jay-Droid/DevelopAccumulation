@@ -1,4 +1,4 @@
-package com.kotlin.循环语句
+package com.kotlin.语法学习.循环语句
 
 
 fun main(args: Array<String>) {
