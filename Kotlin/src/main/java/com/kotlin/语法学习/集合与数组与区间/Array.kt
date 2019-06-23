@@ -14,6 +14,9 @@ fun main() {
     }
     println(arrayChar.joinToString(""))
     println(arrayInt.slice(1..2))
+    println(arrayInt.component2())
+    println(arrayInt.reverse())
+    println(arrayInt.toString())
 
 }
 
