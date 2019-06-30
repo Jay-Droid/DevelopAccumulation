@@ -90,6 +90,7 @@
 
         connectWebViewJavascriptBridge(function(bridge) {
             bridge.init(function(message, responseCallback) {
+              document.getElementById("show").innerHTML = ("来自Java端的数据是: = " + message);
                 console.log('JS got a message', message);
                 var data = {
                     'Javascript Responds': '测试中文!'

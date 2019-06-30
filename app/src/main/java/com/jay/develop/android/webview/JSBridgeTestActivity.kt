@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.Toast
 
 import com.github.lzyzsd.jsbridge.BridgeWebView
+import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.Gson
 import com.jay.develop.R
 
@@ -94,6 +95,8 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
 
         webView.send("hello")
 
+
+
     }
 
     fun pickFile() {
@@ -124,9 +127,20 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+        //发送信息给js,此处不需要配置handlerName
+        webView.send("发给JS一条消息", object : CallBackFunction {
+            override fun onCallBack(data: String?) {
+                Toast.makeText(
+                    this@JSBridgeTestActivity,
+                    "我是JS端的数据：$data",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        })
+
         //java 调用JS
-        webView.callHandler("functionInJs", "我是要发给JS端的java端的数据") { data ->
-            Toast.makeText(this@JSBridgeTestActivity, "这是来自JS端的数据 $data", Toast.LENGTH_SHORT).show()
-        }
+//        webView.callHandler("functionInJs", "我是要发给JS端的java端的数据") { data ->
+//            Toast.makeText(this@JSBridgeTestActivity, "这是来自JS端的数据 $data", Toast.LENGTH_SHORT).show()
+//        }
     }
 }
