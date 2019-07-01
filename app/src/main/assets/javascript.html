@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Title</title>
+        <script>
+            // Android端调用JS端的方法
+           function callJS(){
+              alert("Android调用了JS的callJS方法");
+              return "CALL END"
+           }
+           // Android端调用JS端的方法
+           function callH5(data){
+                document.getElementById("result").innerHTML="Android传过来的数据为："+data;
+                return "CALL END"
+           }
+
+
+
+           //JS端调用Android端的方法
+           function callAndroidToast(){
+                // 由于对象映射，所以调用JSForAndroid对象等于调用Android映射的对象(AndroidPlatform)
+                var result=JSForAndroid.toast('我是JS端，我通过callAndroidToast()方法来调用Android端的toast()方法了')
+                document.getElementById("result").innerHTML="Android传过来的数据为："+result;
+           }
+
+           function callAndroidByUrl(){
+                //约定的url协议为：js://webview?arg1=111&arg2=222
+                document.location = "js://webview?arg1=111&arg2=222";
+           }
+           //通过拦截url调用的返回回调方法
+           function callAndroidByUrlCallBack(data){
+                document.getElementById("result").innerHTML="Android传过来的数据为："+data;
+           }
+        </script>
+    </head>
+    <body>
+        <button type="button" onclick="callAndroidToast()">
+            调用Android的Toast
+        </button>
+        <br>
+        <button type="button" onclick="callAndroidByUrl()">
+            通过拦截约定的URL调用Android的方法
+        </button>
+        <br>
+        <div id="result"></div>
+    </body>
+</html>

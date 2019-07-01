@@ -16,6 +16,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".android.webview.JSBridgeTestActivity">
+        </activity>
+        <activity android:name=".android.webview.WebViewOfJSAndJavaActivity">
+        </activity>
+        <activity android:name=".android.webview.WebViewNormalUseActivity">
+        </activity>
+        <activity android:name=".android.webview.WebViewActivity">
+        </activity>
         <activity android:name=".android.recycleview.XAdapterActivity">
         </activity>
         <activity android:name=".android.view.touchEvent.EventActivity">

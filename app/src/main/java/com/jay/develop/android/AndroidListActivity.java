@@ -13,6 +13,7 @@ import com.jay.develop.android.handler.HandlerActivity;
 import com.jay.develop.android.recycleview.XAdapterActivity;
 import com.jay.develop.android.service.ServiceActivity;
 import com.jay.develop.android.view.ViewActivity;
+import com.jay.develop.android.webview.WebViewActivity;
 import com.jay.develop.main.DemoListAdapter;
 
 import java.util.ArrayList;
@@ -50,6 +51,8 @@ public class AndroidListActivity extends AppCompatActivity {
                 ViewActivity.class));
         demoList.add(new DemoListAdapter.DemoItem("RecyclerView", "RecyclerView相关",
                 XAdapterActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("WebViewActivity", "WebViewActivity",
+                WebViewActivity.class));
         return demoList;
     }
 
