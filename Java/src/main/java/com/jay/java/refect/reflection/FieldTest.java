@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 public class FieldTest {
 
     public static void testField() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
-        String className = "com.jay.java.反射.Person";
+        String className = "com.jay.java.reflection.Person";
         Class<Person> personClass = (Class<Person>) Class.forName(className);
 
         //获取所有字段，不包括父类的字段, getFields获取不到
@@ -20,8 +20,8 @@ public class FieldTest {
         for (Field field : fields) {
             System.out.println(field);
             //运行结果：
-            //private java.lang.String com.jay.java.反射.Person.name
-            //private int com.jay.java.反射.Person.age
+            //private java.lang.String com.jay.java.reflection.Person.name
+            //private int com.jay.java.reflection.Person.age
         }
 
         //获取指定字段
@@ -49,7 +49,7 @@ public class FieldTest {
         //JayDroid
 
         //获取私有字段的值,需要设置setAccessible(true)
-        //FieldTest can not access a member of class com.jay.java.反射.Person with modifiers "private"
+        //FieldTest can not access a member of class com.jay.java.reflection.Person with modifiers "private"
         ageField.setAccessible(true);
         ageField.set(person,28);
         int age = (Integer) ageField.get(person);

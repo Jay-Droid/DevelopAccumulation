@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException;
 public class ConstructorTest {
 
     public static void testConstruct() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        String className = "com.jay.java.反射.Person";
+        String className = "com.jay.java.reflection.Person";
         Class<Person> personClass = (Class<Person>) Class.forName(className);
 
         //获取全部构造器实例
@@ -23,8 +23,8 @@ public class ConstructorTest {
             System.out.println(constructors[i]);
             //运行结果：
             //获取全部构造器实例
-            //public com.jay.java.反射.Person(java.lang.String,int)
-            //public com.jay.java.反射.Person()
+            //public com.jay.java.reflection.Person(java.lang.String,int)
+            //public com.jay.java.reflection.Person()
         }
 
         //获取某一个构造器实例，需要参数列表
@@ -34,7 +34,7 @@ public class ConstructorTest {
         System.out.println(constructor);
         //运行结果：
         //获取某一个构造器实例
-        //public com.jay.java.反射.Person(java.lang.String,int)
+        //public com.jay.java.reflection.Person(java.lang.String,int)
 
         //通过构造器创建对象
         System.out.println("通过反射获取的构造器获取类对象");

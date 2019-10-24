@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 public class MethodTest {
 
     public static void testMethod() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        String className = "com.jay.java.反射.Person";
+        String className = "com.jay.java.reflection.Person";
         Class<Person> personClass = (Class<Person>) Class.forName(className);
 
         //获取获取类中的所有方法，包括父类中的方法，不包括私有方法
@@ -44,8 +44,8 @@ public class MethodTest {
         System.out.println(setNameMethod);
         System.out.println(getNameMethod);
         //执行结果：
-        //public void com.jay.java.反射.Person.setName(java.lang.String)
-        //public java.lang.String com.jay.java.反射.Person.getName()
+        //public void com.jay.java.reflection.Person.setName(java.lang.String)
+        //public java.lang.String com.jay.java.reflection.Person.getName()
 
         System.out.println("--------------------------------------");
         //执行一个方法，需要传入要执行该方法的对象实例和实参
@@ -60,13 +60,13 @@ public class MethodTest {
 
         System.out.println("--------------------------------------");
         //执行类的私有方法，需要设置setAccessible(true)
-        //否则报异常：MethodTest can not access a member of class com.jay.java.反射.Person with modifiers "private"
+        //否则报异常：MethodTest can not access a member of class com.jay.java.reflection.Person with modifiers "private"
         Method privateMethod = personClass.getDeclaredMethod("privateMethod");
         privateMethod.setAccessible(true);
         System.out.println(privateMethod);
         privateMethod.invoke(person);
         //运行结果：
-        //private void com.jay.java.反射.Person.privateMethod()
+        //private void com.jay.java.reflection.Person.privateMethod()
         //调用了私有方法
 
         System.out.println("--------------------------------------");

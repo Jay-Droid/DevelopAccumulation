@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jay.develop.R;
 import com.jay.develop.android.activity.lifecycle.LifecycleActivity;
 import com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity;
+import com.jay.develop.android.camera.QRCodeActivity;
 import com.jay.develop.android.fragment.FragmentTestActivity;
 import com.jay.develop.android.handler.HandlerActivity;
 import com.jay.develop.android.recycleview.XAdapterActivity;
@@ -53,6 +54,8 @@ public class AndroidListActivity extends AppCompatActivity {
                 XAdapterActivity.class));
         demoList.add(new DemoListAdapter.DemoItem("WebViewActivity", "WebViewActivity",
                 WebViewActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("QRCodeActivity", "相机相关",
+                QRCodeActivity.class));
         return demoList;
     }
 

@@ -3,9 +3,11 @@
           xmlns:dist="http://schemas.android.com/apk/distribution"
           package="com.jay.develop">
     <!-- To access Google+ APIs: -->
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <dist:module dist:instant="true"/>
 
@@ -16,6 +18,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".android.camera.QRCodeScanActivity">
+        </activity>
+        <activity android:name=".android.camera.QRCodeGainActivity">
+        </activity>
+        <activity android:name=".android.camera.QRCodeActivity">
+        </activity>
+        <activity android:name=".android.webview.WebTestActivity">
+        </activity>
         <activity android:name=".android.webview.JSBridgeTestActivity">
         </activity>
         <activity android:name=".android.webview.WebViewOfJSAndJavaActivity">

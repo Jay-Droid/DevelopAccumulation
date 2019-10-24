@@ -1,13 +1,23 @@
 package com.jay.develop.main;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.gson.Gson;
 import com.jay.develop.R;
 import com.jay.develop.android.AndroidListActivity;
+import com.jay.develop.utils.ImageUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

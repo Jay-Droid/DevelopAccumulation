@@ -18,6 +18,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebView
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.Gson
 import com.jay.develop.R
+import java.io.File
 
 class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = "MainActivity"
@@ -66,7 +67,8 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
             override fun onShowFileChooser(
                 webView: WebView,
                 filePathCallback: ValueCallback<Array<Uri>>,
-                fileChooserParams: FileChooserParams): Boolean {
+                fileChooserParams: FileChooserParams
+            ): Boolean {
                 mUploadMessageArray = filePathCallback
                 pickFile()
                 return true
@@ -96,7 +98,6 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
         webView.send("hello")
 
 
-
     }
 
     fun pickFile() {
@@ -108,18 +109,13 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         if (requestCode == RESULT_CODE) {
-            if (null == mUploadMessage && null == mUploadMessageArray) {
-                return
-            }
-            if (null != mUploadMessage && null == mUploadMessageArray) {
-                val result = if (intent == null || resultCode != Activity.RESULT_OK) null else intent.data
-                mUploadMessage!!.onReceiveValue(result)
-                mUploadMessage = null
-            }
 
-            if (null == mUploadMessage && null != mUploadMessageArray) {
+            if ( null != mUploadMessageArray) {
                 val result = if (intent == null || resultCode != Activity.RESULT_OK) null else intent.data
-                mUploadMessageArray!!.onReceiveValue(result?.let { arrayOf<Uri>(it) })
+                val url:String="kdjfkdkjkj.png"
+
+
+                mUploadMessageArray!!.onReceiveValue(arrayOf<Uri>(Uri.fromFile(File(url))))
                 mUploadMessageArray = null
             }
 
@@ -139,8 +135,6 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         //java 调用JS
-//        webView.callHandler("functionInJs", "我是要发给JS端的java端的数据") { data ->
-//            Toast.makeText(this@JSBridgeTestActivity, "这是来自JS端的数据 $data", Toast.LENGTH_SHORT).show()
-//        }
+
     }
 }
