@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:dist="http://schemas.android.com/apk/distribution"
-          package="com.jay.develop">
+        xmlns:dist="http://schemas.android.com/apk/distribution"
+        package="com.jay.develop">
     <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <dist:module dist:instant="true"/>
+    <dist:module dist:instant="true" />
 
     <application
             android:name=".App"
@@ -19,100 +19,83 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".android.camera.QRCodeScanActivity">
-        </activity>
-        <activity android:name=".android.camera.QRCodeGainActivity">
-        </activity>
-        <activity android:name=".android.camera.QRCodeActivity">
-        </activity>
-        <activity android:name=".android.webview.WebTestActivity">
-        </activity>
-        <activity android:name=".android.webview.JSBridgeTestActivity">
-        </activity>
-        <activity android:name=".android.webview.WebViewOfJSAndJavaActivity">
-        </activity>
-        <activity android:name=".android.webview.WebViewNormalUseActivity">
-        </activity>
-        <activity android:name=".android.webview.WebViewActivity">
-        </activity>
-        <activity android:name=".android.recycleview.XAdapterActivity">
-        </activity>
-        <activity android:name=".android.view.touchEvent.EventActivity">
-        </activity>
-        <activity android:name=".android.view.ViewActivity">
-        </activity>
-        <activity android:name=".android.handler.IntentServiceActivity">
-        </activity>
-        <activity android:name=".android.handler.HandlerThreadActivity">
-        </activity>
-        <activity android:name=".android.handler.AsyncTaskActivity">
-        </activity>
+        <activity android:name=".java.reflection.ReflectionActivity"/>
+        <activity android:name=".android.camera.QRCodeScanActivity" />
+        <activity android:name=".android.camera.QRCodeGainActivity" />
+        <activity android:name=".android.camera.QRCodeActivity" />
+        <activity android:name=".android.webview.WebTestActivity" />
+        <activity android:name=".android.webview.JSBridgeTestActivity" />
+        <activity android:name=".android.webview.WebViewOfJSAndJavaActivity" />
+        <activity android:name=".android.webview.WebViewNormalUseActivity" />
+        <activity android:name=".android.webview.WebViewActivity" />
+        <activity android:name=".android.recycleview.XAdapterActivity" />
+        <activity android:name=".android.view.touchEvent.EventActivity" />
+        <activity android:name=".android.view.ViewActivity" />
+        <activity android:name=".android.handler.IntentServiceActivity" />
+        <activity android:name=".android.handler.HandlerThreadActivity" />
+        <activity android:name=".android.handler.AsyncTaskActivity" />
 
         <receiver
                 android:name=".android.broadcastReceiver.StaticBroadcastReceiver"
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
             </intent-filter>
         </receiver>
         <receiver
                 android:name=".android.broadcastReceiver.DynamicBroadcastReceiver"
                 android:enabled="true"
-                android:exported="true">
-        </receiver>
+                android:exported="true" />
 
-        <activity android:name=".android.broadcastReceiver.BroadcastReceiverActivity">
-        </activity>
+        <activity android:name=".android.broadcastReceiver.BroadcastReceiverActivity" />
         <activity
                 android:name=".android.fragment.NavigationActivity"
-                android:label="NavigationActivity">
-        </activity>
+                android:label="NavigationActivity" />
         <activity
                 android:name=".android.fragment.backstack.BackStackActivity"
-                android:label="BackStackActivity">
-        </activity>
+                android:label="BackStackActivity" />
 
         <service
                 android:name=".android.service.ForegroundService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
         <service
                 android:name=".android.service.IntentTestService"
-                android:exported="false"/>
+                android:exported="false" />
         <service
                 android:name=".android.service.StartService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
         <service
                 android:name=".android.service.BindService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
 
-        <activity android:name=".android.service.ServiceActivity"/>
-        <activity android:name=".android.handler.HandlerActivity"/>
-        <activity android:name=".android.fragment.FragmentTestActivity"/>
+        <activity android:name=".android.service.ServiceActivity" />
+        <activity android:name=".android.handler.HandlerActivity" />
+        <activity android:name=".android.fragment.FragmentTestActivity" />
         <activity
                 android:name=".android.activity.lunchmode.StandardActivity"
                 android:label="StandardActivity"
-                android:launchMode="standard"/>
+                android:launchMode="standard" />
         <activity
                 android:name=".android.activity.lunchmode.SingleTopActivity"
                 android:label="SingleTopActivity"
-                android:launchMode="singleTop"/>
+                android:launchMode="singleTop" />
         <activity
                 android:name=".android.activity.lunchmode.SingleTaskActivity"
                 android:label="SingleTaskActivity"
-                android:launchMode="singleTask"/>
+                android:launchMode="singleTask" />
         <activity
                 android:name=".android.activity.lunchmode.SingleInstanceActivity"
                 android:label="SingleInstanceActivity"
-                android:launchMode="singleInstance"/>
+                android:launchMode="singleInstance" />
         <activity
                 android:name=".android.activity.lifecycle.DialogActivity"
                 android:label=""
-                android:theme="@style/Base.Theme.AppCompat.Dialog"/>
-        <activity android:name=".android.activity.lifecycle.NormalActivity"/>
+                android:theme="@style/Base.Theme.AppCompat.Dialog" />
+        <activity android:name=".android.activity.lifecycle.NormalActivity" />
         <!--
         configChanges属性可以设置多个值，中间使用竖线分割；
         1.orientation 屏幕在纵向和横向间旋转
@@ -135,19 +118,19 @@
         -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:configChanges="orientation" -->
-        <activity android:name=".android.activity.lifecycle.LifecycleActivity"/>
+        <activity android:name=".android.activity.lifecycle.LifecycleActivity" />
         <activity
                 android:name=".java.JavaListActivity"
-                android:label="Java"/>
+                android:label="Java" />
         <activity
                 android:name=".android.AndroidListActivity"
-                android:label="Android"/>
+                android:label="Android" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

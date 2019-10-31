@@ -1,7 +1,9 @@
 package com.jay.develop
 
 import android.app.Application
+import android.content.Context
 import com.jay.develop.demo.UMPushHelper
+import com.jay.develop.java.reflection.HockHelper
 
 
 /**
@@ -11,12 +13,18 @@ import com.jay.develop.demo.UMPushHelper
  */
 class App : Application() {
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        //Activity的启动监控
+//        HockHelper.hookHandler(base)
+        //Activity的创建的监控
+        HockHelper.hookInstrumentation()
+    }
+
     override fun onCreate() {
         super.onCreate()
         val umPushHelper = UMPushHelper()
         umPushHelper.init(this)
-
-
     }
 
 

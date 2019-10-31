@@ -2,24 +2,17 @@ package com.jay.develop.java;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.Spanned;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.widget.EditText;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.jay.develop.R;
-import com.jay.develop.android.AndroidListActivity;
+import com.jay.develop.java.reflection.ReflectionActivity;
 import com.jay.develop.main.DemoListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class JavaListActivity extends AppCompatActivity {
 
@@ -39,10 +32,8 @@ public class JavaListActivity extends AppCompatActivity {
 
     private List<DemoListAdapter.DemoItem> getDemoData() {
         List<DemoListAdapter.DemoItem> demoList = new ArrayList<>();
-        demoList.add(new DemoListAdapter.DemoItem("Android", "Android整理",
-                AndroidListActivity.class));
-        demoList.add(new DemoListAdapter.DemoItem("Java", "Java整理",
-                AndroidListActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("反射", "反射在Android中的运用",
+                ReflectionActivity.class));
         return demoList;
     }
 

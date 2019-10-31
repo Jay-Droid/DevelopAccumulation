@@ -37,7 +37,7 @@ public class ReflectMainTest {
      */
     public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException, NoSuchFieldException, NoSuchMethodException {
 
-        int demoIndex = 7;
+        int demoIndex = 5;
 
         switch (demoIndex) {
 
@@ -269,6 +269,7 @@ public class ReflectMainTest {
         System.out.println("-----获取公用和私有的所有字段，但不能获取父类字段-----");
         //getDeclaredFields()返回Class中所有的字段，包括私有字段，不能获取父类的任何字段
         //getFields()只返回公有字段，即有public修饰的字段,包括父类中的所有共有字段
+        //范围不一样而已，getDeclared获取的是仅限于本类的所有的不受访问限制的，而get获取的是包括父类的但仅限于public修饰符的
         Field[] fields = class1.getDeclaredFields();
         for (Field field : fields) {
             System.out.print(" " + field.getName());
@@ -341,23 +342,27 @@ public class ReflectMainTest {
         Method method = class1.getDeclaredMethod("setName", String.class);
         System.out.println(method);
 
+
+        System.out.println("-----执行成员方法，第一个参数表示执行哪个对象的方法，剩下的参数是执行方法时需要传入的实参-----");
         // public void setAge(int age) {  }---->int.class
         // public void setAge(Integer age) {  }---->Integer.class
         // 注意以上两种写法在反射时的区别
         method = class1.getDeclaredMethod("setAge", int.class);
         System.out.println(method);
+        Object object = class1.newInstance();
+        method.invoke(object, 18);
 
-
-        System.out.println("-----执行方法，第一个参数表示执行哪个对象的方法，剩下的参数是执行方法时需要传入的实参-----");
-        Object obje = class1.newInstance();
-        method.invoke(obje, 18);
+        System.out.println("-----执行静态方法-----");
+        method = class1.getDeclaredMethod("staticMethod");
+        System.out.println(method);
+        method.invoke(object);
 
         System.out.println("-----执行私有方法-----");
         //私有方法的执行，必须在调用invoke之前加上一句method.setAccessible（true）
         method = class1.getDeclaredMethod("privateMethod");
         System.out.println(method);
         method.setAccessible(true);
-        method.invoke(obje);
+        method.invoke(object);
 
     }
 
@@ -493,6 +498,10 @@ public class ReflectMainTest {
 
         static {
             System.out.println("我是静态代码块");
+        }
+
+        public static void staticMethod() {
+            System.out.println("我是静态方法");
         }
 
         public String getName() {

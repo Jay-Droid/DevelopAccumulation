@@ -1,6 +1,10 @@
 package com.jay.java.反射.practice;
 
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 /**
  * 反射综合实践测试类
  *
@@ -15,7 +19,7 @@ public class RefectionPractice {
      * @throws Exception
      */
     public static void main(String[] args) throws Exception {
-        int demoIndex = 1;
+        int demoIndex = 3;
 
         switch (demoIndex) {
 
@@ -31,7 +35,7 @@ public class RefectionPractice {
                 break;
             }
             case 3: {
-                //demo3.  反射针对非 SDK 接口的限制
+                //demo3.  基于反射机制的动态代理实践
                 demo3();
                 break;
             }
@@ -62,7 +66,6 @@ public class RefectionPractice {
      * 富士康代加工工厂类
      */
     static class Factory {
-
         /**
          * 获取接口实例化对象,生产线分配系统
          *
@@ -133,17 +136,66 @@ public class RefectionPractice {
     }
 
     /**
-     *
+     * demo2 反射在Android框架层的应用
      */
     private static void demo2() {
         System.out.println("-----Demo2-----\n\n");
-
+        //相关代码在 com.jay.develop.java.reflection.HockHelper
     }
 
     /**
-     *
+     * demo3 基于反射机制的动态代理实践
      */
     private static void demo3() {
+        System.out.println("-----Demo3-----\n\n");
+        // jdk动态代理测试
+        Subject subject = new JDKDynamicProxy(new RealSubject()).getProxy();
+        subject.doSomething();
+    }
 
+    /**
+     * 抽象主题接口
+     */
+    public interface Subject {
+
+        void doSomething();
+    }
+
+    /**
+     * 真是主题类
+     */
+    public static class RealSubject implements Subject {
+        @Override
+        public void doSomething() {
+            System.out.println("我是真实对象的方法，我被代理类执行了");
+        }
+    }
+
+    /**
+     * jdk动态代理
+     */
+    public static class JDKDynamicProxy implements InvocationHandler {
+
+        private Object target;
+
+        public JDKDynamicProxy(Object target) {
+            this.target = target;
+        }
+
+        /**
+         * 获取被代理接口实例对象
+         */
+        public <T> T getProxy() {
+            return (T) Proxy.newProxyInstance(target.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println("我是代理类，执行被代理对象的方法之前");
+            //实现代理对象调用到了真实对象的方法
+            Object result = method.invoke(target, args);
+            System.out.println("我是代理类，执行被代理对象的方法之后");
+            return result;
+        }
     }
 }

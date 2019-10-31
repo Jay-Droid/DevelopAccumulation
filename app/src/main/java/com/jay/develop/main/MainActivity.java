@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.jay.develop.R;
 import com.jay.develop.android.AndroidListActivity;
+import com.jay.develop.java.JavaListActivity;
 import com.jay.develop.utils.ImageUtils;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         demoList.add(new DemoListAdapter.DemoItem("Android", "Android整理",
                 AndroidListActivity.class));
         demoList.add(new DemoListAdapter.DemoItem("Java", "Java整理",
-                AndroidListActivity.class));
+                JavaListActivity.class));
         return demoList;
     }
 
