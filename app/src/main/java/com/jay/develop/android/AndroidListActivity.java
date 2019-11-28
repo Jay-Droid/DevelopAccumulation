@@ -1,10 +1,12 @@
 package com.jay.develop.android;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.jay.develop.R;
 import com.jay.develop.android.activity.lifecycle.LifecycleActivity;
 import com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity;
@@ -15,6 +17,8 @@ import com.jay.develop.android.recycleview.XAdapterActivity;
 import com.jay.develop.android.service.ServiceActivity;
 import com.jay.develop.android.view.ViewActivity;
 import com.jay.develop.android.webview.WebViewActivity;
+import com.jay.develop.demo.deeplink.DeepLinkActivity;
+import com.jay.develop.demo.deeplink.DeepLinkWebActivity;
 import com.jay.develop.main.DemoListAdapter;
 
 import java.util.ArrayList;
@@ -56,6 +60,9 @@ public class AndroidListActivity extends AppCompatActivity {
                 WebViewActivity.class));
         demoList.add(new DemoListAdapter.DemoItem("QRCodeActivity", "相机相关",
                 QRCodeActivity.class));
+
+        demoList.add(new DemoListAdapter.DemoItem("DeepLinkWebActivity", "深度链接",
+                DeepLinkWebActivity.class));
         return demoList;
     }
 

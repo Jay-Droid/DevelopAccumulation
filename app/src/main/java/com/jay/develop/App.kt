@@ -2,7 +2,8 @@ package com.jay.develop
 
 import android.app.Application
 import android.content.Context
-import com.jay.develop.demo.UMPushHelper
+import com.jay.develop.demo.deeplink.LinkHelper
+import com.jay.develop.demo.push.UMPushHelper
 import com.jay.develop.java.reflection.HockHelper
 
 
@@ -16,7 +17,7 @@ class App : Application() {
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         //Activity的启动监控
-//        HockHelper.hookHandler(base)
+        HockHelper.hookHandler(base)
         //Activity的创建的监控
         HockHelper.hookInstrumentation()
     }
@@ -24,7 +25,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         val umPushHelper = UMPushHelper()
+        val linkHelper = LinkHelper()
         umPushHelper.init(this)
+        linkHelper.init(this)
+
     }
 
 

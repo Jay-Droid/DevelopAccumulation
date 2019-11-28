@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+// 添加插件
+apply plugin: 'com.mob.sdk'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -84,4 +87,26 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     //PushSDK
     implementation 'com.umeng.umsdk:push:6.0.1'
+
+    /** ======================== deeplink =========================== */
+    implementation "cc.linkedme.deeplinks:link-page:1.1.6"
 }
+
+// 在MobSDK的扩展中注册MobLink的相关信息
+MobSDK {
+    appKey "2cfba72eac264"
+    appSecret "de9956e055a8b1a520848b731c79367b"
+    MobLink {
+        uriScheme "mlink"
+        appLinkHost "as7w.t4m.cn"
+    }
+}
+
+//MobSDK {
+//    appKey "182a1c38dd79c"
+//    appSecret "c1e337c5325937ef39334250d86b100b"
+//    MobLink {
+//        uriScheme "mlink"
+//        appLinkHost "662u.t4m.cn"
+//    }
+//}
