@@ -33,4 +33,5 @@ public class Alvin implements WomanToolsFactory {
     private void doSthBefore() {
         System.out.println("根据需求，进行市场调研和产品分析");
     }
+
 }

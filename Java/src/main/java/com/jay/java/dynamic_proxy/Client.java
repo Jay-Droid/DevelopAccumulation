@@ -3,6 +3,8 @@ package com.jay.java.dynamic_proxy;
 
 import com.jay.java.dynamic_proxy.dynamic.MarkCompany;
 import com.jay.java.dynamic_proxy.dynamic.ProxyUtils;
+import com.jay.java.dynamic_proxy.normal.Alvin;
+import com.jay.java.dynamic_proxy.normal.Mark;
 
 import java.lang.reflect.Method;
 
@@ -17,13 +19,13 @@ public class Client {
 
     public static void main(String[] args) {
         /*静态代理模式---------------*/
-//        ManToolsFactory factory = new AaFactory();
-//        Mark mark = new Mark(factory);
-//        mark.saleManTools("D");
-//
-//        WomanToolsFactory womanToolsFactory = new BbFactory();
-//        Alvin av = new Alvin(womanToolsFactory);
-//        av.saleWomanTools(1.8f);
+        ManToolsFactory factory = new AaFactory();
+        Mark mark = new Mark(factory);
+        mark.saleManTools("D");
+
+        WomanToolsFactory womanToolsFactory = new BbFactory();
+        Alvin av = new Alvin(womanToolsFactory);
+        av.saleWomanTools(1.8f);
 
         /*动态代理模式---------------*/
         ManToolsFactory aafactory = new AaFactory();
