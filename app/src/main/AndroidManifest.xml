@@ -8,14 +8,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--LinkedME SDK 需要开启的权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- LinkedME SDK 需要开启的权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <!-- 请务必添加该权限，用户更流畅的跳转 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 请务必添加该权限，用户更流畅的跳转 -->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
-
 
     <dist:module dist:instant="true" />
 
@@ -29,6 +26,7 @@
             android:theme="@style/AppTheme">
         <activity android:name=".demo.deeplink.DeepLinkWebActivity" />
         <activity android:name=".demo.deeplink.DeepLinkActivity">
+
             <!-- URI Scheme方式 在dashboard配置中,请保持与ios的URI Scheme相同 -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -50,14 +48,13 @@
                         android:host="com.jay.develop"
                         android:scheme="mlink" />
 
-                <!-- moblink-->
-<!--                <data-->
-<!--                        android:host="com.jay.develop"-->
-<!--                        android:path="/scene/news"-->
-<!--                        android:scheme="mlink" />-->
+                <!-- moblink -->
+                <!-- <data -->
+                <!-- android:host="com.jay.develop" -->
+                <!-- android:path="/scene/news" -->
+                <!-- android:scheme="mlink" /> -->
 
             </intent-filter>
-
 
             <!-- APP Links方式,Android 23版本及以后支持 -->
             <intent-filter
@@ -67,9 +64,9 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- 以下pathPrefix值需要替换为后台设置中 App ID 的值,注意保留反斜杠-->
-                <!-- host中设置的lkme.cc不要更改！！！-->
-                <!-- https://lkme.cc/omD/sBfSA1MrN-->
+                <!-- 以下pathPrefix值需要替换为后台设置中 App ID 的值,注意保留反斜杠 -->
+                <!-- host中设置的lkme.cc不要更改！！！ -->
+                <!-- https://lkme.cc/omD/sBfSA1MrN -->
                 <data
                         android:host="lkme.cc"
                         android:pathPrefix="/omD"
@@ -79,23 +76,38 @@
                         android:pathPrefix="/omD"
                         android:scheme="http" />
 
-                <!--Mob link-->
+                <!-- Mob link -->
                 <data
                         android:host="as7w.t4m.cn"
                         android:scheme="http" />
                 <data
                         android:host="as7w.t4m.cn"
                         android:scheme="https" />
-
                 <data
                         android:host="662u.t4m.cn"
                         android:scheme="http" />
                 <data
                         android:host="662u.t4m.cn"
                         android:scheme="https" />
-
             </intent-filter>
         </activity>
+
+        <activity android:name=".java.dynamic_proxy.DynamicProxyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--dv://com.jay.develop/router-->
+                <data
+                        android:host="com.jay.develop"
+                        android:path="/router"
+                        android:scheme="dv" />
+
+            </intent-filter>
+
+        </activity>
+
         <activity android:name=".java.reflection.ReflectionActivity" />
         <activity android:name=".android.camera.QRCodeScanActivity" />
         <activity android:name=".android.camera.QRCodeGainActivity" />
