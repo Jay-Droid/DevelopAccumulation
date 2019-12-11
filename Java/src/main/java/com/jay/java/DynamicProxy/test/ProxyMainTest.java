@@ -134,11 +134,11 @@ public class ProxyMainTest {
         System.out.println("-----JDK动态代理的实现-----");
 
         Subject realSubject = new RealSubject();
-        //将被代理对象传入代理生成工厂类
+        //将被代理对象传入代理生产工厂类中
         DynamicProxySubjectFactory proxySubjectFactory = new DynamicProxySubjectFactory(realSubject);
         //获取jdk动态生成的代理类
         Subject proxySubject = (Subject) proxySubjectFactory.getProxyInstance();
-        //执行被代理类方法
+        //执行真实对象的方法
         proxySubject.request("动态代理类调用了");
     }
 
@@ -160,20 +160,55 @@ public class ProxyMainTest {
          * 通过Proxy获得动态代理对象
          */
         public Object getProxyInstance() {
-//
-            return Proxy.newProxyInstance(realSubject.getClass().getClassLoader(),
-                    realSubject.getClass().getInterfaces(), this);
+
+            /**
+             * Returns an instance of a proxy class for the specified interfaces * that dispatches
+             * method invocations to the specified invocation handler.
+             * 返回一个实现了抽象接口的代理对象，该实例将方法调用委托给invocation handler来调用。
+             * @param loader the class loader to define the proxy class
+             * loader 类加载器用于定义代理类
+             * @param interfaces the list of interfaces for the proxy class  to implement
+             * interfaces 代理类要实现的接口列表
+             * @param h the invocation handler to dispatch method invocations to
+             *  h InvocationHandler 被委托来调用代理对象的方法
+             * @return a proxy instance with the specified invocation handler of a * proxy class that is
+             *     defined by the specified class loader * and that implements the specified interfaces
+             *  返回一个具有包含InvocationHandler的并由指定类加载器定义并实现指定接口的代理对象
+             */
+            return Proxy.newProxyInstance(
+                    realSubject.getClass().getClassLoader(), realSubject.getClass().getInterfaces(), this);
 
 //            return Proxy.newProxyInstance(realSubject.getClass().getClassLoader(),
 //                    new Class<?>[]{realSubject.getClass()}, this);
         }
 
         /**
-         * 通过动态代理对象方法进行增强
+         * Processes a method invocation on a proxy instance and returns * the
+         * result. This method will be invoked on an invocation handler * when a method is invoked on a
+         * proxy instance that it is * associated with.
+         * @param proxy the proxy instance that the
+         * method was invoked on
+         * @param method the {@code Method} instance corresponding to * the
+         * interface method invoked on the proxy instance. The declaring * class of the {@code Method}
+         * object will be the interface that * the method was declared in, which may be a superinterface
+         * of the * proxy interface that the proxy class inherits the method through.
+         * @param args an array of objects containing the values of the * arguments passed in the method invocation on
+         * the proxy instance, * or {@code null} if interface method takes no arguments. * Arguments of
+         * primitive types are wrapped in instances of the * appropriate primitive wrapper class, such
+         * as * {@code java.lang.Integer} or {@code java.lang.Boolean}.
+         * @return the value to return from the method invocation on the * proxy instance. If the declared return type of the
+         * interface * method is a primitive type, then the value returned by * this method must be an
+         * instance of the corresponding primitive * wrapper class; otherwise, it must be a type
+         * assignable to the * declared return type. If the value returned by this method is * {@code
+         * null} and the interface method's return type is * primitive, then a {@code
+         * NullPointerException} will be * thrown by the method invocation on the proxy instance. If the
+         * * value returned by this method is otherwise not compatible with * the interface method's
+         * declared return type as described above, * a {@code ClassCastException} will be thrown by the
+         * method * invocation on the proxy instance.
          */
         @Override
-        public Object invoke(Object proxy, Method method, Object[] args)
-                throws Throwable {
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            //通过动态代理对象方法进行增强
             doSthAfter();
             Object result = method.invoke(realSubject, args);
             doSthBefore();

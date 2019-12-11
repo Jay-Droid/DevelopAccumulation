@@ -26,7 +26,7 @@ public class DynamicProxyPractice {
                 break;
             }
             case 2: {
-                //Demo2:
+                //Demo2: 动态代理组件化路由框架实战
                 Demo2();
                 break;
             }
