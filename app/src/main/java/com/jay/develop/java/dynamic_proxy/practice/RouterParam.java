@@ -8,7 +8,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 定义两个注解参数，一个标示URI注解，一个标示参数
+ * 注解参数,标示参数注解
  *
  * @author wangxuejie
  * @version 1.0
@@ -19,5 +19,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface RouterParam {
     String value() default "";
-
 }

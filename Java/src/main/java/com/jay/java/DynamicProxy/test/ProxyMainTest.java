@@ -67,17 +67,33 @@ public class ProxyMainTest {
      * 抽象角色：指代理角色和真实角色对外提供的公共方法，一般为一个接口
      */
     public interface Subject {
-        void request(String data);
+
+        String request(String data);
+
+        int response(int value);
+    }
+
+    public interface Subject2 {
+
+        String request(String data);
+
+        int response(int value);
     }
 
     /**
      * 真实角色：需要实现抽象角色接口，定义了真实角色所要实现的业务逻辑，以便供代理角色调用。也就是真正的业务逻辑在此。
      */
-    public static class RealSubject implements Subject {
+    public static class RealSubject implements Subject, Subject2 {
 
         @Override
-        public void request(String data) {
+        public String request(String data) {
             System.out.println("RealSubject-data=" + data);
+            return data;
+        }
+
+        @Override
+        public int response(int value) {
+            return value;
         }
     }
 
@@ -93,10 +109,16 @@ public class ProxyMainTest {
         }
 
         @Override
-        public void request(String data) {
+        public String request(String data) {
             doSthBefore();
             realSubject.request(data);
             doSthAfter();
+            return data;
+        }
+
+        @Override
+        public int response(int value) {
+            return value;
         }
 
         /**
@@ -132,14 +154,15 @@ public class ProxyMainTest {
     private static void Demo2() {
         System.out.println("-----Demo2-----\n\n");
         System.out.println("-----JDK动态代理的实现-----");
-
+        //创建真实对象实例
         Subject realSubject = new RealSubject();
-        //将被代理对象传入代理生产工厂类中
+        //将真实对象传入代理生产工厂类中
         DynamicProxySubjectFactory proxySubjectFactory = new DynamicProxySubjectFactory(realSubject);
         //获取jdk动态生成的代理类
         Subject proxySubject = (Subject) proxySubjectFactory.getProxyInstance();
         //执行真实对象的方法
         proxySubject.request("动态代理类调用了");
+        proxySubject.response(521);
     }
 
     /**
@@ -160,58 +183,96 @@ public class ProxyMainTest {
          * 通过Proxy获得动态代理对象
          */
         public Object getProxyInstance() {
-
+            System.out.println("---------------------getProxyInstance-----------------------");
             /**
-             * Returns an instance of a proxy class for the specified interfaces * that dispatches
-             * method invocations to the specified invocation handler.
-             * 返回一个实现了抽象接口的代理对象，该实例将方法调用委托给invocation handler来调用。
-             * @param loader the class loader to define the proxy class
-             * loader 类加载器用于定义代理类
-             * @param interfaces the list of interfaces for the proxy class  to implement
-             * interfaces 代理类要实现的接口列表
+             * Returns an instance of a proxy class for the specified interfaces * that dispatches method
+             * invocations to the specified invocation handler. 返回一个实现了抽象接口的代理对象，该实例将方法调用委托给invocation
+             * handler来调用。
+             *
+             * @param loader the class loader to define the proxy class loader 类加载器用于定义代理类
+             * @param interfaces the list of interfaces for the proxy class to implement interfaces
+             *        代理类要实现的接口列表
              * @param h the invocation handler to dispatch method invocations to
-             *  h InvocationHandler 被委托来调用代理对象的方法
+             *        InvocationHandler委托调用代理对象的方法
              * @return a proxy instance with the specified invocation handler of a * proxy class that is
-             *     defined by the specified class loader * and that implements the specified interfaces
-             *  返回一个具有包含InvocationHandler的并由指定类加载器定义并实现指定接口的代理对象
+             *        defined by the specified class loader * and that implements the specified interfaces
+             *        返回一个具有包含InvocationHandler的并由指定类加载器定义且实现了指定接口的代理对象
              */
-            return Proxy.newProxyInstance(
-                    realSubject.getClass().getClassLoader(), realSubject.getClass().getInterfaces(), this);
+            System.out.println("---getProxyInstance-realSubject.getClass()=");
+            System.out.println(realSubject.getClass());//class com.jay.java.DynamicProxy.test.ProxyMainTest$RealSubject
+            System.out.println("---getProxyInstance-realSubject.getClass().getClassLoader()=");
+            System.out.println(realSubject.getClass().getClassLoader());//sun.misc.Launcher$AppClassLoader@18b4aac2
+            System.out.println("---getProxyInstance-realSubject.getClass().getInterfaces()[0]=");
+            for (Class<?> anInterface : realSubject.getClass().getInterfaces()) {
+                System.out.println(anInterface);//interface com.jay.java.DynamicProxy.test.ProxyMainTest$Subject
+            }
 
-//            return Proxy.newProxyInstance(realSubject.getClass().getClassLoader(),
-//                    new Class<?>[]{realSubject.getClass()}, this);
+
+            //获取代理对象
+            Object proxyInstance = Proxy.newProxyInstance(
+                    realSubject.getClass().getClassLoader(),
+                    realSubject.getClass().getInterfaces(),
+                    this);
+            System.out.println("---getProxyInstance-代理对象proxyInstance=");
+            System.out.println(proxyInstance.getClass().getName());//com.sun.proxy.$Proxy0
+            return proxyInstance;
         }
 
         /**
-         * Processes a method invocation on a proxy instance and returns * the
-         * result. This method will be invoked on an invocation handler * when a method is invoked on a
-         * proxy instance that it is * associated with.
-         * @param proxy the proxy instance that the
-         * method was invoked on
-         * @param method the {@code Method} instance corresponding to * the
-         * interface method invoked on the proxy instance. The declaring * class of the {@code Method}
-         * object will be the interface that * the method was declared in, which may be a superinterface
-         * of the * proxy interface that the proxy class inherits the method through.
-         * @param args an array of objects containing the values of the * arguments passed in the method invocation on
-         * the proxy instance, * or {@code null} if interface method takes no arguments. * Arguments of
-         * primitive types are wrapped in instances of the * appropriate primitive wrapper class, such
-         * as * {@code java.lang.Integer} or {@code java.lang.Boolean}.
-         * @return the value to return from the method invocation on the * proxy instance. If the declared return type of the
-         * interface * method is a primitive type, then the value returned by * this method must be an
-         * instance of the corresponding primitive * wrapper class; otherwise, it must be a type
-         * assignable to the * declared return type. If the value returned by this method is * {@code
-         * null} and the interface method's return type is * primitive, then a {@code
-         * NullPointerException} will be * thrown by the method invocation on the proxy instance. If the
-         * * value returned by this method is otherwise not compatible with * the interface method's
-         * declared return type as described above, * a {@code ClassCastException} will be thrown by the
-         * method * invocation on the proxy instance.
+         * Processes a method invocation on a proxy instance and returns * the result. This method will
+         * be invoked on an invocation handler * when a method is invoked on a proxy instance that it is
+         * * associated with.
+         *
+         * 对代理对象执行方法调用并返回结果。 该方法会被和代理对象关联对InvocationHandler接口对象调用。 如：在代理对象中request方法
+         * super.h.invoke(this, m3, new Object[]{var1});
+         *
+         * @param proxy  调用该方法对代理对象
+         * @param method the {@code Method} instance corresponding to * the interface method invoked on
+         *               the proxy instance. The declaring * class of the {@code Method} object will be the
+         *               interface that * the method was declared in, which may be a superinterface of the * proxy
+         *               interface that the proxy class inherits the method through.
+         *               与在代理对象上调用的接口方法相对应的Method实例，Method实例是在声明该方法的接口中被声明对，这个接口也可能是代理类实现对代理接口的超接口
+         * @param args   an array of objects containing the values of the * arguments passed in the method
+         *               invocation on the proxy instance, * or {@code null} if interface method takes no
+         *               arguments. * Arguments of primitive types are wrapped in instances of the * appropriate
+         *               primitive wrapper class, such as * {@code java.lang.Integer} or {@code
+         *               java.lang.Boolean}. 代理对象调用真实对象的方法所需要传递的参数值的对象数组；如果接口方法不接受参数，则为null。
+         *               基本类型的参数将被自动装箱为包装类型，例如Integer，Boolean。
+         * @return the value to return from the method invocation on the * proxy instance. If the
+         * declared return type of the interface * method is a primitive type, then the value
+         * returned by * this method must be an instance of the corresponding primitive * wrapper
+         * class; otherwise, it must be a type assignable to the * declared return type. If the
+         * value returned by this method is * {@code null} and the interface method's return type is
+         * * primitive, then a {@code NullPointerException} will be * thrown by the method
+         * invocation on the proxy instance. If the * value returned by this method is otherwise not
+         * compatible with * the interface method's declared return type as described above, * a
+         * {@code ClassCastException} will be thrown by the method * invocation on the proxy
+         * instance.
+         * 代理实例上的方法调用返回的值。 如果接口方法的声明的返回类型是原始类型，则此方法返回的值必须是对应的原始包装器类的实例；
+         * 否则，它必须是可分配给声明的返回类型的类型。
+         * 如果此方法返回的值为 null，并且接口方法的返回类型为原始类型，则在代理实例上的method调用将抛出NullPointerException。
+         * 如果此方法返回的*值与上述接口方法的声明的返回类型不兼容，则proxyinstance上的调用方法引发ClassCastException。
          */
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            // super.h.invoke(this, m3, new Object[]{var1});
+            System.out.println("---------------------invoke-----------------------");
+
+            System.out.println("---invoke-代理对象实例proxy=" + proxy.getClass().getSimpleName());//invoke-proxy=$Proxy0
+            System.out.println("---invoke-执行的方法method=" + method.getName());//invoke-method=request
+            for (Object arg : args) {
+                System.out.println("---invoke-方法参数值args[i]=");
+                System.out.println(arg);//动态代理类调用了
+                System.out.println("---invoke-方法参数类型args[i].getClass().getSimpleName()=");
+                System.out.println(arg.getClass().getSimpleName());//String
+            }
+
             //通过动态代理对象方法进行增强
             doSthAfter();
+            //反射执行真实对象对应的method
             Object result = method.invoke(realSubject, args);
             doSthBefore();
+            System.out.println("---invoke-方法返回值result=" + result);//result=动态代理类调用了
             return result;
         }
 

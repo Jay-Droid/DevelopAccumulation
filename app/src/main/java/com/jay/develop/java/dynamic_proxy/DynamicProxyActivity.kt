@@ -8,6 +8,8 @@ import kotlinx.android.synthetic.main.activity_dynamic_proxy.*
 /**
  * 动态代理组件化路由框架实战
  * URI，Scheme，注解，动态代理
+ * 通过该方法打开该页面
+ * XLRouter.routerUri().jumpToDynamicProxyPage("我是通过XLRouter路由框架跳转的", "我是描述");
  */
 class DynamicProxyActivity : AppCompatActivity() {
 

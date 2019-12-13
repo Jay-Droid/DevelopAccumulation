@@ -47,6 +47,41 @@ public class DynamicProxyPractice {
 //                .baseUrl("https://api.github.com/")
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
+        //利用动态代理技术生成代理对象
+
+        /**
+         * Retrofit利用动态代理技术生成代理对象
+         * retrofit.create()
+         */
+//        public <T> T create(final Class<T> service) {
+//            Utils.validateServiceInterface(service);
+//            if (validateEagerly) {
+//                eagerlyValidateMethods(service);
+//            }
+//            return (T) Proxy.newProxyInstance(
+//            service.getClassLoader(),
+//            new Class<?>[] { service },
+//              InvocationHandler内部实现类
+//            new InvocationHandler() {
+//                        private final Platform platform = Platform.get();
+//                        private final Object[] emptyArgs = new Object[0];
+//                        @Override public @Nullable Object invoke(Object proxy, Method method,
+//                                                                 @Nullable Object[] args) throws Throwable {
+//                            // 如果方法是来自对象的方法，则不做代理
+//                            if (method.getDeclaringClass() == Object.class) {
+//                                return method.invoke(this, args);
+//                            }
+//                               判断是否是默认方法，这是1.8新增的内容
+//                            if (platform.isDefaultMethod(method)) {
+//                                return platform.invokeDefaultMethod(method, service, proxy, args);
+//                            }
+//                            return loadServiceMethod(method).invoke(args != null ? args : emptyArgs);
+//                        }
+//                    });
+//        }
+
+
+
 //        GitHubService service = retrofit.create(GitHubService.class);
 //        //从创建的GitHubService进行的每次调用都可以向远程Web服务器发出同步或异步HTTP请求。
 //        Call<List<Repo>> repos = service.listRepos("Jay-Droid");
@@ -66,15 +101,20 @@ public class DynamicProxyPractice {
 //        });
     }
 
-    //Retrofit将您的HTTP API转换为Java接口。
+    /**
+     * Retrofit将您的HTTP API转换为Java接口。
+     * 抽象接口对象
+     */
     public interface GitHubService {
         //https://api.github.com/users/Jay-Droid/repos
         @GET("users/{user}/repos")
         Call<List<Repo>> listRepos(@Path("user") String user);
     }
 
+    /**
+     * 数据接受实体类
+     */
     private class Repo {
-
         private String id;
         private String name;
         private String description;
