@@ -102,6 +102,7 @@
                 }
             });
 
+            //Native调用Js的方法
             bridge.registerHandler("functionInJs", function(data, responseCallback) {
                 document.getElementById("show").innerHTML = ("来自Java端的数据是: = " + data);
                 if (responseCallback) {
@@ -109,7 +110,14 @@
                     responseCallback(responseData);
                 }
             });
+
+            WebViewJavascriptBridge.registerHandler("functionInJs", function(data, responseCallback) {
+                document.getElementById("show").innerHTML = ("data from Java: = " + data);
+                 var responseData = "Javascript Says Right back aka!";
+                responseCallback(responseData);
+             });
         })
+
     </script>
 
 </html>

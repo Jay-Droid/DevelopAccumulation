@@ -4,21 +4,20 @@ package com.jay.develop.android.webview
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
 import com.github.lzyzsd.jsbridge.BridgeWebView
 import com.github.lzyzsd.jsbridge.CallBackFunction
 import com.google.gson.Gson
 import com.jay.develop.R
 import java.io.File
+
 
 class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
     private val TAG = "MainActivity"
@@ -95,6 +94,14 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
 
         webView.callHandler("functionInJs", Gson().toJson(user)) { }
 
+        webView.callHandler("functionInJs", Gson().toJson(user)) {
+            Toast.makeText(
+                this@JSBridgeTestActivity,
+                "我是JS端的回调数据：$it",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+
         webView.send("hello")
 
 
@@ -135,6 +142,17 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         //java 调用JS
-
+        val user = User()
+        val location = Location()
+        location.address = "SDU"
+        user.location = location
+        user.name = "大头鬼"
+        webView.callHandler("functionInJs", Gson().toJson(user)) {
+            Toast.makeText(
+                this@JSBridgeTestActivity,
+                "我是JS端的回调数据：$it",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }

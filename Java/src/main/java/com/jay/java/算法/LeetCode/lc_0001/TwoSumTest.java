@@ -1,4 +1,4 @@
-package com.jay.java.算法.LeetCode;
+package com.jay.java.算法.LeetCode.lc_0001;
 
 import java.util.Arrays;
 import java.util.HashMap;
