@@ -12,69 +12,99 @@
             </xmp>
         </p>
         <p>
-            <xmp id="init">
-            </xmp>
-        </p>
-        <p>
-            <input type="text" id="text1" value="账号" />
-        </p>
-        <p>
-            <input type="text" id="text2" value="密码" />
-        </p>
-        <p>
-            <input type="button" id="enter" value="发消息给Native" onclick="testClick();"
+            <input type="button" id="enter" value="通过send()方法发消息给Java" onclick="sendClick();"
             />
         </p>
         <p>
-            <input type="button" id="enter1" value="调用Native方法" onclick="testClick1();"
+            <input type="button" id="enter1" value="通过callHandler()方法调用Java方法"
+                   onclick="callHandlerClick();"
             />
         </p>
         <p>
             <input type="button" id="enter2" value="显示html" onclick="testDiv();" />
         </p>
-        <p>
-            <input type="file" value="打开文件" />
-        </p>
+
     </body>
     <script>
-        function testDiv() {
-            document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
-        }
 
-        //发消息给Native
-        function testClick() {
-            var str1 = document.getElementById("text1").value;
-            var str2 = document.getElementById("text2").value;
+    document.getElementById("show").innerHTML = ("打印Js端测试数据");
 
-            //send message to native
-            var data = {id: 1, content: "这是一个图片 <img src=\"a.png\"/> test\r\nhahaha"};
-            window.WebViewJavascriptBridge.send(data,function(responseData) {
-                    document.getElementById("show").innerHTML = "我是js端，我给java发了一个消息，java的返回信息是 = " + responseData
-                }
-            );
 
-        }
+    ///////////Register a Java handler function so that js can call///////////
 
-        //调用Native方法
-        function testClick1() {
-            var str1 = document.getElementById("text1").value;
-            var str2 = document.getElementById("text2").value;
 
-            //call native method
+
+        //通过callHandler()方法调用Native方法functionInJava
+        function callHandlerClick() {
+
             window.WebViewJavascriptBridge.callHandler(
-                'submitFromWeb'
-                , {'param': '我要调用java方法了-submitFromWeb'}
+                'functionInJava'
+                , {'param': 'JS调用java方法functionInJava（）了'}
                 , function(responseData) {
-                    document.getElementById("show").innerHTML = "这是来自java的回调数据： = " + responseData
+                    document.getElementById("show").innerHTML = "我是Java端的数据：callHandler()---" + responseData
                 }
             );
         }
 
-        function bridgeLog(logContent) {
-            document.getElementById("show").innerHTML = logContent;
+
+        //You can set a default handler in Java, so that js can send message to Java without assigned handlerName
+
+
+        //通过send()方法发消息给Native
+        function sendClick() {
+            var account = document.getElementById("text1").value;
+            var pwd = document.getElementById("text2").value;
+
+            var data = {账号: account, 密码: pwd, content: "我是来自JS的数据：window.WebViewJavascriptBridge.send()"};
+            window.WebViewJavascriptBridge.send(data,function(responseData) {
+                    document.getElementById("show").innerHTML = "我是Java端的数据：send()---" + responseData
+                }
+            );
         }
 
-        function connectWebViewJavascriptBridge(callback) {
+
+
+
+
+
+
+
+
+
+    ///////////Register a JavaScript handler function so that Java can call///////////
+
+
+
+        //You can also define a default handler use init method, so that Java can send message to js without assigned handlerName
+
+        //Java通过send()发过来的数据
+        connectWebViewJavascriptBridge(function(bridge) {
+
+            bridge.init(function(message, responseCallback) {
+              document.getElementById("show").innerHTML = ("我是Java端的数据：init()---" + message);
+                console.log('JS got a message', message);
+                var data = {
+                    'JS的返回数据': 'by bridge.init(）!'
+                };
+
+                if (responseCallback) {
+                    console.log('JS responding with', data);
+                    responseCallback(data);
+                }
+            });
+
+            //Java调用Js的方法
+            bridge.registerHandler("functionInJs", function(data, responseCallback) {
+                document.getElementById("show").innerHTML = ("我是Java端的数据：registerHandler()---"  + data);
+                if (responseCallback) {
+                    var responseData = "js端收到了java端的数据";
+                    responseCallback(responseData);
+                }
+            });
+        })
+
+        //注册bridge
+         function connectWebViewJavascriptBridge(callback) {
             if (window.WebViewJavascriptBridge) {
                 callback(WebViewJavascriptBridge)
             } else {
@@ -88,35 +118,11 @@
             }
         }
 
-        connectWebViewJavascriptBridge(function(bridge) {
-            bridge.init(function(message, responseCallback) {
-              document.getElementById("show").innerHTML = ("来自Java端的数据是: = " + message);
-                console.log('JS got a message', message);
-                var data = {
-                    'Javascript Responds': '测试中文!'
-                };
 
-                if (responseCallback) {
-                    console.log('JS responding with', data);
-                    responseCallback(data);
-                }
-            });
-
-            //Native调用Js的方法
-            bridge.registerHandler("functionInJs", function(data, responseCallback) {
-                document.getElementById("show").innerHTML = ("来自Java端的数据是: = " + data);
-                if (responseCallback) {
-                    var responseData = "我是js端，我收到了java端的数据";
-                    responseCallback(responseData);
-                }
-            });
-
-            WebViewJavascriptBridge.registerHandler("functionInJs", function(data, responseCallback) {
-                document.getElementById("show").innerHTML = ("data from Java: = " + data);
-                 var responseData = "Javascript Says Right back aka!";
-                responseCallback(responseData);
-             });
-        })
+         //显示html
+        function testDiv() {
+            document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
+        }
 
     </script>
 

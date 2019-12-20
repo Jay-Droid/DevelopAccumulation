@@ -1,158 +1,83 @@
 package com.jay.develop.android.webview
 
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.lzyzsd.jsbridge.BridgeWebView
-import com.github.lzyzsd.jsbridge.CallBackFunction
-import com.google.gson.Gson
 import com.jay.develop.R
-import java.io.File
+import kotlinx.android.synthetic.main.activity_jsbridge_test.*
 
 
 class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
+
     private val TAG = "MainActivity"
 
     private lateinit var webView: BridgeWebView
-
-    private lateinit var button: Button
-
-    private var RESULT_CODE = 0
-
-    internal var mUploadMessage: ValueCallback<Uri>? = null
-
-    internal var mUploadMessageArray: ValueCallback<Array<Uri>>? = null
-
-    internal class Location {
-        var address: String? = null
-    }
-
-    internal class User {
-        var name: String? = null
-        var location: Location? = null
-        var testStr: String? = null
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsbridge_test)
 
-        webView = findViewById<View>(R.id.webView) as BridgeWebView
+        btn_send.setOnClickListener(this)
+        btn_callHandler.setOnClickListener(this)
 
-        button = findViewById<View>(R.id.button) as Button
-
-        button.setOnClickListener(this)
-
-        webView.setDefaultHandler { data, function ->
-            Toast.makeText(
-                this@JSBridgeTestActivity,
-                "我是JS端的数据：$data",
-                Toast.LENGTH_LONG
-            ).show()
-            function?.onCallBack("我是来自Java端的默认回调")
-        }
-
-        webView.webChromeClient = object : WebChromeClient() {
-
-            override fun onShowFileChooser(
-                webView: WebView,
-                filePathCallback: ValueCallback<Array<Uri>>,
-                fileChooserParams: FileChooserParams
-            ): Boolean {
-                mUploadMessageArray = filePathCallback
-                pickFile()
-                return true
-            }
-        }
-
-        webView.loadUrl("file:///android_asset/js_bridge_demo.html")
+        //初始化 BridgeWebView
+        initJSWebView()
 
         //js 调用 java
-        webView.registerHandler("submitFromWeb") { data, function ->
-            Toast.makeText(
-                this@JSBridgeTestActivity,
-                "我是JS端的数据：$data",
-                Toast.LENGTH_LONG
-            ).show()
-            function.onCallBack("我是来自Java端的回调-submitFromWeb")
-        }
-
-        val user = User()
-        val location = Location()
-        location.address = "SDU"
-        user.location = location
-        user.name = "大头鬼"
-
-        webView.callHandler("functionInJs", Gson().toJson(user)) { }
-
-        webView.callHandler("functionInJs", Gson().toJson(user)) {
-            Toast.makeText(
-                this@JSBridgeTestActivity,
-                "我是JS端的回调数据：$it",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
-        webView.send("hello")
+        initJSCallJava()
 
 
     }
 
-    fun pickFile() {
-        val chooserIntent = Intent(Intent.ACTION_GET_CONTENT)
-        chooserIntent.type = "image/*"
-        startActivityForResult(chooserIntent, RESULT_CODE)
+    private fun initJSWebView() {
+        webView = findViewById<View>(R.id.webView) as BridgeWebView
+
+        val url = "file:///android_asset/js_bridge_demo.html"
+        webView.loadUrl(url)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intent)
-        if (requestCode == RESULT_CODE) {
 
-            if ( null != mUploadMessageArray) {
-                val result = if (intent == null || resultCode != Activity.RESULT_OK) null else intent.data
-                val url:String="kdjfkdkjkj.png"
+    //JS 调用 java
+    private fun initJSCallJava() {
+        //js 调用 functionInJava
+        webView.registerHandler("functionInJava") { data, function ->
 
+            info.text = "我是JS端的数据：registerHandler()---$data"
+            function.onCallBack("我是来自Java端的回调-functionInJava（）")
+        }
 
-                mUploadMessageArray!!.onReceiveValue(arrayOf<Uri>(Uri.fromFile(File(url))))
-                mUploadMessageArray = null
-            }
+        //js端通过send方法
+        webView.setDefaultHandler { data, function ->
 
+            info.text = "我是JS端的数据：setDefaultHandler()---$data"
+            function?.onCallBack("我是来自Java端的默认回调")
         }
     }
 
+
+    //java 调用 JS
     override fun onClick(v: View) {
-        //发送信息给js,此处不需要配置handlerName
-        webView.send("发给JS一条消息", object : CallBackFunction {
-            override fun onCallBack(data: String?) {
-                Toast.makeText(
-                    this@JSBridgeTestActivity,
-                    "我是JS端的数据：$data",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
+        when (v.id) {
+            R.id.btn_send -> {
+                //发送信息给js,此处不需要配置handlerName
+                webView.send("通过webView.send(）方法发给JS一条消息") { data ->
 
-        //java 调用JS
-        val user = User()
-        val location = Location()
-        location.address = "SDU"
-        user.location = location
-        user.name = "大头鬼"
-        webView.callHandler("functionInJs", Gson().toJson(user)) {
-            Toast.makeText(
-                this@JSBridgeTestActivity,
-                "我是JS端的回调数据：$it",
-                Toast.LENGTH_LONG
-            ).show()
+                    info.text = "我是JS端的数据：send()--$data"
+                }
+
+            }
+
+            R.id.btn_callHandler -> {
+
+                webView.callHandler("functionInJs", "callHandler（），调用functionInJs") {
+
+                    info.text = "我是JS端的回调数据：callHandler()--$it"
+                }
+            }
         }
+
+
     }
 }
