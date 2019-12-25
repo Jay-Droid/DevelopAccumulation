@@ -27,13 +27,13 @@ public class Solution {
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
     public static void main(String[] args) {
-        //数组长度5万：5 079 573 ，1 369 711，1 307 594，519 817  140 354 536
-        int solutionIndex = 4;
+        //数组长度5万：5 079 573 ，1 369 711，1 307 594，519 817
+        int solutionIndex = 1;
 
         switch (solutionIndex) {
 
             case 1: {
-                // Solution1: 暴力法
+                //Solution1: 暴力法
                 solution1();
                 break;
             }
@@ -45,7 +45,6 @@ public class Solution {
             case 3: {
                 //Solution3: 一遍哈希表
                 solution3();
-
                 break;
             }
             case 4: {
@@ -78,7 +77,7 @@ public class Solution {
         //随机数组
         int[] numArray = getNumArray();
         //获取随机下标
-        int[] targetIndex = getRandomNumArray(0, numArray.length - 1, 2);
+        int[] targetIndex = getTargetIndexFromArray(numArray);
         //生成target
         int target = numArray[targetIndex[0]] + numArray[targetIndex[1]];
         System.out.println("target:\n" + target);
@@ -152,17 +151,16 @@ public class Solution {
         //随机数组
         int[] numArray = getNumArray();
         //获取随机下标
-        int[] targetIndex = getRandomNumArray(0, numArray.length - 1, 2);
+        int[] targetIndex = getTargetIndexFromArray(numArray);
         //生成target
         int target = numArray[targetIndex[0]] + numArray[targetIndex[1]];
         System.out.println("target:\n" + target);
 
-        //暴力法测试
-        //开始时间纳秒
+        //开始时间
         long sTime = System.nanoTime();
-        //暴力法题解算法
+        //两遍哈希表题解算法
         int[] resultIndex = new Solution().twoSum2(numArray, target);
-        //结束时间纳秒
+        //结束时间
         long eTime = System.nanoTime();
         System.out.println("nanoTime:\n" + (eTime - sTime));
 
@@ -232,18 +230,17 @@ public class Solution {
         //随机数组
         int[] numArray = getNumArray();
         //获取随机下标
-        int[] targetIndex = getRandomNumArray(0, numArray.length - 1, 2);
+        int[] targetIndex = getTargetIndexFromArray(numArray);
         //生成target
         int target = numArray[targetIndex[0]] + numArray[targetIndex[1]];
 //        int target = 6;
         System.out.println("target:\n" + target);
 
-        //暴力法测试
-        //开始时间纳秒
+        //开始时间
         long sTime = System.nanoTime();
-        //暴力法题解算法
+        //一遍哈希表题解算法
         int[] resultIndex = new Solution().twoSum3(numArray, target);
-        //结束时间纳秒
+        //结束时间
         long eTime = System.nanoTime();
         System.out.println("nanoTime:\n" + (eTime - sTime));
 
@@ -309,7 +306,7 @@ public class Solution {
         //随机数组
         int[] numArray = getNumArray();
         //获取随机下标
-        int[] targetIndex = getRandomNumArray(0, numArray.length - 1, 2);
+        int[] targetIndex = getTargetIndexFromArray(numArray);
         //生成target
         int target = numArray[targetIndex[0]] + numArray[targetIndex[1]];
 //        int target = 6;
@@ -319,12 +316,11 @@ public class Solution {
         Arrays.sort(numArray);
         printArray("sorted numArray:", numArray);
 
-        //暴力法测试
-        //开始时间纳秒
+        //开始时间
         long sTime = System.nanoTime();
-        //暴力法题解算法
+        //排序+指针题解算法
         int[] resultIndex = new Solution().twoSum4(numArray, target);
-        //结束时间纳秒
+        //结束时间
         long eTime = System.nanoTime();
         System.out.println("nanoTime:\n" + (eTime - sTime));
 
@@ -379,11 +375,21 @@ public class Solution {
      */
     private static int[] getNumArray() {
         //[0,100] 随机取5个数
-//        int[] numArray = getRandomNumArray(0, 1000000, 50000);
+        int[] numArray = getRandomNumArray(0, 1000000, 50000);
 //        int[] numArray = getRandomNumArray(0, 100, 5);
-        int[] numArray = new int[]{3, 3};
+//        int[] numArray = new int[]{3, 3};
         printArray("numArray:", numArray);
         return numArray;
+    }
+
+    /**
+     * 随机获取数组的两个元素的下标
+     *
+     * @param numArray numArray
+     * @return targetIndex
+     */
+    private static int[] getTargetIndexFromArray(int[] numArray) {
+        return getRandomNumArray(0, numArray.length - 1, 2);
     }
 
     /**

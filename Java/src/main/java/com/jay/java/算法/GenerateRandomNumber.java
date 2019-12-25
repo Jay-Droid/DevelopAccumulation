@@ -43,14 +43,14 @@ public class GenerateRandomNumber {
         //int randomNumber =  random.nextInt(max)%(max-min+1) + min;
 
 //方法一：最简单最易理解的两重循环去重
-        int[] reult1 = randomCommon(20, 50, 4);
+        int[] reult1 = randomCommon(1, 10, 9);
         for (int i : reult1) {
             System.out.println(i);
         }
 
 //方法二：利用HashSet的特征，只能存放不同的值
 //        HashSet<Integer> set = new HashSet<Integer>();
-//        randomSet(20, 50, 10, set);
+//        randomSet(20, 50, 10, new HashSet<Integer>());
 //        for (int j : set) {
 //            System.out.println(j);
 //        }
@@ -75,6 +75,7 @@ public class GenerateRandomNumber {
     public static int[] randomCommon(int min, int max, int n) {
         //条件校验
         if (n > (max - min + 1) || max < min) {
+
             return new int[0];
         }
         int[] result = new int[n];
@@ -111,7 +112,7 @@ public class GenerateRandomNumber {
      * @param min              指定范围最小值
      * @param max              指定范围最大值
      * @param n                随机数个数
-     * @param HashSet<Integer> set 随机数结果集
+     * @param set 随机数结果集
      */
     public static void randomSet(int min, int max, int n, HashSet<Integer> set) {
         if (n > (max - min + 1) || max < min) {
