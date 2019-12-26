@@ -12,6 +12,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * ①②③④⑤⑥⑦⑧⑨⑩
+ */
 public class MyClass {
     public static void main(String[] args) {
 //        testCallable();

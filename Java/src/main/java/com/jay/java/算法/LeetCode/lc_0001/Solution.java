@@ -20,8 +20,37 @@ public class Solution {
      * <p>你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
      *
      * <p>示例:
+     *
      * <p>给定 nums = [2, 7, 11, 15], target = 9
+     *
      * <p>因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]
+     * 解题步骤：
+     * 1，两次遍历暴力破解
+     * ①遍历array找到num1
+     * ②再次遍历array,根据条件num1+num2=target 找到num2
+     * ③返回两数的下标
+     * 复杂度分析：Time:O(n^2) Space:O(1)
+     *
+     * <p>
+     * 2，两遍哈希表
+     * ①遍历array，将每个元素以<num,index>形式存储到HashMap中
+     * ②再次遍历array，根据条件num1+num2=target 从map中找到num2
+     * ③返回两数的下标
+     * 复杂度分析：Time:O(n) Space:O(n)
+     *
+     * <p>
+     * 3，一遍哈希表
+     * ①遍历array，根据条件num1+num2=target 从map中寻找num2
+     * ②返回两数的下标
+     * ③将每个元素以<num,index>形式存储到HashMap中
+     * 复杂度分析：Time:O(n) Space:O(n)
+     *
+     * 4，指针法（已排序array）
+     * ①声明两个指针 left right 分别指向数组开始和末尾
+     * ②如果左右指针在数组下标取值范围内就进入循环
+     * ③根据num1+num2=target移动指针，直到找到
+     * ④返回 left right的值
+     * 复杂度分析：Time:O(n) Space:O(1)
      *
      * <p>来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/two-sum
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
@@ -310,11 +339,13 @@ public class Solution {
         //生成target
         int target = numArray[targetIndex[0]] + numArray[targetIndex[1]];
 //        int target = 6;
-        System.out.println("target:\n" + target);
+
 
         //对数组排序
         Arrays.sort(numArray);
         printArray("sorted numArray:", numArray);
+
+        System.out.println("target:\n" + target);
 
         //开始时间
         long sTime = System.nanoTime();
@@ -343,7 +374,7 @@ public class Solution {
         int left = 0;
         //右指针初始指向最后一个元素
         int right = numArray.length - 1;
-        //如果左指针未超过右指针就进入循环
+        //如果左右指针在数组下标取值范围内就进入循环
         while ((left > -1 && left < numArray.length) && (right > -1 && right < numArray.length)) {
             //计算当前左右指针所指向的元素的和
             int tempTarget = numArray[left] + numArray[right];
@@ -375,7 +406,7 @@ public class Solution {
      */
     private static int[] getNumArray() {
         //[0,100] 随机取5个数
-        int[] numArray = getRandomNumArray(0, 1000000, 50000);
+        int[] numArray = getRandomNumArray(0, 1000000, 90000);
 //        int[] numArray = getRandomNumArray(0, 100, 5);
 //        int[] numArray = new int[]{3, 3};
         printArray("numArray:", numArray);
