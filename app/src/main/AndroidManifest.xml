@@ -13,6 +13,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 请务必添加该权限，用户更流畅的跳转 -->
     <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
 
     <dist:module dist:instant="true" />
 
@@ -24,6 +29,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".demo.baiduface.BaiduFaceActivity"></activity>
+        <activity android:name=".java.mult_thread.ThreadActivity" />
         <activity android:name=".demo.deeplink.DeepLinkWebActivity" />
         <activity android:name=".demo.deeplink.DeepLinkActivity">
 
@@ -91,23 +98,19 @@
                         android:scheme="https" />
             </intent-filter>
         </activity>
-
         <activity android:name=".java.dynamic_proxy.DynamicProxyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!--dv://com.jay.develop/router-->
+                <!-- dv://com.jay.develop/router -->
                 <data
                         android:host="com.jay.develop"
                         android:path="/router"
                         android:scheme="dv" />
-
             </intent-filter>
-
         </activity>
-
         <activity android:name=".java.reflection.ReflectionActivity" />
         <activity android:name=".android.camera.QRCodeScanActivity" />
         <activity android:name=".android.camera.QRCodeGainActivity" />

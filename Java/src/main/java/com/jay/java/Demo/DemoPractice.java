@@ -1,4 +1,4 @@
-package com.jay.java;
+package com.jay.java.Demo;
 
 
 /**
@@ -6,7 +6,7 @@ package com.jay.java;
  * @version 1.0
  * @date 2019-11-26 17:51
  */
-public class DemoMainTest {
+public class DemoPractice {
 
     public static void main(String[] args) {
 

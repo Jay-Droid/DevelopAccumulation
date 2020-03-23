@@ -20,6 +20,12 @@
                    onclick="callHandlerClick();"
             />
         </p>
+
+        <p>
+            <input type="button" id="enter3" value="申请定位"
+                   onclick="getLocation();"
+            />
+        </p>
         <p>
             <input type="button" id="enter2" value="显示html" onclick="testDiv();" />
         </p>
@@ -124,6 +130,16 @@
             document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
         }
 
+
+
+
+function getLocation(){
+  if (navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(showPosition,showError);
+  }else{
+    alert("浏览器不支持地理定位。");
+  }
+}
     </script>
 
 </html>

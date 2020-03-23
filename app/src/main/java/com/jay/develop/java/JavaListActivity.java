@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jay.develop.R;
 import com.jay.develop.java.dynamic_proxy.DynamicProxyActivity;
 import com.jay.develop.java.dynamic_proxy.practice.XLRouter;
+import com.jay.develop.java.mult_thread.ThreadActivity;
 import com.jay.develop.java.reflection.ReflectionActivity;
 import com.jay.develop.main.DemoListAdapter;
 
@@ -45,6 +46,8 @@ public class JavaListActivity extends AppCompatActivity {
 
         demoList.add(new DemoListAdapter.DemoItem("动态代理", "动态代理实现页面路由框架",
                 DynamicProxyActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("多线程", "Android 线程信息",
+                ThreadActivity.class));
         return demoList;
     }
 

@@ -1,34 +1,21 @@
 package com.kotlin
 
 import java.net.URI
+import java.util.*
 
 
 fun main(args: Array<String>) {
     println("Hello Kotlin")
-    val ip1 = "htttp://192.168.10.49:80uuu83/"
-    println(ip1)
-    println(ip1.indexOf("//"))
-    val ip2 = ip1.substring(ip1.indexOf("//")).replace("/", "")
-    println(ip2)
-    println(checkIpAndPort(ip2))
-    println(checkAddress("192.68.0.49"))
-    println(checkPort("4954"))
-    val uri = URI.create(ip1)
-    val uri2 = getIP(URI.create(ip1))
-    println(uri)
-    println(uri2)
-    println(uri2?.host)
-    println(uri2?.port)
-    println(uri2?.scheme)
+    val startDate = Calendar.getInstance()
+    startDate.set(2020, 1, 1)
+    val startTimeInMillis = startDate.time.time
+    val threeDay = DateUtils.getDateLong(2)//后天
+    val distanceDay = (threeDay - startTimeInMillis) / DateUtils.DAY_1
 
-    println(uri?.host)
-    println(uri?.port)
-    println(uri?.scheme)
-    val ip3 = "http://192.168.10.49:8099983/1"
-    println(checkIpAndPort(ip3))
+    for (index in 0 .. distanceDay) {
+        val secondDay = DateUtils.getDateLong((index-distanceDay+2).toInt(), DateUtils.yearMonthDayPointFormat)
 
-
-
+    }
 
 }
 

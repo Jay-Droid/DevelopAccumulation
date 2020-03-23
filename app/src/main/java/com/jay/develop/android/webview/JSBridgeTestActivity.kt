@@ -3,6 +3,8 @@ package com.jay.develop.android.webview
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.GeolocationPermissions
+import android.webkit.WebChromeClient
 import androidx.appcompat.app.AppCompatActivity
 import com.github.lzyzsd.jsbridge.BridgeWebView
 import com.jay.develop.R
@@ -36,8 +38,19 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
 
         val url = "file:///android_asset/js_bridge_demo.html"
         webView.loadUrl(url)
-    }
 
+        webView.settings.domStorageEnabled = true
+        webView.settings.setGeolocationEnabled(true)
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onGeolocationPermissionsShowPrompt(
+                origin: String?,
+                callback: GeolocationPermissions.Callback?
+            ) {
+
+                super.onGeolocationPermissionsShowPrompt(origin, callback)
+            }
+        }
+    }
 
     //JS 调用 java
     private fun initJSCallJava() {

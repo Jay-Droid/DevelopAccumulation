@@ -29,7 +29,8 @@ class WebViewNormalUseActivity : AppCompatActivity() {
     private fun initWebView() {
         getWebView()
         setWebView()
-        webView.loadUrl("https://www.baidu.com/")
+//        webView.loadUrl("https://www.baidu.com/")
+        webView.loadUrl("https://media.w3.org/2010/05/sintel/trailer.mp4")
         //WebViewClient类
         //作用：处理各种通知 & 请求事件
         webView.webViewClient = object : WebViewClient() {
