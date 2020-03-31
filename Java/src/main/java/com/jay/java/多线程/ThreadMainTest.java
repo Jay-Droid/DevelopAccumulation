@@ -6,7 +6,6 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 import java.util.Date;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -33,7 +32,7 @@ public class ThreadMainTest {
 
   public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-    int demoIndex = 1;
+    int demoIndex = 7;
 
     switch (demoIndex) {
       case 1:
@@ -156,10 +155,13 @@ public class ThreadMainTest {
     System.out.println("Java里的程序天生就是多线程的:");
     // 一个Java程序从main()方法开始执行，然后按照既定的代码逻辑执行，看似没有其他线程参与，
     // 但实际上Java程序天生就是多线程程序，因为执行main()方法的是一个名称为main的线程。
-    // 虚拟机线程管理的接口
+
+    // 获取虚拟机线程管理的接口
     ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-    // 取得线程信息
+    // 返回具有堆栈跟踪和同步信息的所有活线程的线程信息。
+    // dumpAllThreads(boolean lockedMonitors, boolean lockedSynchronizers)
     ThreadInfo[] threadInfos = threadMXBean.dumpAllThreads(false, false);
+    // 打印所有线程的id和name
     for (ThreadInfo threadInfo : threadInfos) {
       System.out.println("[" + threadInfo.getThreadId() + "]" + " " + threadInfo.getThreadName());
     }
@@ -171,37 +173,134 @@ public class ThreadMainTest {
      */
     System.out.println("Android里的程序天生就是多线程的:");
     // 将下面的代码在Activity中执行
-    Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
-    for (Thread thread : threadMap.keySet()) {
-      System.out.println("[" + thread.getId() + "]" + " " + thread.getName());
-    }
+//    Map<Thread, StackTraceElement[]> threadMap = Thread.getAllStackTraces();
+//    for (Thread thread : threadMap.keySet()) {
+//      System.out.println("[" + thread.getId() + "]" + " " + thread.getName());
+//    }
+
     /**
-     * --[8452] Thread-29 --[8387] Thread-2 --[8441] Binder:interceptor --[8414] Thread-23 --[8429]
-     * LMREQUEST --[8451] Thread-28 --[8380] FinalizerDaemon --[8384] Binder:10499_2 --[8421]
-     * FileObserver --[8455] Thread-32 --[8386] Profile Saver --[8475] Binder:10499_4 --[8412]
-     * DBUpdater --[8390] Thread-5 --[8389] Thread-4 --[8425] queued-work-looper --[8468]
-     * UMThreadPoolExecutor4 --[8407] UMThreadPoolExecutor1 --[8383] Binder:10499_1 --[8388]
-     * Thread-3 --[8377] Signal Catcher --[8406] Thread-18 --[8420] NetWorkSender --[8466]
-     * UMThreadPoolExecutor3 --[8416] SpStatus daemon --[8462] spdy-0 --[8409] Thread-21 --[8459]
-     * RenderThread --[8385] Binder:10499_3 --[8426] UMThreadPoolExecutor2 --[8418] work_thread
-     * --[2] main --[8444] AWCN Scheduler1 --[8395] Thread-10 --[8401] Thread-14 --[8435] Okio
-     * Watchdog --[8450] Thread-27 --[8423] ConnectivityThread --[8464] SL-NetWorkSender --[8398]
-     * Thread-11 --[8376] Jit thread pool worker thread 0 --[8381] FinalizerWatchdogDaemon --[8382]
-     * HeapTaskDaemon --[8469] UMThreadPoolExecutor5 --[8397] OkHttp ConnectionPool --[8379]
-     * ReferenceQueueDaemon --[8463] pool-2-thread-1 --[8452] Thread-29 --[8387] Thread-2 --[8441]
-     * Binder:interceptor --[8414] Thread-23 --[8429] LMREQUEST --[8451] Thread-28 --[8380]
-     * FinalizerDaemon --[8384] Binder:10499_2 --[8421] FileObserver --[8455] Thread-32 --[8386]
-     * Profile Saver --[8475] Binder:10499_4 --[8412] DBUpdater --[8390] Thread-5 --[8389] Thread-4
-     * --[8425] queued-work-looper --[8468] UMThreadPoolExecutor4 --[8407] UMThreadPoolExecutor1
-     * --[8383] Binder:10499_1 --[8388] Thread-3 --[8377] Signal Catcher --[8406] Thread-18 --[8420]
-     * NetWorkSender --[8466] UMThreadPoolExecutor3 --[8416] SpStatus daemon --[8462] spdy-0
-     * --[8409] Thread-21 --[8459] RenderThread --[8385] Binder:10499_3 --[8426]
-     * UMThreadPoolExecutor2 --[8418] work_thread --[2] main --[8444] AWCN Scheduler1 --[8395]
-     * Thread-10 --[8401] Thread-14 --[8435] Okio Watchdog --[8450] Thread-27 --[8423]
-     * ConnectivityThread --[8464] SL-NetWorkSender --[8398] Thread-11 --[8376] Jit thread pool
-     * worker thread 0 --[8381] FinalizerWatchdogDaemon --[8382] HeapTaskDaemon --[8469]
-     * UMThreadPoolExecutor5 --[8397] OkHttp ConnectionPool --[8379] ReferenceQueueDaemon --[8463]
-     * pool-2-thread-1
+     * D: jay_thread running
+     D: [1335] Thread-2
+     D: [1354] OkHttp ConnectionPool
+     D: [1389] ACCS0
+     D: [1373] pool-1-thread-1
+     D: [1394] Thread-30
+     D: [1413] ACCS-SEND1
+     D: [1418] AsyncTask #1
+     D: [1370] NetWorkSender
+     D: [1330] HeapTaskDaemon
+     D: [1391] Binder:interceptor
+     D: [1396] Thread-31
+     D: [1327] ReferenceQueueDaemon
+     D: [1377] queued-work-looper
+     D: [1333] Binder:8785_3
+     D: [1341] Thread-8
+     D: [1427] jay_thread
+     D: [1382] LMREQUEST
+     D: [1337] Thread-4
+     D: [1417] Binder:8785_5
+     D: [1395] AWCN Scheduler1
+     D: [1329] FinalizerWatchdogDaemon
+     D: [1423] UMThreadPoolExecutor6
+     D: [1416] SL-NetWorkSender
+     D: [1336] T-log
+     D: [1324] Jit thread pool worker thread 0
+     D: [1332] Binder:8785_2
+     D: [1381] Okio Watchdog
+     D: [2] T-connStch
+     D: [1331] Binder:8785_1
+     D: [1411] pool-4-thread-1
+     D: [1419] UMThreadPoolExecutor3
+     D: [1359] Thread-23
+     D: [1378] UMThreadPoolExecutor2
+     D: [1355] Thread-19
+     D: [1367] SpStatus daemon
+     D: [1349] Thread-15
+     D: [1420] UMThreadPoolExecutor4
+     D: [1409] spdy-0
+     D: [1421] Thread-41
+     D: [1414] Binder:8785_4
+     D: [1356] UMThreadPoolExecutor1
+     D: [1403] RenderThread
+     D: [1325] Signal Catcher
+     D: [1366] Thread-26
+     D: [1371] FileObserver
+     D: [1334] Profile Saver
+     D: [1398] AMDC1
+     D: [1384] sensor_thread
+     D: [1422] UMThreadPoolExecutor5
+     D: [1407] process reaper
+     D: [1369] ConnectivityThread
+     D: [1328] FinalizerDaemon
+     D: [1358] Thread-22
+     D: [1397] Thread-32
+     D: [1402] AMDC2
+     D: [1364] DBUpdater
+     D: [1343] Thread-10
+     D: [1346] Thread-12
+     D: [1365] work_thread
+     D: processors=8
+     D: jay_thread running
+     D: [1335] Thread-2
+     D: [1354] OkHttp ConnectionPool
+     D: [1389] ACCS0
+     D: [1373] pool-1-thread-1
+     D: [1394] Thread-30
+     D: [1413] ACCS-SEND1
+     D: [1418] AsyncTask #1
+     D: [1370] NetWorkSender
+     D: [1330] HeapTaskDaemon
+     D: [1391] Binder:interceptor
+     D: [1396] Thread-31
+     D: [1327] ReferenceQueueDaemon
+     D: [1377] queued-work-looper
+     D: [1333] Binder:8785_3
+     D: [1341] Thread-8
+     D: [1382] LMREQUEST
+     D: [1337] Thread-4
+     D: [1417] Binder:8785_5
+     D: [1395] AWCN Scheduler1
+     D: [1329] FinalizerWatchdogDaemon
+     D: [1423] UMThreadPoolExecutor6
+     D: [1416] SL-NetWorkSender
+     D: [1336] T-log
+     D: [1324] Jit thread pool worker thread 0
+     D: [1332] Binder:8785_2
+     D: [1381] Okio Watchdog
+     D: [2] T-connStch
+     D: [1331] Binder:8785_1
+     D: [1411] pool-4-thread-1
+     D: [1419] UMThreadPoolExecutor3
+     D: [1359] Thread-23
+     D: [1378] UMThreadPoolExecutor2
+     D: [1355] Thread-19
+     D: [1367] SpStatus daemon
+     D: [1349] Thread-15
+     D: [1420] UMThreadPoolExecutor4
+     D: [1409] spdy-0
+     D: [1421] Thread-41
+     D: [1414] Binder:8785_4
+     D: [1356] UMThreadPoolExecutor1
+     D: [1403] RenderThread
+     D: [1325] Signal Catcher
+     D: [1366] Thread-26
+     D: [1371] FileObserver
+     D: [1334] Profile Saver
+     D: [1429] jay_thread
+     D: [1398] AMDC1
+     D: [1384] sensor_thread
+     D: [1422] UMThreadPoolExecutor5
+     D: [1407] process reaper
+     D: [1369] ConnectivityThread
+     D: [1328] FinalizerDaemon
+     D: [1358] Thread-22
+     D: [1397] Thread-32
+     D: [1402] AMDC2
+     D: [1364] DBUpdater
+     D: [1343] Thread-10
+     D: [1346] Thread-12
+     D: [1365] work_thread
+     D: processors=8
      */
   }
 
@@ -233,14 +332,68 @@ public class ThreadMainTest {
     System.out.println("UseCallable返回信息:" + futureTask.get());
   }
 
-  /** 扩展自Thread类 */
+  /**
+   * Demo4:其他的线程方法（start/run/yield/join） Thread类是Java里对线程概念的抽象，可以这样理解：我们通过new
+   * Thread()其实只是new出一个Thread的实例，还没有操作系统中真正的线程挂起钩来。 只有执行了start()方法后，才实现了真正意义上的启动线程。
+   * 1，start()方法：使一个线程进入就绪队列等待分配cpu，分到cpu后才调用实现的run()方法，start()方法不能重复调用。
+   * 2，run()方法：是线程业务逻辑实现的地方，本质上和任意一个类的任意一个成员方法并没有任何区别，可以重复执行，可以被单独调用。
+   * 2，yield()方法：使当前线程让出CPU占有权，但让出的时间是不可设定的。也不会释放锁资源，所有执行yield()的线程有可能在进入到可执行状态后马上又被执行。
+   * 3，join()方法：把指定的线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程。比如在线程B中调用了线程A的Join()方法，直到线程A执行完毕后，才会继续执行线程B。
+   */
+  private static void Demo4() {
+    System.out.println("-----Demo4-----\n\n");
+    System.out.println("深入理解run()和start(),(开启一个线程分别调用线程实例的start和run方法)");
+    // start和run方法的区别
+    ThreadRunAndStart threadRunAndStart = new ThreadRunAndStart();
+//    threadRunAndStart.run(); // 当前是main线程
+//    threadRunAndStart.start(); // 当前是thread-0 线程
+    //threadRunAndStart.start(); //不能调用多次：Exception in thread "main" java.lang.IllegalThreadStateException
+
+    System.out.println("\n\n深入理解 yield()方法(开启两个线程进入同一个代码块，调用yield方法后看当前正在执行的线程是否会让出cpu执行权)");
+    Runnable runnable = new Runnable() {
+      @Override
+      public void run() {
+        //当有synchronized时yield()方法会失效?
+        //当yield()方法执行后线程确实变成了可运行状态,但是有一点需要注意.调用yield()方法的时候是在同步代码内,所以该线程还没释放锁对象,
+        //那么真实的情况就是 线程A调用了yield()方法后状态变为了可运行,然后和A和B再次重新竞争cpu的执行权.
+        //但是B没有Demo的锁对象,所以必定失败.就会给我们造成同步代码内调用yield()方法无效.
+//                synchronized (this) {
+        for (int i = 0; i < 5; i++) {
+          System.out.println("当前线程为: " + Thread.currentThread().getName() + "index: " + i);
+          if (i == 3) {
+            System.out.println("调用了Thread.yield()");
+            //yield()方法的作用是将当前的线程的状态变为可运行状态,其意义就是让一个正在运行的线程主动放弃cpu资源.但是主动放弃并不意味着就完全放弃了运行的权限,就相当于重新和其他线程竞争cpu资源.例如 线程A正在运行然后调用了yield()不意味着能成功将cpu下个时间片运行的线程变成线程B, 有可能还是线程A.
+            Thread.yield();
+          }
+        }
+//                }
+      }
+    };
+    Thread threadA = new Thread(runnable, "Thread-A---");
+    Thread threadB = new Thread(runnable, "Thread-B---");
+//    threadA.start();
+//    threadB.start();
+
+    System.out.println("\n\n深入理解 join()方法(顺序执行线程A,B,C)");
+    ThreadA tA = new ThreadA();
+    ThreadB tB = new ThreadB(tA);
+    ThreadC tc = new ThreadC(tB);
+    tA.start();
+    tB.start();
+    tc.start();
+
+  }
+
+  /**
+   * 扩展自Thread类
+   */
   private static class UseThread extends Thread {
     @Override
     public void run() {
       super.run();
       // do my work
       System.out.println("我是通过继承Thread来实现的线程");
-      Thread t = this;
+      Thread t = Thread.currentThread();
       System.out.println("[" + t.getId() + "]" + " " + t.getName());
     }
   }
@@ -276,23 +429,23 @@ public class ThreadMainTest {
   }
 
   /**
-   * Demo3:线程的终止 自然终止：要么是run执行完成了，要么是抛出了一个未处理的异常导致线程提前结束。 手动中止：暂停、恢复和停止操作对应在线程Thread的API就是
-   * suspend()、resume()和stop()。但是这些API是过期的， 因为这些API终结一个线程时不会保证线程的资源正常释放，这样容易引发死锁问题或导致程序可能工作在不确定状态下
+   * Demo3:线程的终止
+   * 自然终止：要么是run执行完成了，要么是抛出了一个未处理的异常导致线程提前结束。
+   * 手动中止：暂停、恢复和停止操作对应在线程Thread的API就是 suspend()、resume()和stop()。但是这些API是过期的， 因为这些API终结一个线程时不会保证线程的资源正常释放，这样容易引发死锁问题或导致程序可能工作在不确定状态下
    * 如何安全的终止一个线程？
    * 安全的中止则是其他线程通过调用某个线程A的interrupt()方法对其进行中断操作，不代表线程A会立即停止自己的工作，同样的A线程完全可以不理会这种中断请求。因为java里的线程是协作式的，不是抢占式的
    * 线程通过检查自身的中断标志位是否被置为true来进行响应，线程通过方法isInterrupted()来进行判断是否被中断，
    * 也可以调用静态方法Thread.interrupted()来进行判断当前线程是否被中断，不过Thread.interrupted()会同时将中断标识位改写为false。
-   * 如果一个线程处于了阻塞状态（如线程调用了thread.sleep、thread.join、thread.wait、），则在线程在检查中断标示时如果发现中断标示为true，则会在这些阻塞方法调用处抛出InterruptedException异常
+   * 如果一个线程处于了阻塞状态（如线程调用了thread.sleep、thread.join、thread.wait、），则线程在检查中断标示时如果发现中断标示为true，则会在这些阻塞方法调用处抛出InterruptedException异常
    * 处于死锁状态的线程无法被中断
    */
   private static void Demo3() throws InterruptedException {
     System.out.println("-----Demo3-----\n\n");
     Thread endThread = new EndThread("EndThread");
     endThread.start();
-    Thread.sleep(1);
-
-    System.out.println("stop()方法终止线程");
-    // endThread.stop();
+    Thread.sleep(1000);
+//    System.out.println("stop()方法终止线程");
+//     endThread.stop();
     System.out.println("interrupt()方法终止线程");
     endThread.interrupt();
   }
@@ -307,78 +460,30 @@ public class ThreadMainTest {
     @Override
     public void run() {
       String threadName = Thread.currentThread().getName();
-      System.out.println(threadName + "01_中断标志位：isInterrupted=" + isInterrupted());
+      System.out.println(threadName + "01_run中断标志位：isInterrupted=" + isInterrupted());
       // 将听到中断标志位发生改变就停止循环
-      // while (!isInterrupted()) {
-      // 静态方法Thread.interrupted()会将isInterrupted修改为false
-      while (!Thread.interrupted()) {
-        // while (true) {
+      while (!isInterrupted()) {
+        // 静态方法Thread.interrupted()会将isInterrupted修改为false
+//        while (!Thread.interrupted()) {
+        // 开启一个线程，执行一个死循环,测试stop
+//      while (true) {
+//        try {
+        //如果一个线程处于了阻塞状态（如线程调用了thread.sleep、thread.join、thread.wait、），则线程在检查中断标示时如果发现中断标示为true，则会在这些阻塞方法调用处抛出InterruptedException异常
+        //Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//          e.printStackTrace();
+//        }
         System.out.println(threadName + "------线程正在运行中。。。");
-        System.out.println(threadName + "02_中断标志位：isInterrupted=" + isInterrupted());
+        System.out.println(threadName + "02_循环体中断标志位：isInterrupted=" + isInterrupted());
       }
-      System.out.println(threadName + "03_中断标志位：isInterrupted=" + isInterrupted());
+      System.out.println(threadName + "03_循环体外断标志位：isInterrupted=" + isInterrupted());
     }
   }
 
   /**
-   * Demo4:其他的线程方法（start/run/yield/join） Thread类是Java里对线程概念的抽象，可以这样理解：我们通过new
-   * Thread()其实只是new出一个Thread的实例，还没有操作系统中真正的线程挂起钩来。 只有执行了start()方法后，才实现了真正意义上的启动线程。
-   * 1，start()方法：使一个线程进入就绪队列等待分配cpu，分到cpu后才调用实现的run()方法，start()方法不能重复调用。
-   * 2，run()方法：是线程业务逻辑实现的地方，本质上和任意一个类的任意一个成员方法并没有任何区别，可以重复执行，可以被单独调用。
-   * 2，yield()方法：使当前线程让出CPU占有权，但让出的时间是不可设定的。也不会释放锁资源，所有执行yield()的线程有可能在进入到可执行状态后马上又被执行。
-   * 3，join()方法：把指定的线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程。比如在线程B中调用了线程A的Join()方法，直到线程A执行完毕后，才会继续执行线程B。
+   * 测试start和run方法的区别
    */
-  private static void Demo4() {
-    System.out.println("-----Demo4-----\n\n");
-    System.out.println("深入理解run()和start():");
-    System.out.println("创建方式一：X extends Thread");
-    Thread t1 =
-        new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                // run方法是业务逻辑实现的地方，本质上和任意一个类的任意一个成员方法并没有任何区别，可以重复执行，可以被单独调用
-                System.out.println("thread t1 is running ");
-              }
-            });
-    // 只有执行了start()方法后，才实现了真正意义上的启动线程
-    // start()方法让一个线程进入就绪队列等待分配cpu，分到cpu后才调用实现的run()方法，start()方法不能重复调用
-    t1.start();
-    //        t1.start(); 不能调用多次：Exception in thread "main" java.lang.IllegalThreadStateException
-
-    // start和run方法的区别
-    ThreadRun beCalled = new ThreadRun();
-    beCalled.run(); // main
-    //        beCalled.start(); // thread-0
-
-    System.out.println("\n\n深入理解 yield()方法");
-    Runnable runnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            for (int i = 0; i < 5; i++) {
-              System.out.println("当前线程为: " + Thread.currentThread().getName() + i);
-              if (i == 3) {
-                System.out.println("调用了Thread.yield()");
-                Thread.yield();
-              }
-            }
-          }
-        };
-    Thread threadA = new Thread(runnable, "Thread-A---");
-    Thread threadB = new Thread(runnable, "Thread-B---");
-    //        threadA.start();
-    //        threadB.start();
-
-    System.out.println("\n\n深入理解 join()方法");
-    BThread bt = new BThread();
-    AThread at = new AThread(bt);
-    at.start();
-    bt.start();
-  }
-
-  /** start和run方法的区别 */
-  public static class ThreadRun extends Thread {
+  public static class ThreadRunAndStart extends Thread {
 
     @Override
     public void run() {
@@ -390,56 +495,70 @@ public class ThreadMainTest {
     }
   }
 
-  static class BThread extends Thread {
-    public BThread() {
-      super("Thread-B---");
-    }
-
+  /**
+   * 测试join()-ThreadA
+   */
+  static class ThreadA extends Thread {
     @Override
     public void run() {
-      String threadName = Thread.currentThread().getName();
-      System.out.println(threadName + " start.");
-      for (int i = 0; i < 5; i++) {
-        System.out.println("当前线程为: " + threadName + i);
-        try {
-          Thread.sleep(200);
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-      System.out.println(threadName + " end.");
+      System.out.println("A");
     }
   }
 
-  static class AThread extends Thread {
-    BThread bt;
+  /**
+   * 测试join()-ThreadB
+   */
+  static class ThreadB extends Thread {
+    private ThreadA threadA;
 
-    public AThread(BThread bt) {
-      super("Thread-A---");
-      this.bt = bt;
+    public ThreadB(ThreadA threadA) {
+      this.threadA =threadA;
     }
 
     @Override
     public void run() {
-      String threadName = Thread.currentThread().getName();
-      System.out.println(threadName + " start.");
       try {
-        System.out.println("调用了BThread.join()");
-        bt.join();
-        System.out.println(threadName + " end.");
-      } catch (Exception e) {
-        System.out.println("Exception from " + threadName + ".run");
+        threadA.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
+      System.out.println("B");
+    }
+
+  }
+
+  /**
+   * 测试join()-ThreadC
+   */
+  static class ThreadC extends Thread {
+    private ThreadB threadB;
+
+    public ThreadC(ThreadB threadB) {
+      this.threadB = threadB;
+    }
+
+    @Override
+    public void run() {
+      try {
+        threadB.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("C");
     }
   }
+
 
   /**
    * Demo5:线程间的共享 内置锁synchronized： Java支持多个线程同时访问一个对象或者对象的成员变量，关键字synchronized可以修饰方法或者以同步块的形式来进行使用，
    * 它主要确保多个线程在同一个时刻，只能有一个线程处于方法或者同步块中， 它保证了线程对变量访问的可见性和排他性，又称为内置锁机制
    *
-   * <p>对象锁和类锁： 一，对象锁是针对实例对象的，类声明后，我们可以 new 出来很多的实例对象。这时候，每个实例在 JVM
-   * 中都有自己的引用地址和堆内存空间，在实例上加的锁和其他的实例就没有关系，互不影响了 使用对象锁的方式有下面三种： 1、锁住实体里的非静态变量 2、直接在非静态方法上加
-   * synchronized 3、锁住 this 对象 使用对象锁的情况，只有使用同一实例的线程才会受锁的影响，多个实例调用同一方法不会受影响。
+   * <p>对象锁和类锁：
+   * 一，对象锁是针对实例对象的，类声明后，我们可以 new 出来很多的实例对象。这时候，每个实例在 JVM
+   * 中都有自己的引用地址和堆内存空间，在实例上加的锁和其他的实例就没有关系，互不影响了 使用对象锁的方式有下面三种：
+   * 1、锁住实体里的非静态变量
+   * 2、直接在非静态方法上加synchronized
+   * 3、锁住 this 对象 使用对象锁的情况，只有使用同一实例的线程才会受锁的影响，多个实例调用同一方法不会受影响。
    *
    * <p>二，类锁是加在类上的，而类信息是存在 JVM 方法区的，并且整个 JVM 只有一份，方法区又是所有线程共享的，所以类锁是所有线程共享的。 使用类锁的方式有如下方式：
    * 1、锁住类中的静态变量 2、直接在静态方法上加 synchronized 3、锁住 Class(className.class)
@@ -453,8 +572,8 @@ public class ThreadMainTest {
         new Runnable() {
           @Override
           public void run() {
-            for (int i = 0; i < 100; i++) {
-              //                    syncCountTest.addCount1();//没加锁
+            for (int i = 0; i < 1000; i++) {
+//               syncCountTest.addCount1();//没加锁
               syncCountTest.addCount2(); // 方发锁（对象锁）
             }
           }
@@ -464,20 +583,18 @@ public class ThreadMainTest {
     threadA.start();
     threadB.start();
     Thread.sleep(50);
-    System.out.println("多线程操作后的数量：count=" + syncCountTest.count); // 200
+    System.out.println("多线程操作后的数量：count=" + syncCountTest.count); // 2000
 
-    System.out.println("\n\n测试对象锁（多个线程同时执行同一个实例的同一个方法）");
+//    System.out.println("\n\n测试对象锁（多个线程同时执行同一个实例的同一个方法）");
     // 使用相同的实例对象
     final InstanceLock instanceLock = new InstanceLock();
     for (int i = 0; i < 5; i++) {
-      Thread instanceThread =
-          new Thread(
-              new Runnable() {
+      Thread instanceThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                   // 每次都创建新的实例对象，影响对象锁
-                  //                    InstanceLock instanceLock = new InstanceLock();
-                  int instanceIndex = 2;
+                  // InstanceLock instanceLock = new InstanceLock();
+                  int instanceIndex = 0;
                   switch (instanceIndex) {
                     case 1:
                       {
@@ -514,14 +631,12 @@ public class ThreadMainTest {
     // 使用相同的实例对象
     final ClassLock classLock = new ClassLock();
     for (int i = 0; i < 5; i++) {
-      Thread classThread =
-          new Thread(
-              new Runnable() {
+      Thread classThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                   // 每次都创建新的实例对象,不影响类锁
-                  //                    ClassLock classLock = new ClassLock();
-                  int instanceIndex = 4;
+                  // ClassLock classLock = new ClassLock();
+                  int instanceIndex = 1;
                   switch (instanceIndex) {
                     case 1:
                       {
@@ -541,9 +656,8 @@ public class ThreadMainTest {
                         ClassLock.lockStaticMethod(); // 各个线程依次执行
                         break;
                       }
-                    case 4:
-                      {
-                        // 3、锁住 this 对象
+                    case 4: {
+                      // 3、锁住 Class(className.class)
                         classLock.lockClass(); // 各个线程依次执行
                         break;
                       }
@@ -646,7 +760,7 @@ public class ThreadMainTest {
    */
   private static void second(int seconds) {
     try {
-      System.out.println("等待中...");
+//      System.out.println("等待中...");
       TimeUnit.SECONDS.sleep(seconds);
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -814,14 +928,15 @@ public class ThreadMainTest {
 
   /**
    * Demo7：ThreadLocal 的使用 https://www.zhihu.com/question/23089780 ThreadLocal
-   * 的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度。 ThreadLocal常用方法： 1，void
-   * set(Object value) 设置当前线程的线程局部变量的值。 2，Object get() 该方法返回当前线程所对应的线程局部变量。 3，void remove()
-   * 将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是JDK
-   * 5.0新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。 4，protected
-   * Object initialValue()
-   * 返回该线程局部变量的初始值，该方法是一个protected的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第1次调用get()或set(Object)时才执行，并且仅执行1次。ThreadLocal中的缺省实现直接返回一个null。
+   * 的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度。
+   * ThreadLocal常用方法：
+   * 1，void set(Object value) 设置当前线程的线程局部变量的值。
+   * 2，Object get() 该方法返回当前线程所对应的线程局部变量。
+   * 3，void remove() 将当前线程局部变量的值删除，目的是为了减少内存的占用，该方法是JDK 5.0新增的方法。需要指出的是，当线程结束后，对应该线程的局部变量将自动被垃圾回收，所以显式调用该方法清除线程的局部变量并不是必须的操作，但它可以加快内存回收的速度。
+   * 4，protected Object initialValue() 返回该线程局部变量的初始值，该方法是一个protected的方法，显然是为了让子类覆盖而设计的。这个方法是一个延迟调用方法，在线程第1次调用get()或set(Object)时才执行，并且仅执行1次。ThreadLocal中的缺省实现直接返回一个null。
    *
-   * <p>ThreadLocal与Synchronized： 1，相同：ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。
+   * <p>ThreadLocal与Synchronized：
+   * 1，相同：ThreadLocal和线程同步机制都是为了解决多线程中相同变量的访问冲突问题。
    * 2，不同：Synchronized同步机制采用了“以时间换空间”的方式，仅提供一份变量，让不同的线程排队访问；而ThreadLocal采用了“以空间换时间”的方式，每一个线程都提供了一份变量，因此可以同时访问而互不影响。
    * 3，以时间换空间->即枷锁方式，某个区域代码或变量只有一份节省了内存，但是会形成很多线程等待现象，因此浪费了时间而节省了空间。
    * 4，以空间换时间->为每一个线程提供一份变量，多开销一些内存，但是呢线程不用等待，可以一起执行而相互之间没有影响。 *
@@ -837,8 +952,7 @@ public class ThreadMainTest {
   /** 类说明：演示ThreadLocal的使用 */
   public static class UseThreadLocal {
 
-    static ThreadLocal<Integer> threadLocal =
-        new ThreadLocal<Integer>() {
+    static ThreadLocal<Integer> threadLocal = new ThreadLocal<Integer>() {
           @Override
           protected Integer initialValue() {
             // 初始化
@@ -847,7 +961,7 @@ public class ThreadMainTest {
         };
 
     /** 运行3个线程，对同一个threadLocal修改值 */
-    public void StartThreadArray() {
+    void StartThreadArray() {
       Thread[] runs = new Thread[3];
       for (int i = 0; i < runs.length; i++) {
         runs[i] = new Thread(new TestThread(i));
@@ -857,13 +971,10 @@ public class ThreadMainTest {
 
     /** 测试线程，线程的工作是将ThreadLocal变量的值变化，并写回， 看看线程之间是否会互相影响 */
     public static class TestThread implements Runnable {
-
       int id;
-
       public TestThread(int id) {
         this.id = id;
       }
-
       public void run() {
         System.out.println(Thread.currentThread().getName() + ":start");
         // Thread 类的成员变量：ThreadLocal.ThreadLocalMap threadLocals
