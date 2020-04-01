@@ -67,6 +67,7 @@ public class Solution {
     }
 
     /**
+     * 弹出和推入数字 & 溢出前进行检查
      * 思路
      * 我们可以一次构建反转整数的一位数字。在这样做的时候，我们可以预先检查向原整数附加另一位数字是否会导致溢出。
      * 反转整数的方法可以与反转字符串进行类比。
@@ -89,22 +90,30 @@ public class Solution {
     }
 
     /**
-     * 整数反转解法一
+     * 整数反转解法一:弹出和推入数字 & 溢出前进行检查
      *
      * @param x 要反转的整数
      * @return 反转后的整数
      */
-    public static int reverse01(int x) {
+    public static int reverse01(int x) { //x=123
+        //反转后的结果值
         int rev = 0;
-        while (x != 0) {
-            int pop = x % 10;
-            x /= 10;
-            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && pop > 7))
+        //直到x整除到0才结束while循环
+        while (x != 0) { // true
+            //弹出个位上的数字
+            int pop = x % 10; // pop=3
+            //x去除个位数字以便进行下一次循环直到循环条件不成立
+            x /= 10; //x=12
+            //2147483647,反转后的数字超出了Int的最大值，分别检查十位以上的数位和个位
+            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && pop > Integer.MAX_VALUE % 10))
                 return 0;
-            if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && pop < -8))
+            //-2147483648，反转后的数字小于了Int的最小值，分别检查十位以上的数位和个位
+            if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && pop < Integer.MIN_VALUE % 10))
                 return 0;
-            rev = rev * 10 + pop;
+            //推入反转后的每个数字
+            rev = rev * 10 + pop; //3
         }
+        //反转完成返回反转后的数字
         return rev;
     }
 
