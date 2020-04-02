@@ -1,6 +1,5 @@
 package com.jay.java.算法.LeetCode.lc_0007;
 
-
 /**
  * 7. 整数反转
  *
@@ -10,32 +9,15 @@ package com.jay.java.算法.LeetCode.lc_0007;
  */
 public class Solution {
 
-    /**
+    /*
      * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
-     * <p>
-     * 示例 1:
-     * <p>
-     * 输入: 123
-     * 输出: 321
-     * 示例 2:
-     * <p>
-     * 输入: -123
-     * 输出: -321
-     * 示例 3:
-     * <p>
-     * 输入: 120
-     * 输出: 21
-     * 注意:
-     * <p>
-     * 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
-     * [-2147483648,2147483647]
-     * 32位int
-     * 正数（符号位是0）：0~2147483647
-     * 负数（符号位是1）：-1~2147483648
-     * 正负都是2147483648个 只不过0放到正数（符号位为0）那边
-     * <p>
-     * 来源：力扣（LeetCode）
-     * 链接：https://leetcode-cn.com/problems/reverse-integer
+     * 示例 1: 输入: 123 输出: 321
+     * 示例 2: 输入: -123 输出: -321
+     * 示例 3: 输入: 120 输出: 21
+     * 注意: 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1] 即[-2147483648，2147483647]。
+     * 请根据这个假设，如果反转后整数溢出那么就返回 0。
+     *
+     * 来源：力扣（LeetCode） 链接：https://leetcode-cn.com/problems/reverse-integer
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
      */
     public static void main(String[] args) {
@@ -43,19 +25,18 @@ public class Solution {
         int solutionIndex = 1;
 
         switch (solutionIndex) {
-
             case 1: {
-                //Solution1: 弹出和推入数字 & 溢出前进行检查
+                // Solution1: 弹出和推入数字 & 溢出前进行检查
                 solution1();
                 break;
             }
             case 2: {
-                //Solution2: 两遍哈希表
+                // Solution2: 两遍哈希表
                 solution2();
                 break;
             }
             case 3: {
-                //Solution3: 一遍哈希表
+                // Solution3: 一遍哈希表
                 solution3();
                 break;
             }
@@ -85,7 +66,6 @@ public class Solution {
         for (int n : num) {
             System.out.println("x=" + n + ", rev=" + reverse01(n));
         }
-
     }
 
     /**
@@ -110,22 +90,13 @@ public class Solution {
 
     private static void solution2() {
         System.out.println("-----Solution2-----\n");
-
-
     }
-
 
     private static void solution3() {
         System.out.println("-----Solution3-----\n\n");
-
     }
-
 
     private static void solution4() {
         System.out.println("-----Solution4-----\n\n");
-
-
     }
-
-
 }
