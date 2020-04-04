@@ -62,10 +62,10 @@ public class Solution {
      * 反转整数的方法可以与反转字符串进行类比。
      * 我们想重复“弹出” x 的最后一位数字，并将它“推入”到 rev 的后面。最后，rev 将与 x 相反。
      * 要在没有辅助堆栈 / 数组的帮助下 “弹出” 和 “推入” 数字，我们可以使用数学方法。
-     * //pop operation:
+     * //弹出操作:
      * pop = x % 10;
      * x /= 10;
-     * //push operation:
+     * //推入操作:
      * temp = rev * 10 + pop;
      * rev = temp;
      */
