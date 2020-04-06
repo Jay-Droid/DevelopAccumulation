@@ -19,8 +19,8 @@ public class Solution {
      * 假设我们的环境只能存储得下 32 位的有符号整数(int类型)，则其数值范围为 [−2^31,  2^31−1]，即[-2147483648,2147483647]
      * 请根据这个假设，如果反转后整数溢出那么就返回 0。
      * 32位int
-     * 正数（二进制符号位是0）：0~2147483647
-     * 负数（二进制符号位是1）：-1~2147483648
+     * 正数（二进制符号位是0）：0~2147483647    / 01111111 11111111 11111111 11111111
+     * 负数（二进制符号位是1）：-1~-2147483648  / 10000000 00000000 00000000 00000001
      * 正负都是2147483648个 只不过0放到正数那边
      * <p>
      * 来源：力扣（LeetCode）
@@ -29,7 +29,7 @@ public class Solution {
      */
     public static void main(String[] args) {
 
-        int solutionIndex = 1;
+        int solutionIndex = 4;
 
         switch (solutionIndex) {
 
@@ -79,7 +79,7 @@ public class Solution {
     }
 
     /**
-     * 整数反转解法一:弹出和推入数字 & 溢出前进行检查
+     * 整数反转解法一: 弹出和推入数字 & 溢出前进行检查
      *
      * @param x 要反转的整数
      * @return 反转后的整数
@@ -106,22 +106,134 @@ public class Solution {
         return rev;
     }
 
+    /**
+     *
+     */
     private static void solution2() {
         System.out.println("-----Solution2-----\n");
+        int[] num = {-2147483648, 123, -123, 120, 2147483647};
+        for (int n : num) {
+            System.out.println("x=" + n + ", rev=" + reverse02(n));
+        }
+    }
 
 
+    /**
+     * 整数反转解法一: 弹出和推入数字 & 溢出前进行检查
+     * Int 类型的最小负数乘以-1 等于本身
+     * 1000 0000 0000 0000
+     * --------------- 取反
+     * 0111 1111 1111 1111
+     * --------------- + 1
+     * 1000 0000 0000 0000
+     *
+     * @param x 要反转的整数
+     * @return 反转后的整数
+     */
+    public static int reverse02(int x) {
+        //反转后的结果值
+        int rev = 0;
+        if (x == Integer.MIN_VALUE) return 0;
+        int signBit = x < 0 ? -1 : 1;
+        x *= signBit;
+        while (x > 0) {
+            int n = rev;
+            n = n * 10 + x % 10;
+            x /= 10;
+            //
+            if (n / 10 != rev) return 0;
+            rev = n;
+        }
+        return rev * signBit;
     }
 
 
     private static void solution3() {
-        System.out.println("-----Solution3-----\n\n");
+        System.out.println("-----Solution3-----\n");
+        int[] num = {-2147483648, 123, -123, 120, 2147483647};
+        for (int n : num) {
+            System.out.println("x=" + n + ", rev=" + reverse03(n));
+        }
 
+    }
+
+    public static int reverse03(int x) {
+        long rev = 0;
+        if (x == Integer.MIN_VALUE) return 0;
+        int signBit = x < 0 ? -1 : 1;
+        x *= signBit;
+        String xStr = Long.toString(x);
+        rev = Long.valueOf(reverseToStr1(xStr));
+        if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE) {
+            return 0;
+        }
+        return (int) (rev * signBit);
+    }
+
+
+    /**
+     * 字符串反转：by StringBuffer
+     *
+     * @param str 要反转的字符串
+     * @return 反转后的字符串
+     */
+    public static String reverseToStr1(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+
+    /**
+     * 字符串反转：by toCharArray
+     *
+     * @param str 要反转的字符串
+     * @return 反转后的字符串
+     */
+    public static String reverseToStr2(String str) {
+        char[] chars = str.toCharArray();
+        String reverse = "";
+        for (int i = chars.length - 1; i >= 0; i--) {
+            reverse += chars[i];
+        }
+        return reverse;
+    }
+
+    /**
+     * 字符串反转：by charAt
+     *
+     * @param str 要反转的字符串
+     * @return 反转后的字符串
+     */
+    public static String reverseToStr3(String str) {
+        String reverse = "";
+        int length = str.length();
+        for (int i = 0; i < length; i++) {
+            reverse = str.charAt(i) + reverse;
+        }
+        return reverse;
     }
 
 
     private static void solution4() {
-        System.out.println("-----Solution4-----\n\n");
+        System.out.println("-----Solution4-----\n");
+        int[] num = {-2147483648, 123, -123, 120, 2147483647};
+        for (int n : num) {
+            System.out.println("x=" + n + ", rev=" + reverse04(n));
+        }
 
+    }
+
+    public static int reverse04(int x) {
+        int pop;
+        long rev = 0;
+        while (x != 0) {
+            pop = x % 10;
+            x = x / 10;
+            //
+            rev = rev * 10 + pop;
+        }
+        if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE) {
+            return 0;
+        }
+        return (int) rev;
 
     }
 

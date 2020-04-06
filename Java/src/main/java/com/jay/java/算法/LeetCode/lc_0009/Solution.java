@@ -12,19 +12,10 @@ public class Solution {
     /**
      * 题目描述：
      * 判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
-     * 示例 1:
-     * 输入: 121
-     * 输出: true
-     * 示例 2:
-     * 输入: -121
-     * 输出: false
-     * 解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
-     * 示例 3:
-     * 输入: 10
-     * 输出: false
-     * 解释: 从右向左读, 为 01 。因此它不是一个回文数。
-     * 进阶:
-     * 你能不将整数转为字符串来解决这个问题吗？
+     * 示例 1: 输入: 121 输出: true
+     * 示例 2: 输入: -121 输出: false 解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
+     * 示例 3: 输入: 10 输出: false 解释: 从右向左读, 为 01 。因此它不是一个回文数。
+     * 进阶: 你能不将整数转为字符串来解决这个问题吗？
      * <p>
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/palindrome-number
@@ -32,7 +23,7 @@ public class Solution {
      */
     public static void main(String[] args) {
 
-        int solutionIndex = 1;
+        int solutionIndex = 3;
 
         switch (solutionIndex) {
             case 1: {
@@ -41,7 +32,7 @@ public class Solution {
                 break;
             }
             case 2: {
-                // Solution2:
+                // Solution2: 整数转为字符串，字符串反转后比较
                 solution2();
                 break;
             }
@@ -70,7 +61,7 @@ public class Solution {
         System.out.println("-----Solution1-----\n");
         int[] num = {1221, 12221, 454354, -2147483648, 2147483647};
         for (int x : num) {
-            System.out.println("x：" + x + ", isPalindrome：" + new Solution().isPalindrome(x));
+            System.out.println("x：" + x + ", isPalindrome：" + new Solution().isPalindrome01(x));
         }
     }
 
@@ -86,19 +77,20 @@ public class Solution {
      * 如果继续这个过程，我们将得到更多位数的反转数字。
      * <p>
      * 现在的问题是，我们如何知道反转数字的位数已经达到原始数字位数的一半？
-     * 我们将原始数字除以 10，然后给反转后的数字乘上 10，所以，当原始数字小于反转后的数字时，就意味着我们已经处理了一半位数的数字。
+     * 我们将原始数字除以 10，然后给反转后的数字乘上 10，
+     * 所以，当原始数字小于反转后的数字时，就意味着我们已经处理了一半位数的数字。
      *
      * @param x 要判断的目标数字
      * @return 是否是回文数
      */
-    private Boolean isPalindrome(int x) {
+    private Boolean isPalindrome01(int x) {
         //负数和个位是0的非0数字都不是回文数，可以直接排除
         if (x < 0 || (x % 10 == 0 && x != 0)) {
             return false;
         }
         //用于接收反转一半数字的变量
         int revertedNumber = 0;
-        //反转一半数字的值大于原数字一半的时候表示已经反转了一半，结束循环
+        //反转一半数字的值大于原数字前一半的时候表示已经反转了一半，结束循环
         while (x > revertedNumber) {
             //从个位开始反转原数字
             revertedNumber = revertedNumber * 10 + x % 10;
@@ -112,18 +104,48 @@ public class Solution {
     }
 
     /**
-     * Solution2：
+     * Solution2：整数转为字符串，字符串反转后比较
      */
     private static void solution2() {
         System.out.println("-----Solution2-----\n");
+        int[] num = {1221, 12221, 454354, -2147483648, 2147483647};
+        for (int x : num) {
+            System.out.println("x：" + x + ", isPalindrome：" + new Solution().isPalindrome02(x));
+        }
+    }
+
+    public boolean isPalindrome02(int x) {
+        String reversedStr = (new StringBuilder(x + "")).reverse().toString();
+        return (x + "").equals(reversedStr);
     }
 
     /**
-     * Solution3：
+     * Solution3：左右指针比较
      */
     private static void solution3() {
         System.out.println("-----Solution3-----\n");
+        int[] num = {1221, 12221, 454354, -2147483648, 2147483647};
+        for (int x : num) {
+            System.out.println("x：" + x + ", isPalindrome：" + new Solution().isPalindrome03(x));
+        }
     }
+
+    public boolean isPalindrome03(int x) {
+        //边界判断
+        if (x < 0) return false;
+        int div = 1;
+        //
+        while (x / div >= 10) div *= 10;
+        while (x > 0) {
+            int left = x / div;
+            int right = x % 10;
+            if (left != right) return false;
+            x = (x % div) / 10;
+            div /= 100;
+        }
+        return true;
+    }
+
 
     /**
      * Solution4：
