@@ -32,7 +32,7 @@ public class Solution {
                 break;
             }
             case 2: {
-                // Solution2: 整数转为字符串，字符串反转后比较
+                // Solution2: 整数转为字符串，字符串反转后比较 （LeetCode不推荐）
                 solution2();
                 break;
             }
@@ -97,7 +97,7 @@ public class Solution {
             //原数剔除个位上的数字以便继续下一次循环
             x /= 10;
         }
-        // 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中位的数字。
+        // 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中间的数字。
         // 例如，当输入为 12321 时，在 while 循环的末尾我们可以得到 x = 12，revertedNumber = 123，
         // 由于处于中位的数字不影响回文（它总是与自己相等），所以我们可以简单地将其去除。
         return x == revertedNumber || x == revertedNumber / 10;
@@ -114,6 +114,13 @@ public class Solution {
         }
     }
 
+    /**
+     * 判断一个数字是否是回文数
+     * StringBuilder(x).reverse()
+     *
+     * @param x target
+     * @return boolean
+     */
     public boolean isPalindrome02(int x) {
         String reversedStr = (new StringBuilder(x + "")).reverse().toString();
         return (x + "").equals(reversedStr);
@@ -124,24 +131,31 @@ public class Solution {
      */
     private static void solution3() {
         System.out.println("-----Solution3-----\n");
-        int[] num = {1221, 12221, 454354, -2147483648, 2147483647};
+        int[] num = {121,1221, 12221, 454354, -2147483648, 2147483647};
         for (int x : num) {
             System.out.println("x：" + x + ", isPalindrome：" + new Solution().isPalindrome03(x));
         }
     }
 
-    public boolean isPalindrome03(int x) {
-        //边界判断
+    public boolean isPalindrome03(int x) { //x=123
+        //排除负数
         if (x < 0) return false;
+        //权数的变量
         int div = 1;
-        //
-        while (x / div >= 10) div *= 10;
+        //获取x的权数 x=123,div=100
+        while (x / div >= 10) div *= 10; //div=100
+        //x>0进入循环
         while (x > 0) {
-            int left = x / div;
-            int right = x % 10;
+            // 获取最高位的数字
+            int left = x / div; //left=1
+            // 获取个位的数字
+            int right = x % 10; // right=3
+            // 最高位和最低位上的数字有一个不同就不是水仙花数
             if (left != right) return false;
-            x = (x % div) / 10;
-            div /= 100;
+            // X去头去尾 获取中间的数位
+            x = (x % div) / 10; // x=2
+            // 权数减少两位
+            div /= 100; // div=1
         }
         return true;
     }
