@@ -11,6 +11,7 @@ package com.jay.java.算法.LeetCode.lc_0007;
 public class Solution {
 
     /**
+     * 题目：
      * 给出一个 32 位的有符号整数，你需要将这个整数中每位上的数字进行反转。
      * 示例 1:输入: 123 输出: 321
      * 示例 2:输入: -123 输出: -321
@@ -18,7 +19,7 @@ public class Solution {
      * 注意:
      * 假设我们的环境只能存储得下 32 位的有符号整数(int类型)，则其数值范围为 [−2^31,  2^31−1]，即[-2147483648,2147483647]
      * 请根据这个假设，如果反转后整数溢出那么就返回 0。
-     * 32位int
+     * 32位int最值
      * 正数（二进制符号位是0）：0~2147483647    / 01111111 11111111 11111111 11111111
      * 负数（二进制符号位是1）：-1~-2147483648  / 10000000 00000000 00000000 00000001
      * 正负都是2147483648个 只不过0放到正数那边
@@ -29,7 +30,7 @@ public class Solution {
      */
     public static void main(String[] args) {
 
-        int solutionIndex = 4;
+        int solutionIndex = 2;
 
         switch (solutionIndex) {
 
@@ -71,11 +72,20 @@ public class Solution {
      */
     private static void solution1() {
         System.out.println("-----Solution1-----\n");
-        int[] num = {122, 43434, 45454, -2147483648, 2147483647};
-        for (int n : num) {
-            System.out.println("x=" + n + ", rev=" + reverse01(n));
+        //随机生成的数字数组
+        int[] numArray = getNumArray();
+        //反转后的数字数组
+        int[] reverseArray = new int[numArray.length];
+        //获取反转后的数字
+        for (int i = 0; i < numArray.length; i++) {
+            //第一种方案
+            reverseArray[i] = reverse01(numArray[i]);
         }
-
+        //打印反转后的数字
+        printArray("反转后的数字数组:", reverseArray);
+        System.out.println("--------- 益处边界值 ---------");
+        System.out.println("MAX_VALUE: " + Integer.MAX_VALUE);
+        System.out.println("MIN_VALUE: " + Integer.MIN_VALUE);
     }
 
     /**
@@ -111,10 +121,20 @@ public class Solution {
      */
     private static void solution2() {
         System.out.println("-----Solution2-----\n");
-        int[] num = {-2147483648, 123, -123, 120, 2147483647};
-        for (int n : num) {
-            System.out.println("x=" + n + ", rev=" + reverse02(n));
+        //随机生成的数字数组
+        int[] numArray = getNumArray();
+        //反转后的数字数组
+        int[] reverseArray = new int[numArray.length];
+        //获取反转后的数字
+        for (int i = 0; i < numArray.length; i++) {
+            //第二种方案
+            reverseArray[i] = reverse02(numArray[i]);
         }
+        //打印反转后的数字
+        printArray("反转后的数字数组:", reverseArray);
+        System.out.println("--------- 益处边界值 ---------");
+        System.out.println("MAX_VALUE: " + Integer.MAX_VALUE);
+        System.out.println("MIN_VALUE: " + Integer.MIN_VALUE);
     }
 
 
@@ -133,6 +153,7 @@ public class Solution {
     public static int reverse02(int x) {
         //反转后的结果值
         int rev = 0;
+        //Int最小值
         if (x == Integer.MIN_VALUE) return 0;
         int signBit = x < 0 ? -1 : 1;
         x *= signBit;
@@ -235,6 +256,78 @@ public class Solution {
         }
         return (int) rev;
 
+    }
+
+    /**
+     * 获取随机产生的数字数组
+     *
+     * @return numArray
+     */
+    private static int[] getNumArray() {
+        int[] numArray = getRandomNumArray(0, Integer.MAX_VALUE - 1, 10);
+        printArray("随机产生的数字数组:", numArray);
+        return numArray;
+    }
+
+    /**
+     * 打印数组
+     *
+     * @param numArray numArray
+     */
+    private static void printArray(String info, int[] numArray) {
+        if (!info.isEmpty()) {
+            System.out.println(info);
+        }
+        String span = ", ";
+        for (int i = 0; i < numArray.length; i++) {
+            if (i == numArray.length - 1) {
+                span = "";
+            }
+            System.out.print("[" + i + "] " + numArray[i] + span);
+        }
+
+        System.out.println();
+
+    }
+
+
+    /**
+     * 随机指定范围内N个不重复的随机数
+     * 最简单最易理解的两重循环去重
+     *
+     * @param min 指定范围最小值
+     * @param max 指定范围最大值
+     * @param n   随机数个数
+     */
+    public static int[] getRandomNumArray(int min, int max, int n) {
+        //条件校验
+        if (n > (max - min + 1) || max < min) {
+            return new int[0];
+        }
+        int[] result = new int[n];
+        //记录随机数的个数
+        int count = 0;
+        while (count < n) {
+            // Math.random() 返回带正号的 double 值，该值的区间为[0.0,1.0)
+            // (max=10,min=1,random=0): num=1;
+            // (max=10,min=1,random=0.5): num=4;
+            int num = (int) (Math.random() * (max - min)) + min;
+            // 标记是否有重复元素
+            boolean flag = true;
+            // 遍历整个数组查找重复项
+            for (int j = 0; j < n; j++) {
+                if (num == result[j]) {
+                    flag = false;
+                    break;
+                }
+            }
+            // 当前随机数不包含在数组中，添加进数组
+            if (flag) {
+                result[count] = num;
+                count++;
+            }
+        }
+        return result;
     }
 
 

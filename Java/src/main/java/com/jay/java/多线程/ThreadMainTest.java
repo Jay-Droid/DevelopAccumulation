@@ -32,7 +32,7 @@ public class ThreadMainTest {
 
   public static void main(String[] args) throws ExecutionException, InterruptedException {
 
-    int demoIndex = 7;
+    int demoIndex = 8;
 
     switch (demoIndex) {
       case 1:
@@ -809,30 +809,29 @@ public class ThreadMainTest {
    */
   private static void Demo6() throws InterruptedException {
     System.out.println("-----Demo6-----\n\n");
-    System.out.println("测试线程间的协作-内置锁实现（快递业务：公里数或城市发生了变化通知用户）");
+//    System.out.println("测试线程间的协作-内置锁实现（快递业务：公里数或城市发生了变化通知用户）");
     final Expressage express = new Expressage(0, Expressage.CITY_HAI);
     for (int i = 0; i < 3; i++) {
       // 三个线程
-      new Thread(
-              new Runnable() {
+      new Thread(new Runnable() {
                 @Override
                 public void run() {
                   // 检查里程数变化的线程,不满足条件，线程一直等待
-                  express.waitKm();
+//                  express.waitKm();
 
                   // 检查地点变化的线程,不满足条件，线程一直等待
-                  express.waitSite();
+//                  express.waitSite();
                 }
               })
           .start();
     }
 
     // 5秒钟之后修改条件
-    Thread.sleep(5000);
+//    Thread.sleep(5000);
     // 快递里程数变化
-    express.changeKm();
+//    express.changeKm();
     // 快递城市变化
-    express.changeSite();
+//    express.changeSite();
 
     System.out.println("测试线程间的协作-显示锁实现（快递业务：公里数或城市发生了变化通知用户）");
     final ExpressageByLock expressByLock = new ExpressageByLock(0, ExpressageByLock.CITY_HAI);
@@ -843,7 +842,7 @@ public class ThreadMainTest {
                 @Override
                 public void run() {
                   // 检查里程数变化的线程,不满足条件，线程一直等待
-                  expressByLock.waitKm();
+//                  expressByLock.waitKm();
 
                   // 检查地点变化的线程,不满足条件，线程一直等待
                   expressByLock.waitSite();
@@ -855,9 +854,9 @@ public class ThreadMainTest {
     // 5秒钟之后修改条件
     Thread.sleep(5000);
     // 快递里程数变化
-    expressByLock.changeKm();
+//    expressByLock.changeKm();
     // 快递城市变化
-    //      expressByLock.changeSite();
+    expressByLock.changeSite();
   }
 
   /** 快递业务测试类（内置锁synchronized实现） */
@@ -903,7 +902,7 @@ public class ThreadMainTest {
     /** 检查城市变化的等待方 */
     public void waitSite() {
       synchronized (this) {
-        while (CITY_JING.equals(this.site)) {
+        while (CITY_HAI.equals(this.site)) {
           try {
             System.out.println("waitSite");
             wait();
@@ -1064,19 +1063,19 @@ public class ThreadMainTest {
                 @Override
                 public void run() {
                   // 检查里程数变化的线程,不满足条件，线程一直等待
-                  express.waitKm();
+//                  express.waitKm();
 
                   // 检查地点变化的线程,不满足条件，线程一直等待
-                  express.waitSite();
+//                  express.waitSite();
                 }
               })
           .start();
     }
 
     // 5秒钟之后修改条件
-    Thread.sleep(5000);
+//    Thread.sleep(5000);
     // 快递里程数变化
-    express.changeKm();
+//    express.changeKm();
     // 快递城市变化
     //      express.changeSite();
 
@@ -1161,7 +1160,7 @@ public class ThreadMainTest {
     public void waitSite() {
       lock.lock();
       try {
-        while (CITY_JING.equals(this.site)) {
+        while (CITY_HAI.equals(this.site)) {
           try {
             System.out.println("awaitSite");
             siteCond.await();
