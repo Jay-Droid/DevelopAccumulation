@@ -23,10 +23,15 @@ public class Solution {
      * 正数（二进制符号位是0）：0~2147483647    / 01111111 11111111 11111111 11111111
      * 负数（二进制符号位是1）：-1~-2147483648  / 10000000 00000000 00000000 00000001
      * 正负都是2147483648个 只不过0放到正数那边
-     * <p>
+     *
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/reverse-integer
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * 解题思路：
+     * Solution1: 弹出和推入数字 & 溢出前进行检查
+     *
+     *
      */
     public static void main(String[] args) {
 
@@ -78,7 +83,7 @@ public class Solution {
         int[] reverseArray = new int[numArray.length];
         //获取反转后的数字
         for (int i = 0; i < numArray.length; i++) {
-            //第一种方案
+            //Solution1：弹出和推入数字 & 溢出前进行检查
             reverseArray[i] = reverse01(numArray[i]);
         }
         //打印反转后的数字
@@ -117,7 +122,7 @@ public class Solution {
     }
 
     /**
-     *
+     * 整数反转解法二: 弹出和推入数字 & 溢出前进行检查
      */
     private static void solution2() {
         System.out.println("-----Solution2-----\n");
@@ -150,22 +155,22 @@ public class Solution {
      * @param x 要反转的整数
      * @return 反转后的整数
      */
-    public static int reverse02(int x) {
+    public static int reverse02(int x) { //x=123
         //反转后的结果值
         int rev = 0;
         //Int最小值
         if (x == Integer.MIN_VALUE) return 0;
-        int signBit = x < 0 ? -1 : 1;
-        x *= signBit;
+        int signBit = x < 0 ? -1 : 1; //1
+        x *= signBit; //x=123
         while (x > 0) {
-            int n = rev;
-            n = n * 10 + x % 10;
-            x /= 10;
-            //
-            if (n / 10 != rev) return 0;
-            rev = n;
+            int n = rev; // n=0,3
+            n = n * 10 + x % 10; //n=3,32
+            x /= 10; //x=12,1
+            //todo 如何判断的益处
+            if (n / 10 != rev) return 0; //3/10==0,32/10==3
+            rev = n; //rev=3
         }
-        return rev * signBit;
+        return rev * signBit; //3*1
     }
 
 
@@ -242,13 +247,18 @@ public class Solution {
 
     }
 
+    /**
+     *
+     * @param x
+     * @return
+     */
     public static int reverse04(int x) {
         int pop;
+        // 用long类型判断溢出，不够稳妥，如果后期改成入参为long
         long rev = 0;
         while (x != 0) {
             pop = x % 10;
             x = x / 10;
-            //
             rev = rev * 10 + pop;
         }
         if (rev > Integer.MAX_VALUE || rev < Integer.MIN_VALUE) {

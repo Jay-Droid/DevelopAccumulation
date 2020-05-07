@@ -93,9 +93,9 @@ public class GenericMainTest {
     public static void Demo1() {
         System.out.println("-----Demo1-----\n\n");
         System.out.println("----- 泛型与方法参数类型 -----");
-        add(1, 2);
-        add(1f, 2f);
-        add(1d, 2d);
+        GenericMainTest.<Integer>add(1, 2);
+        GenericMainTest.<Float>add(1f, 2f);
+        GenericMainTest.<Double>add(1d, 2d);
 
         System.out.println("----- 泛型与集合元素类型 -----");
         List list = new ArrayList();
@@ -103,7 +103,7 @@ public class GenericMainTest {
         list.add("B");
         list.add(100);
         //1.当我们将一个对象放入集合中，集合不会记住此对象的类型，
-        // 当再次从集合中取出此对象时，改对象的编译类型变成了Object类型，
+        //当再次从集合中取出此对象时，该对象的编译类型变成了Object类型，
         //但其运行时类型任然为其本身类型。
         //2.因此，取出集合元素时需要人为的强制类型转化到具体的目标类型，
         //且很容易出现“java.lang.ClassCastException”异常。
@@ -281,7 +281,7 @@ public class GenericMainTest {
         GenericMainTest.<Integer>genericAdd(1, 2);
         //泛型方法的参数类型在使用时指定,不受泛型类的限制
         GenericClass<Integer> genericClass = new GenericMainTest.GenericClass<>();
-        genericClass.show("show");
+        genericClass.<String>show("show");
 
     }
 
