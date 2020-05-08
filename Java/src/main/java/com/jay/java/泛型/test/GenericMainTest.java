@@ -32,7 +32,7 @@ import java.util.Map;
 public class GenericMainTest {
 
     public static void main(String[] args) {
-        int demoIndex = 9;
+        int demoIndex = 7;
 
         switch (demoIndex) {
 
@@ -145,64 +145,122 @@ public class GenericMainTest {
     }
 
     /**
-     * 泛型类
-     * public class GenericClass<T>{}
+     * 通配符类型
+     * 1，<? extends Parent> 指定了泛型类型的上届
+     * 2，<? super Child> 指定了泛型类型的下届
+     * 3，<?> 指定了没有限制的泛型类型
      */
-    public static class GenericClass<T> {
+    /*
+     * 参数化类型： 把类型当参数一样传递 <数据类型>只能是引用类型(泛型的副作用)
+     * 举个例子：
+     * Plate<T>中的”T”称为类型参数
+     * “Plate<T>” 整个成为泛型类型
+     * Plate<Banana>中的”Banana”称为实际类型参数
+     * “Plate<Banana>”整个称为参数化的类型ParameterizedType
+     */
+    private static void Demo7() {
+        System.out.println("-----Demo7-----\n\n");
+        System.out.println("-----通配符类型 -----");
+        //Son 继承自 Father
+        Father father = new Father();
+        Son son = new Son();
+        Grandson grandson = new Grandson();
 
-        private T data;
-
-
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public <T> void show(T t) {
-            System.out.println(t.toString());
-        }
-
-        /**
-         * 不能实例化泛型参数
-         * Type parameter 'T' cannot be instantiated directly
-         */
-        public void setData() {
-            System.out.println("不能实例化泛型参数");
-//            this.data = new T();
-        }
+        GenericClass genericClass = new GenericClass<>();
+        GenericClass<Father> genericClassFather = new GenericClass<>();
+        GenericClass<Son> GenericClassSon = new GenericClass<>();
+        //GenericClassSub继承自GenericClass
+        GenericClass.GenericClassSub<Father> GenericClassSubFather = new GenericClass.GenericClassSub<>();
+        GenericClass.GenericClassSub<Son> GenericClassSubSon = new GenericClass.GenericClassSub<>();
 
         /**
-         * 静态变量或方法不能引用泛型类型变量
-         * 'com.jay.java.泛型.restrict.GenericRestrict1.this' cannot be referenced from a static context
+         * <? extends Parent> 指定了泛型类型的上届
          */
-        private static /*T*/ String result;
+        System.out.println("-----<? extends Parent> 指定了泛型类型的上届 -----");
+        //泛型类中类型不匹配，类型不匹配,可以使用<? extends Parent> 来解决
+        genericClassFather.setDataGenericClassExtendsFather(GenericClassSon);
+        genericClassFather.setDataGenericClassExtendsFather(GenericClassSubSon);
 
-        private static /*T*/ String getResult() {
-            System.out.println("静态变量或方法不能引用泛型类型变量");
-            return result;
-        }
+
+        System.out.println("-----<? extends Father> 表示GenericClass的类型参数的上届是Father -----");
+        //<? extends Father> 表示GenericClass的类型参数的上届是Father
+        GenericClass<? extends Father> extendFatherGenericClass = new GenericClass<Father>();
+        /**
+         * <？extends X>  表示类型的上界，类型参数 T 是 X 的子类，那么可以肯定的说，
+         * get方法返回的一定是个 X（不管是X或者X的子类）编译器是可以确定知道的。
+         * 但是set方法只知道传入的是个 X，至于具体是 X 的那个子类，不知道。
+         * 总结：<？extends X> 限定符主要用于安全地读数据，可以访问 X 及其子类型，并且不能写入非null的数据。
+         */
+
+        //<? extends Father> set方法不能写入人类类型
+
+        // setData(T setData) 方法执行 this.data = setData;
+        // 该语句是将 setData 的值赋值给 data (setData 和 data 泛型类型为 <? extends Father>) 表示限定 T 为 Father 的子类（包括 Father ）
+        // 又因为子类可以安全的转型为父类，如果能找到一个Father类的最下届的子类就可以赋值，
+        // 但是在Java中只有最上届的类型Object 不存在最下届的类型，所以没有这样的类型可以赋值给 data
+        //extendFatherGenericClass.setData(father); //无法执行
+        //extendFatherGenericClass.setData(son); //无法执行
+
+
+        //<? extends Father> get方法只能读取出 Father 类型或 Father 的父类型
+
+        // T getData() 方法执行 return data; 该语句是返回 data(data 泛型类型为 <? extends Father>) 表示限定 T 为 Father 的子类（包括 Father ）
+        // 那什么样的类型可以存放取出来的这个 data 呢？只知道是 Father 的子类就行，但是不能确定是哪个子类，
+        // 又因为子类可以安全的转型为父类, 所以作为 Father 所有子类中的父类 Father 以及 Father 的父类型肯定可以接收这个 data
+        Father fatherData = extendFatherGenericClass.getData();
+        Object fatherDat = extendFatherGenericClass.getData();
+
+
+        System.out.println("-----<? super Son>表示GenericClass的类型参数的下届是Son -----");
+        //<? super Son> 表示GenericClass的类型参数的下界是 Son
+        GenericClass<? super Son> supperSonGenericClass = new GenericClass<Son>();
+        /**
+         * <？super X> 表示类型的下界，类型参数是 X 的父类（包括 X 本身），
+         * public T getData() {return data;}
+         * get() 方法返回的一定是个 X 的超类，那么到底是哪个超类？不知道，但是可以肯定的说，Object一定是它的Son超类，所以get方法返回Object。编译器是可以确定知道的。
+         * public void setData(T data) { this.data = data; }
+         * 对于set()方法来说，编译器不知道它需要的确切类型，但是 X 和 X 的子类可以安全的转型为 X。
+         * 总结：<？super X> 限定符主要用于安全地写入数据，可以写入 X 及其子类型。
+         */
+
+        // <? super Son> set方法只能写入Son本身和它的子类
+
+        // setData(T setData) 方法是执行 this.data = setData;
+        // 该语句是将 setData 的值赋值给 data (setData 和 data 泛型类型为 <? super Son>) 表示限定 T 为Son的父类（包括Son）
+        // 又因为子类可以安全的转型为父类，所以作为最下届的子类型 Son(Son的子类也可以安全的转为Son类型)的数据类型肯定可以赋值给 data
+        // supperSonGenericClass.setData(new Object()); //无法执行
+        // supperSonGenericClass.setData(new Father()); //无法执行
+        supperSonGenericClass.setData(new Son());
+        supperSonGenericClass.setData(new Grandson());
+
+
+
+        // <? super Son> get方法只能读取出 Object 类型
+
+        // T getData() 方法执行 return data; 该语句是返回 data(data 泛型类型为 <? super Son>) 表示限定 T 为Son的父类（包括Son）
+        // 那什么样的类型可以存放取出来的这个 data 呢？只知道是 Son 的父类就行，但是不能确定是哪个父类，
+        // 又因为子类可以安全的转型为父类,所以作为最上届的父类型 Object 肯定可以接收这个data
+        Object data = supperSonGenericClass.getData();
+        //Son sonData = supperSonGenericClass.getData(); //无法执行
 
         /**
-         * 泛型类的继承关系在使用中同样会受到泛型类型的影响
+         * <?> 指定了没有限定的通配符
          */
-        void setDataGenericClassFather(GenericClass<Father> father) {
+        System.out.println("----- <?> 指定了没有限定的通配符 -----");
+        GenericClass<?> genericClassCommon = new GenericClass<>();
 
-        }
+        //<?> set方法不能写入人类类型
 
-        /**
-         * 泛型类的继承关系在使用中同样会受到泛型类型的影响
-         * 类型不匹配,可以使用<? extends Parent> 来解决
-         */
-        void setDataGenericClassExtendsFather(GenericClass<? extends Father> father) {
+        // 因为子类可以安全的转型为父类，如果能找到一个任意一个的最下届的子类就可以赋值，
+        // 但是在Java中只有最上届的类型 Object 不存在最下届的类型，所以没有这样的类型可以赋值给 data
+        //genericClassCommon.setData(genericClass);
+        //genericClassCommon.setData(new Object());
 
-        }
+       // <?> get方法只能读取出 Object 类型
 
-        static class GenericClassSub<T> extends GenericClass<T> {
+        //因为子类可以安全的转型为父类,所以不管什么类型，作为最上届的父类型 Object 肯定可以接收这个data
+        Object object = genericClass.getData();
 
-        }
     }
 
     /**
@@ -460,79 +518,68 @@ public class GenericMainTest {
     }
 
     /**
-     * 通配符类型
-     * 1，<? extends Parent> 指定了泛型类型的上届
-     * 2，<? super Child> 指定了泛型类型的下届
-     * 3，<?> 指定了没有限制的泛型类型
+     * 泛型类
+     * public class GenericClass<T>{}
      */
-    private static void Demo7() {
-        System.out.println("-----Demo7-----\n\n");
-        System.out.println("-----通配符类型 -----");
-        //Son 继承自 Father
-        Father father = new Father();
-        Son son = new Son();
-        GenericClass genericClass = new GenericClass<>();
-        GenericClass<Father> genericClassFather = new GenericClass<>();
-        GenericClass<Son> GenericClassSon = new GenericClass<>();
-        //GenericClassSub继承自GenericClass
-        GenericClass.GenericClassSub<Father> GenericClassSubFather = new GenericClass.GenericClassSub<>();
-        GenericClass.GenericClassSub<Son> GenericClassSubSon = new GenericClass.GenericClassSub<>();
+    public static class GenericClass<T> {
 
         /**
-         * <? extends Parent> 指定了泛型类型的上届
+         * 静态变量或方法不能引用泛型类型变量
+         * 'com.jay.java.泛型.restrict.GenericRestrict1.this' cannot be referenced from a static context
          */
-        System.out.println("-----<? extends Parent> 指定了泛型类型的上届 -----");
-        //泛型类中类型不匹配，类型不匹配,可以使用<? extends Parent> 来解决
-        genericClassFather.setDataGenericClassExtendsFather(GenericClassSon);
-        genericClassFather.setDataGenericClassExtendsFather(GenericClassSubSon);
+        private static /*T*/ String result;
+        private T data;
 
+        private static /*T*/ String getResult() {
+            System.out.println("静态变量或方法不能引用泛型类型变量");
+            return result;
+        }
 
-        System.out.println("-----<? extends Father> 表示GenericClass的类型参数的上届是Father -----");
-        //<? extends Father> 表示GenericClass的类型参数的上届是Father
-        GenericClass<? extends Father> extendFatherGenericClass = new GenericClass<>();
-        /**
-         * 道理很简单，<？extends X>  表示类型的上界，类型参数是X的子类，那么可以肯定的说，
-         * get方法返回的一定是个X（不管是X或者X的子类）编译器是可以确定知道的。
-         * 但是set方法只知道传入的是个X，至于具体是X的那个子类，不知道。
-         * 总结：主要用于安全地访问数据，可以访问X及其子类型，并且不能写入非null的数据。
-         */
-        //<? extends Father> set方法不能被执行
-        //extendFatherGenericClass.setData(father);
-        //extendFatherGenericClass.setData(son);
+        public T getData() {
+            return data;
+        }
 
-        //<? extends Father>
-        father = extendFatherGenericClass.getData();
+        public void setData(T setData) {
+            this.data = setData;
+        }
 
-
-        System.out.println("-----<? super Son>表示GenericClass的类型参数的下届是Son -----");
-        //<? super Son> 表示GenericClass的类型参数的下界是Apple
-        GenericClass<? super Son> supperSonGenericClass = new GenericClass<>();
-        /**
-         * <？ super  X> 表示类型的下界，类型参数是X的超类（包括X本身），
-         * 那么可以肯定的说，get方法返回的一定是个X的超类，那么到底是哪个超类？不知道，
-         * 但是可以肯定的说，Object一定是它的Son超类，所以get方法返回Object。
-         * 编译器是可以确定知道的。对于set方法来说，编译器不知道它需要的确切类型，但是X和X的子类可以安全的转型为X。
-         * 总结：主要用于安全地写入数据，可以写入X及其子类型。
-         */
-        //<? super Son> set方法只能写入Son本身和它的子类
-        //supperSonGenericClass.setData(new Father());
-        supperSonGenericClass.setData(new Son());
-
-        //<? super Son> get方法只会返回一个Object类型的值。
-        Object data = supperSonGenericClass.getData();
-
+        public <T> void show(T t) {
+            System.out.println(t.toString());
+        }
 
         /**
-         * <?> 指定了没有限定的通配符
+         * 不能实例化泛型参数
+         * Type parameter 'T' cannot be instantiated directly
          */
-        System.out.println("----- <?> 指定了没有限定的通配符 -----");
-        GenericClass<?> genericClassCommon = new GenericClass<>();
-        //setData 方法不能被调用， 甚至不能用 Object 调用；
-        //genericClassCommon.setData(genericClass);
-        //genericClassCommon.setData(new Object());
-        //返回值只能赋给 Object
-        Object object = genericClass.getData();
+        public void setData() {
+            System.out.println("不能实例化泛型参数");
+//            this.data = new T();
+        }
 
+        /**
+         * 泛型类的继承关系在使用中同样会受到泛型类型的影响
+         */
+        void setDataGenericClassFather(GenericClass<Father> father) {
+
+        }
+
+        /**
+         * 泛型类的继承关系在使用中同样会受到泛型类型的影响
+         * 类型不匹配,可以使用<? extends Parent> 来解决
+         */
+        void setDataGenericClassExtendsFather(GenericClass<? extends Father> father) {
+
+        }
+
+        static class GenericClassSub<T> extends GenericClass<T> {
+
+        }
+    }
+
+    /**
+     * 孙子类
+     */
+    private static class Grandson extends Son {
     }
 
     /**
