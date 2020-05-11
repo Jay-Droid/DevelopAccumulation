@@ -27,6 +27,13 @@ public class Solution {
      * 来源：力扣（LeetCode）
      * 链接：https://leetcode-cn.com/problems/reverse-integer
      * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     * 解题思路：
+     * 整数反转解法一: 弹出和推入数字 & 溢出前进行检查
+     * 1，重复弹出 x 的最后一位数字，直到 x=0
+     * 2，对 x 做整除操作以改变循环条件
+     * 3，预先检查向rev附加下一位数字是否会导致溢出
+     * 4，将 x 推入到 rev 的后面。
+     * 5，循环结束，rev 将与 x 相反。
      */
     public static void main(String[] args) {
 
@@ -58,17 +65,6 @@ public class Solution {
 
     /**
      * Solution1：弹出和推入数字 & 溢出前进行检查
-     * 思路
-     * 我们可以一次构建反转整数的一位数字。在这样做的时候，我们可以预先检查向原整数附加另一位数字是否会导致溢出。
-     * 反转整数的方法可以与反转字符串进行类比。
-     * 我们想重复“弹出” x 的最后一位数字，并将它“推入”到 rev 的后面。最后，rev 将与 x 相反。
-     * 要在没有辅助堆栈 / 数组的帮助下 “弹出” 和 “推入” 数字，我们可以使用数学方法。
-     * //弹出操作:
-     * pop = x % 10;
-     * x /= 10;
-     * //推入操作:
-     * temp = rev * 10 + pop;
-     * rev = temp;
      */
     private static void solution1() {
         System.out.println("-----Solution1-----\n");
@@ -90,6 +86,16 @@ public class Solution {
 
     /**
      * 整数反转解法一: 弹出和推入数字 & 溢出前进行检查
+     * 1，重复弹出 x 的最后一位数字，直到 x=0
+     * 2，对 x 做整除操作以改变循环条件
+     * 3，预先检查向rev附加下一位数字是否会导致溢出
+     * 4，将 x 推入到 rev 的后面。
+     * 5，循环结束，rev 将与 x 相反。
+     *
+     * 数学方法执行弹出和推入操作：
+     * 弹出操作: pop = x % 10;
+     * 循环操作：x /= 10;
+     * 推入操作: rev = rev * 10 + pop;
      *
      * @param x 要反转的整数
      * @return 反转后的整数
@@ -113,6 +119,17 @@ public class Solution {
             rev = rev * 10 + pop; //3
         }
         //反转完成返回反转后的数字
+        return rev;
+    }
+
+    /**
+     * @param x 要反转的整数
+     * @return 反转后的整数
+     */
+    public static int reverse01ByArray(int x) { //x=123
+        //反转后的结果值
+        int rev = 0;
+
         return rev;
     }
 
