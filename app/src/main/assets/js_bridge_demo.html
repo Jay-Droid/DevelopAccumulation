@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="content-type">
+        <title>
+            js调用java
+        </title>
+    </head>
+    
+    <body>
+        <p>
+            <xmp id="show">
+            </xmp>
+        </p>
+        <p>
+            <input type="button" id="enter" value="通过send()方法发消息给Java" onclick="sendClick();"
+            />
+        </p>
+        <p>
+            <input type="button" id="enter1" value="通过callHandler()方法调用Java方法"
+                   onclick="callHandlerClick();"
+            />
+        </p>
+
+        <p>
+            <input type="button" id="enter3" value="申请定位"
+                   onclick="getLocation();"
+            />
+        </p>
+        <p>
+            <input type="button" id="enter2" value="显示html" onclick="testDiv();" />
+        </p>
+
+    </body>
+    <script>
+
+    document.getElementById("show").innerHTML = ("打印Js端测试数据");
+
+
+    ///////////Register a Java handler function so that js can call///////////
+
+
+
+        //通过callHandler()方法调用Java方法functionInJava
+        function callHandlerClick() {
+
+            window.WebViewJavascriptBridge.callHandler(
+                'functionInJava'
+                , {'param': 'JS调用java方法functionInJava（）了'}
+                , function(responseData) {
+                    document.getElementById("show").innerHTML = "我是Java端的数据：callHandler()---" + responseData
+                }
+            );
+        }
+
+
+        //You can set a default handler in Java, so that js can send message to Java without assigned handlerName
+
+
+        //通过send()方法发消息给Native
+        function sendClick() {
+            var account = document.getElementById("text1").value;
+            var pwd = document.getElementById("text2").value;
+
+            var data = {账号: account, 密码: pwd, content: "我是来自JS的数据：window.WebViewJavascriptBridge.send()"};
+            window.WebViewJavascriptBridge.send(data,function(responseData) {
+                    document.getElementById("show").innerHTML = "我是Java端的数据：send()---" + responseData
+                }
+            );
+        }
+
+
+
+
+
+
+
+
+
+
+    ///////////Register a JavaScript handler function so that Java can call///////////
+
+
+
+        //You can also define a default handler use init method, so that Java can send message to js without assigned handlerName
+
+        //Java通过send()发过来的数据
+        connectWebViewJavascriptBridge(function(bridge) {
+
+            bridge.init(function(message, responseCallback) {
+              document.getElementById("show").innerHTML = ("我是Java端的数据：init()---" + message);
+                console.log('JS got a message', message);
+                var data = {
+                    'JS的返回数据': 'by bridge.init(）!'
+                };
+
+                if (responseCallback) {
+                    console.log('JS responding with', data);
+                    responseCallback(data);
+                }
+            });
+
+            //Java调用Js的方法
+            bridge.registerHandler("functionInJs", function(data, responseCallback) {
+                document.getElementById("show").innerHTML = ("我是Java端的数据：registerHandler()---"  + data);
+                if (responseCallback) {
+                    var responseData = "js端收到了java端的数据";
+                    responseCallback(responseData);
+                }
+            });
+        })
+
+        //注册bridge
+         function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady'
+                    , function() {
+                        callback(WebViewJavascriptBridge)
+                    },
+                    false
+                );
+            }
+        }
+
+
+         //显示html
+        function testDiv() {
+            document.getElementById("show").innerHTML = document.getElementsByTagName("html")[0].innerHTML;
+        }
+
+
+
+
+function getLocation(){
+  if (navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(showPosition,showError);
+  }else{
+    alert("浏览器不支持地理定位。");
+  }
+}
+    </script>
+
+</html>
+

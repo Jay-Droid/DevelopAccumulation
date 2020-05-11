@@ -1,97 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:dist="http://schemas.android.com/apk/distribution"
-          package="com.jay.develop">
+        xmlns:dist="http://schemas.android.com/apk/distribution"
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.jay.develop">
     <!-- To access Google+ APIs: -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- LinkedME SDK 需要开启的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 请务必添加该权限，用户更流畅的跳转 -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_ASSISTED_GPS" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION" />
 
-    <dist:module dist:instant="true"/>
+    <dist:module dist:instant="true" />
 
     <application
+            android:name=".App"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.jay.develop.android.view.touchEvent.EventActivity">
+        <activity android:name=".demo.baiduface.BaiduFaceActivity"></activity>
+        <activity android:name=".java.mult_thread.ThreadActivity" />
+        <activity android:name=".demo.deeplink.DeepLinkWebActivity" />
+        <activity android:name=".demo.deeplink.DeepLinkActivity">
+
+            <!-- URI Scheme方式 在dashboard配置中,请保持与ios的URI Scheme相同 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 自定义 -->
+                <!-- https://com.jay.develop/deeplink -->
+                <data
+                        android:host="com.jay.develop"
+                        android:path="/deeplink"
+                        android:scheme="https" />
+
+                <!-- linkedme -->
+                <!-- 此处scheme值需要替换为后台设置中的scheme值 -->
+                <!-- host禁止更改！！！ -->
+                <!-- 禁止配置其他属性 -->
+                <data
+                        android:host="com.jay.develop"
+                        android:scheme="mlink" />
+
+                <!-- moblink -->
+                <!-- <data -->
+                <!-- android:host="com.jay.develop" -->
+                <!-- android:path="/scene/news" -->
+                <!-- android:scheme="mlink" /> -->
+
+            </intent-filter>
+
+            <!-- APP Links方式,Android 23版本及以后支持 -->
+            <intent-filter
+                    android:autoVerify="true"
+                    tools:targetApi="m">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 以下pathPrefix值需要替换为后台设置中 App ID 的值,注意保留反斜杠 -->
+                <!-- host中设置的lkme.cc不要更改！！！ -->
+                <!-- https://lkme.cc/omD/sBfSA1MrN -->
+                <data
+                        android:host="lkme.cc"
+                        android:pathPrefix="/omD"
+                        android:scheme="https" />
+                <data
+                        android:host="lkme.cc"
+                        android:pathPrefix="/omD"
+                        android:scheme="http" />
+
+                <!-- Mob link -->
+                <data
+                        android:host="as7w.t4m.cn"
+                        android:scheme="http" />
+                <data
+                        android:host="as7w.t4m.cn"
+                        android:scheme="https" />
+                <data
+                        android:host="662u.t4m.cn"
+                        android:scheme="http" />
+                <data
+                        android:host="662u.t4m.cn"
+                        android:scheme="https" />
+            </intent-filter>
         </activity>
-        <activity android:name="com.jay.develop.android.view.ViewActivity">
+        <activity android:name=".java.dynamic_proxy.DynamicProxyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- dv://com.jay.develop/router -->
+                <data
+                        android:host="com.jay.develop"
+                        android:path="/router"
+                        android:scheme="dv" />
+            </intent-filter>
         </activity>
-        <activity android:name="com.jay.develop.android.handler.IntentServiceActivity">
-        </activity>
-        <activity android:name="com.jay.develop.android.handler.HandlerThreadActivity">
-        </activity>
-        <activity android:name="com.jay.develop.android.handler.AsyncTaskActivity">
-        </activity>
+        <activity android:name=".java.reflection.ReflectionActivity" />
+        <activity android:name=".android.camera.QRCodeScanActivity" />
+        <activity android:name=".android.camera.QRCodeGainActivity" />
+        <activity android:name=".android.camera.QRCodeActivity" />
+        <activity android:name=".android.webview.WebTestActivity" />
+        <activity android:name=".android.webview.JSBridgeTestActivity" />
+        <activity android:name=".android.webview.WebViewOfJSAndJavaActivity" />
+        <activity android:name=".android.webview.WebViewNormalUseActivity" />
+        <activity android:name=".android.webview.WebViewActivity" />
+        <activity android:name=".android.recycleview.XAdapterActivity" />
+        <activity android:name=".android.view.touchEvent.EventActivity" />
+        <activity android:name=".android.view.ViewActivity" />
+        <activity android:name=".android.handler.IntentServiceActivity" />
+        <activity android:name=".android.handler.HandlerThreadActivity" />
+        <activity android:name=".android.handler.AsyncTaskActivity" />
 
         <receiver
-                android:name="com.jay.develop.android.broadcastReceiver.StaticBroadcastReceiver"
+                android:name=".android.broadcastReceiver.StaticBroadcastReceiver"
                 android:enabled="true"
                 android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
             </intent-filter>
         </receiver>
         <receiver
-                android:name="com.jay.develop.android.broadcastReceiver.DynamicBroadcastReceiver"
+                android:name=".android.broadcastReceiver.DynamicBroadcastReceiver"
                 android:enabled="true"
-                android:exported="true">
-        </receiver>
+                android:exported="true" />
 
-        <activity android:name="com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity">
-        </activity>
+        <activity android:name=".android.broadcastReceiver.BroadcastReceiverActivity" />
         <activity
-                android:name="com.jay.develop.android.fragment.NavigationActivity"
-                android:label="NavigationActivity">
-        </activity>
+                android:name=".android.fragment.NavigationActivity"
+                android:label="NavigationActivity" />
         <activity
-                android:name="com.jay.develop.android.fragment.backstack.BackStackActivity"
-                android:label="BackStackActivity">
-        </activity>
+                android:name=".android.fragment.backstack.BackStackActivity"
+                android:label="BackStackActivity" />
 
         <service
-                android:name="com.jay.develop.android.service.ForegroundService"
+                android:name=".android.service.ForegroundService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
         <service
-                android:name="com.jay.develop.android.service.IntentTestService"
-                android:exported="false"/>
+                android:name=".android.service.IntentTestService"
+                android:exported="false" />
         <service
-                android:name="com.jay.develop.android.service.StartService"
+                android:name=".android.service.StartService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
         <service
-                android:name="com.jay.develop.android.service.BindService"
+                android:name=".android.service.BindService"
                 android:enabled="true"
-                android:exported="true"/>
+                android:exported="true" />
 
-        <activity android:name="com.jay.develop.android.service.ServiceActivity"/>
-        <activity android:name="com.jay.develop.android.handler.HandlerActivity"/>
-        <activity android:name="com.jay.develop.android.fragment.FragmentTestActivity"/>
+        <activity android:name=".android.service.ServiceActivity" />
+        <activity android:name=".android.handler.HandlerActivity" />
+        <activity android:name=".android.fragment.FragmentTestActivity" />
         <activity
-                android:name="com.jay.develop.android.activity.lunchmode.StandardActivity"
+                android:name=".android.activity.lunchmode.StandardActivity"
                 android:label="StandardActivity"
-                android:launchMode="standard"/>
+                android:launchMode="standard" />
         <activity
-                android:name="com.jay.develop.android.activity.lunchmode.SingleTopActivity"
+                android:name=".android.activity.lunchmode.SingleTopActivity"
                 android:label="SingleTopActivity"
-                android:launchMode="singleTop"/>
+                android:launchMode="singleTop" />
         <activity
-                android:name="com.jay.develop.android.activity.lunchmode.SingleTaskActivity"
+                android:name=".android.activity.lunchmode.SingleTaskActivity"
                 android:label="SingleTaskActivity"
-                android:launchMode="singleTask"/>
+                android:launchMode="singleTask" />
         <activity
-                android:name="com.jay.develop.android.activity.lunchmode.SingleInstanceActivity"
+                android:name=".android.activity.lunchmode.SingleInstanceActivity"
                 android:label="SingleInstanceActivity"
-                android:launchMode="singleInstance"/>
+                android:launchMode="singleInstance" />
         <activity
-                android:name="com.jay.develop.android.activity.lifecycle.DialogActivity"
+                android:name=".android.activity.lifecycle.DialogActivity"
                 android:label=""
-                android:theme="@style/Base.Theme.AppCompat.Dialog"/>
-        <activity android:name="com.jay.develop.android.activity.lifecycle.NormalActivity"/>
+                android:theme="@style/Base.Theme.AppCompat.Dialog" />
+        <activity android:name=".android.activity.lifecycle.NormalActivity" />
         <!--
         configChanges属性可以设置多个值，中间使用竖线分割；
         1.orientation 屏幕在纵向和横向间旋转
@@ -114,19 +210,19 @@
         -->
         <!-- android:screenOrientation="portrait" -->
         <!-- android:configChanges="orientation" -->
-        <activity android:name="com.jay.develop.android.activity.lifecycle.LifecycleActivity"/>
+        <activity android:name=".android.activity.lifecycle.LifecycleActivity" />
         <activity
-                android:name="com.jay.develop.java.JavaListActivity"
-                android:label="Java"/>
+                android:name=".java.JavaListActivity"
+                android:label="Java" />
         <activity
-                android:name="com.jay.develop.android.AndroidListActivity"
-                android:label="Android"/>
-        <activity android:name="com.jay.develop.main.MainActivity">
+                android:name=".android.AndroidListActivity"
+                android:label="Android" />
+        <activity android:name=".main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

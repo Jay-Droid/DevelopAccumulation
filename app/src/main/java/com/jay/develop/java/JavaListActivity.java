@@ -1,13 +1,19 @@
 package com.jay.develop.java;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.jay.develop.R;
-import com.jay.develop.android.AndroidListActivity;
+import com.jay.develop.java.dynamic_proxy.DynamicProxyActivity;
+import com.jay.develop.java.dynamic_proxy.practice.XLRouter;
+import com.jay.develop.java.mult_thread.ThreadActivity;
+import com.jay.develop.java.reflection.ReflectionActivity;
 import com.jay.develop.main.DemoListAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +23,13 @@ public class JavaListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initData();
         initView();
+
+    }
+
+    private void initData() {
+        XLRouter.initXLRouter(this);
     }
 
     private void initView() {
@@ -29,10 +41,13 @@ public class JavaListActivity extends AppCompatActivity {
 
     private List<DemoListAdapter.DemoItem> getDemoData() {
         List<DemoListAdapter.DemoItem> demoList = new ArrayList<>();
-        demoList.add(new DemoListAdapter.DemoItem("Android", "Android整理",
-                AndroidListActivity.class));
-        demoList.add(new DemoListAdapter.DemoItem("Java", "Java整理",
-                AndroidListActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("反射", "反射在Android中的运用",
+                ReflectionActivity.class));
+
+        demoList.add(new DemoListAdapter.DemoItem("动态代理", "动态代理实现页面路由框架",
+                DynamicProxyActivity.class));
+        demoList.add(new DemoListAdapter.DemoItem("多线程", "Android 线程信息",
+                ThreadActivity.class));
         return demoList;
     }
 
@@ -41,7 +56,12 @@ public class JavaListActivity extends AppCompatActivity {
         return new DemoListAdapter(getDemoData(), new DemoListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(DemoListAdapter.DemoItem item) {
-                startActivity(new Intent(JavaListActivity.this, item.getActivity()));
+                if (item.getActivity().getSimpleName().contains("DynamicProxyActivity")) {
+                    XLRouter.routerUri().jumpToDynamicProxyPage("我是通过XLRouter路由框架跳转的", "我是描述");
+                } else {
+                    startActivity(new Intent(JavaListActivity.this, item.getActivity()));
+
+                }
             }
         });
     }

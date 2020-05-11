@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/powderblue"
+                    android:padding="10dp"
+                    android:text="演示Java调用web"
+                    android:textStyle="bold" />
+
+            <!-- text 显示测试数据-->
+            <TextView
+                    android:id="@+id/info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="打印Java端测试数据" />
+
+            <!-- button 演示Java调用web send()-->
+            <Button
+                    android:id="@+id/btn_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="通过send()方法发消息给JS"
+                    android:textAllCaps="false" />
+
+            <!-- button 演示Java调用web send()-->
+            <Button
+                    android:id="@+id/btn_callHandler"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="通过callHandler()方法调用JS方法"
+                    android:textAllCaps="false" />
+
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/powderblue"
+                    android:padding="10dp"
+                    android:text="演示Web调用Java"
+                    android:textStyle="bold" />
+
+            <!-- webview 演示web调用Java -->
+            <com.github.lzyzsd.jsbridge.BridgeWebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+            </com.github.lzyzsd.jsbridge.BridgeWebView>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
