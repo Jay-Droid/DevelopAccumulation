@@ -37,6 +37,7 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
         webView = findViewById<View>(R.id.webView) as BridgeWebView
 
         val url = "file:///android_asset/js_bridge_demo.html"
+//        val url = "https://testweb.halouhuandian.com/ceshi/demo2.html"
         webView.loadUrl(url)
 
         webView.settings.domStorageEnabled = true
@@ -54,6 +55,20 @@ class JSBridgeTestActivity : AppCompatActivity(), View.OnClickListener {
 
     //JS 调用 java
     private fun initJSCallJava() {
+        //js 调用 functionInJava
+        webView.registerHandler("callScanQRCode") { data, function ->
+
+            info.text = "我是JS端的数据：registerHandler()---$data"
+            function.onCallBack("我是来自Java端的回调-functionInJava（）")
+        }
+
+        //js 调用 functionInJava
+        webView.registerHandler("callMapNavigation") { data, function ->
+
+            info.text = "我是JS端的数据：registerHandler()---$data"
+            function.onCallBack("我是来自Java端的回调-functionInJava（）")
+        }
+
         //js 调用 functionInJava
         webView.registerHandler("functionInJava") { data, function ->
 
