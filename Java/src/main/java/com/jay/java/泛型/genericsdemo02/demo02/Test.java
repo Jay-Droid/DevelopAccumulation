@@ -45,6 +45,7 @@ public class Test {
         //Fruit是Apple的父类，Fruit[]是Apple[]的父类，这就是数组的协变
         //如果加入泛型后，由于擦除机制，运行时将无法知道数组的类型
         Plate<?>[] plates = new Plate<?>[10];//这是可以的
+        plates[0]=new BananaPlate();
     }
 }
 
