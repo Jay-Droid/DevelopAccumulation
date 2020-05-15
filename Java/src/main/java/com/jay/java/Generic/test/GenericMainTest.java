@@ -105,20 +105,14 @@ import java.util.Map;
  * @author wangxuejie
  * @version 1.0
  * @date 2019-11-26 17:51
- *
- *
  */
-
-
 public class GenericMainTest {
 
     public static void main(String[] args) throws NoSuchFieldException {
-        int demoIndex = 9;
-
+        int demoIndex = 1;
         switch (demoIndex) {
-
             case 1: {
-                //Demo1:演示范型的使用以及存在的必要性
+                //Demo1: 为什么使用泛型，使用泛型的好处？
                 Demo1();
                 break;
             }
@@ -166,33 +160,32 @@ public class GenericMainTest {
     }
 
     /**
-     * Demo1:演示范型的使用以及存在的必要性
-     * 范型的好处：
-     * 1，适用于多种数据类型执行相同的代码（代码复用）
-     * 2，泛型中的类型在使用时指定，不需要强制类型转换（类型安全，编译器会检查类型）
+     * Demo1: 为什么使用泛型，使用泛型的好处？
+     * - 代码更健壮(类型安全，编译器会检查类型，只要编译期没有警告，那么运行期就不会出现 ClassCastException)
+     * - 代码更简洁(不需要强制类型转换)
+     * - 代码更灵活，代码复用（适用于多种数据类型执行相同的代码）
      */
     public static void Demo1() {
         System.out.println("-----Demo1-----\n\n");
-
         System.out.println("----- 测试泛型优势一：类型安全，检查类型提前到编译器阶段，避免了运行时报错 -----");
         System.out.println("嗨，哥们儿，来个B: " + ((B) getListB().get(0)).name);
         // 我要一个B,你却不懂我给我一个C,后果很严重  //ClassCastException
-        //System.out.println("嗨，哥们儿，这个B来错了: " + ((C) getListB().get(0)).name);
-        //看我怎么治治你，上泛型
-        System.out.println("嗨，哥们儿，再来个B: " + ((B) getCheckedListB().get(0)).name);
+        System.out.println("嗨，哥们儿，这个B来错了: " + ((B) getListB().get(1)).name);
+        //看我怎么治治你，上泛型,不用强转
+        System.out.println("嗨，哥们儿，再来个B: " + (getGenericListB().get(0)).name);
         //这回不能捣乱了吧，我都看到了，错误: 不兼容的类型: B无法转换为C
-        //System.out.println("嗨，哥们儿，再来个B吧: " + ((C) getCheckedListB().get(0)).name);
+        //System.out.println("嗨，哥们儿，再来个B吧: " + ((C) getGenericListB().get(0)).name);
 
         System.out.println("----- 测试泛型优势二：代码复用，适用于多种数据类型执行相同的代码-----");
         System.out.println("嗨，哥们儿，数数这里有几个硬币: ");
-        addTwoInt(3, 11);
+        addTwoNum(3, 11);
         System.out.println("嗨，哥们儿，那这些硬币总共多少元钱呢: ");
         addTwoFloat(1.4f, 2.7f);
         //每换一种类型都写个方法，太臃肿了，能不能用同一个方法实现多类型都加法运算呢，上泛型
         System.out.println("嗨，哥们儿，你看波操作如何: ");
-        GenericMainTest.<Float>addTwoInt(1.4f, 2.7f);
-        GenericMainTest.addTwoInt(1d, 2);
-        GenericMainTest.<Integer>addTwoInt(1, 2);
+        GenericMainTest.<Float>addTwoNum(1.4f, 2.7f);
+        GenericMainTest.addTwoNum(1d, 2);
+        GenericMainTest.<Integer>addTwoNum(1, 2);
 
     }
 
@@ -205,24 +198,26 @@ public class GenericMainTest {
         //当再次从集合中取出此对象时，该对象的编译类型变成了Object类型，
         //因此，取出集合元素时需要人为的强制类型转化到具体的目标类型，
         //且很容易出现“java.lang.ClassCastException”异常。
-        List items = new ArrayList(1);
+        List items = new ArrayList(2);
         items.add(new B());
+        items.add(new C());
         return items;
     }
 
     /**
      * 返回一个装有B的容器，已经经过泛型限制
      */
-    private static List<B> getCheckedListB() {
+    private static List<B> getGenericListB() {
         List<B> items = new ArrayList<>(1);
         items.add(new B());
+        //items.add(new C());//编译错误
         return items;
     }
 
     /**
      * Int 类型的加法
      */
-    private static int addTwoInt(int a, int b) {
+    private static int addTwoNum(int a, int b) {
         System.out.println(a + "+" + b + "=" + (a + b));
         return a + b;
     }
@@ -238,7 +233,7 @@ public class GenericMainTest {
     /**
      * 泛形方法实现不同类型的加法操作
      */
-    private static <T extends Number> double addTwoInt(T a, T b) {
+    private static <T extends Number> double addTwoNum(T a, T b) {
         System.out.println(a + "+" + b + "=" + (a.doubleValue() + b.doubleValue()));
         return a.doubleValue() + b.doubleValue();
     }
