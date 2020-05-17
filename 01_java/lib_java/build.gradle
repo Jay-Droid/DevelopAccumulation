@@ -1,0 +1,14 @@
+apply from: "../../buildgradle/lib_java.gradle"
+
+dependencies {
+ //retrofit
+ implementation rootProject.ext.retrofit
+ implementation rootProject.ext.retrofitConverterGson
+ implementation rootProject.ext.retrofitAdapterRxjava
+ implementation rootProject.ext.retrofitUrlManager
+
+ //rxjava
+ api rootProject.ext.rxjava
+
+}
+

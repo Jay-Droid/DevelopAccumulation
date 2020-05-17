@@ -1,1 +1,9 @@
-include ':app', ':Java', ':Kotlin'
+//Java
+include ':01_java:lib_java',
+        ':01_java:lib_java_android'
+
+//Android
+include ':02_android:app_android'
+
+//Kotlin
+include ':03_kotlin:lib_kotlin'
