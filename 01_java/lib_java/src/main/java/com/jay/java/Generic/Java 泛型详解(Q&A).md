@@ -3,6 +3,7 @@
 
 [Oracle Java 泛型官方教程-中文版](https://pingfangx.github.io/java-tutorials/java/generics/index.html)
 # 一，打破砂锅问到底
+<img src="image/test_class_abcdefghi.png" > 
 
 ### Q：什么是泛型？泛型的来源？
 ### A：
