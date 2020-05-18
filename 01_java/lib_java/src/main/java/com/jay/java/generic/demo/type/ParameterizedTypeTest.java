@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * ParameterizedTypeTest
- *
+ * https://cloud.tencent.com/developer/article/1121266
  * @author wangxuejie
  * @version 1.0
  * @date 2020/5/18
