@@ -24,9 +24,10 @@ public class ParameterizedTypeTest<T> {
     private Map<String, Integer> map = new HashMap<>();
     private List<Map<String, Integer>> listMap = null;
     private List<Map<T, T>> listMapGeneric = null;
+    private Map.Entry<String, Integer> mapEntry = null;
 
     /**
-     * testParameterizedType
+     * 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<T> 、Map<String,Integer>；
      */
     public void testParameterizedType() throws NoSuchFieldException {
         //反射获取成员变量的实例对象
@@ -39,6 +40,16 @@ public class ParameterizedTypeTest<T> {
         // 运行结果：
         //sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
 
+        // 测试ParameterizedType三个方法
+        System.out.println("---- 参数化类型(ParameterizedType#getActualTypeArguments())");
+        testGetActualTypeArguments();
+
+        System.out.println("---- 参数化类型(ParameterizedType#getRawType())");
+        testGetRawType();
+
+        System.out.println("---- 参数化类型(ParameterizedType#getOwnerType())");
+        testGetOwnerType();
+
     }
 
     /**
@@ -48,7 +59,6 @@ public class ParameterizedTypeTest<T> {
      * Type getOwnerType();
      */
     public void testGetActualTypeArguments() throws NoSuchFieldException {
-        System.out.println(map.getClass().getName()); //java.util.HashMap
         getActualTypeArguments("set");
         getActualTypeArguments("map");
         getActualTypeArguments("listMap");
@@ -88,21 +98,14 @@ public class ParameterizedTypeTest<T> {
                 // java.util.Map<T, T>
                 // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
             }
-        } else if (typeField instanceof GenericArrayType) {
-            GenericArrayType genericArrayType = (GenericArrayType) typeField;
-            Type type = genericArrayType.getGenericComponentType();
-            System.out.println(type);
-            System.out.println(type.getClass().getName());
-            // listArray 运行结果：
-            // java.util.List<T>
-            // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
         }
     }
 
 
     /**
      * getRawType(); 获取声明泛型的类或者接口，也就是泛型中<>前面的那个值；
-     * Type getOwnerType();
+     *
+     * Type getOwnerType(); 获取泛型的拥有者，拥有者表示的含义是内部类的父类
      */
     public void testGetRawType() throws NoSuchFieldException {
         getRawType("set");
@@ -121,40 +124,53 @@ public class ParameterizedTypeTest<T> {
         //将Type类型强转为 ParameterizedType
         if (typeField instanceof ParameterizedType) {
             ParameterizedType parameterizedTypeMap = (ParameterizedType) typeField;
-            //获取泛型中的实际类型的对象的数组
-            Type[] types = parameterizedTypeMap.getActualTypeArguments();
-            for (Type type : types) {
-                System.out.println(type);
-                System.out.println(type.getClass().getName());
-
-                // set 运行结果：
-                // T
-                // sun.reflect.generics.reflectiveObjects.TypeVariableImpl //泛型变量类型
-
-                // map 运行结果：
-                // class java.lang.String
-                // java.lang.Class //原始类型
-                // class java.lang.Integer
-                // java.lang.Class
-
-                // listMap 运行结果：
-                // java.util.Map<java.lang.String, java.lang.Integer>
-                // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl //参数化类型
-
-                // listMapGeneric 运行结果：
-                // java.util.Map<T, T>
-                // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
-            }
-        } else if (typeField instanceof GenericArrayType) {
-            GenericArrayType genericArrayType = (GenericArrayType) typeField;
-            Type type = genericArrayType.getGenericComponentType();
+            //获取声明泛型的类或者接口
+            Type type = parameterizedTypeMap.getRawType();
             System.out.println(type);
             System.out.println(type.getClass().getName());
-            // listArray 运行结果：
-            // java.util.List<T>
-            // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
+            // 运行结果：
+            //interface java.util.Set //
+            //java.lang.Class //原始类型
+            //interface java.util.Map
+            //java.lang.Class
+            //interface java.util.List
+            //java.lang.Class
+            //interface java.util.List
+            //java.lang.Class
         }
     }
 
+
+    /**
+     * Type getOwnerType(); 获取泛型的拥有者，拥有者表示的含义是内部类的父类
+     */
+    public void testGetOwnerType() throws NoSuchFieldException {
+        getOwnerType("set");
+        getOwnerType("map");
+        getOwnerType("listMap");
+        getOwnerType("listMapGeneric");
+        getOwnerType("listArray");
+        getOwnerType("mapEntry");
+    }
+
+    private void getOwnerType(String fieldName) throws NoSuchFieldException {
+        //反射获取成员变量的实例对象
+        Field field = ParameterizedTypeTest.class.getDeclaredField(fieldName);
+        //获取该属性的泛型类型
+        Type typeField = field.getGenericType();
+        //将Type类型强转为 ParameterizedType
+        if (typeField instanceof ParameterizedType) {
+            ParameterizedType parameterizedTypeMap = (ParameterizedType) typeField;
+            //获取声明泛型的类或者接口
+            Type type = parameterizedTypeMap.getOwnerType();
+            System.out.println(type); //Map.Entry<String, Integer> mapEntry = null;
+            if (type == null) return;
+            System.out.println(type.getClass().getName());
+            // 运行结果：
+            //interface java.util.Map //
+            //java.lang.Class
+
+        }
+    }
 
 }
