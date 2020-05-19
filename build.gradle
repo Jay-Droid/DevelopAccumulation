@@ -21,6 +21,13 @@ buildscript {
 
         classpath 'com.mob.sdk:MobSDK:2018.0319.1724'
 
+        // Check that you have the Google Services Gradle plugin v4.3.2 or later
+        // (if not, add it).
+        classpath 'com.google.gms:google-services:4.3.3'
+
+        // Add the Crashlytics Gradle plugin.
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
+
     }
 }
 
