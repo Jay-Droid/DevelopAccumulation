@@ -8,10 +8,15 @@ package com.jay.java.a_generic.demo;
  * @date 2020/5/10
  */
 public class CommonClass {
+
     private String name;
 
     public CommonClass() {
 
+    }
+
+    public CommonClass(String name) {
+        this.name = name;
     }
 
     public String getName() {
@@ -20,6 +25,13 @@ public class CommonClass {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "CommonClass{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }
 /*

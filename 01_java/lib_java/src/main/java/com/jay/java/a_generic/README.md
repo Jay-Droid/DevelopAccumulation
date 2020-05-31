@@ -7,6 +7,8 @@
 
 # 一，打破砂锅问到底
 - 什么是泛型？Java 泛型的来源？
+- 简单说一下 Java Type 体系？
+- 为什么使用泛型，使用泛型的好处？
 - 最常用的类型形参名称有哪些？
 - 为什么使用泛型，使用泛型的好处？
 - 泛型类/泛型接口/泛型方法如何使用？
@@ -27,28 +29,49 @@
 # 二，晓之以理动之以码
 
 ### Q：什么是泛型？Java 泛型的来源？
-### A：
+### A：𓀀𓀁𓀂𓀃𓀄𓀅𓀆𓀇𓀈𓀉𓀊𓀋𓀌𓀍𓀎
 - Java泛型(Generics)是 JDK5 中引入的一种参数化类型特性。
-- 在 JDK5 之前没有泛型只有 class，所有的类都是class，也就是原始类型(raw
-  type)(原始类型不仅仅包含我们平常所指的类，还包括枚举、数组、注解等,还有基本类型即int,float,double等)。Java还统一定义了一个class类对原始类型进行抽象，class类的一个具体对象就是一个类。
+- 在 JDK5 之前没有泛型只有 Class类型，也就是原始类型(raw
+  type)(原始类型不仅仅包含我们平常所指的类，还包括枚举、数组、注解、还有基本类型，即int,float,double等)。Java中统一定义了一个class类对原始类型进行抽象，class类的一个具体对象就是一个类。
 -  然后有了泛型，超出了原始类型的定义，为了统一泛型有关的类型和原始类型Class，Java
    引入了Type接口，Type是Java
-   编程语言中所有类型的公共高级接口，Java语言角度来说，Type是对基本类型、引用类型、泛型相关类型向上的抽象，Type接口的实现类除了Class原始类型又增加了4个和原始类型平级的类型，他们是:
-    1. 泛型数组类型(GenericArrayType): 表示一种元素类型是参数化类型或者类型变量的数组类型，如 GenericClass<T>[]；
-    1. 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<String>、Map<String,Integer>；
-    1. 泛型变量(TypeVariable): 是各种类型变量的公共高级接口，如 <T>
-    1. 泛型通配符类型(WildcardType): 通配符类型, 如 <?>, <? extends T> ；
+   编程语言中所有类型的公共高级接口，从Java语言角度来说，Type是对原始类型、泛型相关类型向上的抽象，Type接口的实现类除了Class原始类型又增加了4个和原始类型平级的类型，它们分别是:
+   1. 泛型数组类型(GenericArrayType)
+   1. 参数化类型(ParameterizedType)
+   3. 泛型变量(TypeVariable)
+   4. 泛型通配符类型(WildcardType)
 
- 因为jvm只可以处理class原始类型的字节码，这个是java一开始就定义好的，如果要改的话，就需要在jvm中增加4种字节码文件，对于jvm改动太大，
- 所以Oracle就只在javac编译阶段做兼容。这个也就是为什么我们说java的泛型是伪泛型，因为jvm并不支持泛型。
+ 因为jvm只可以处理class原始类型的字节码，这个是java一开始就定义好的，如果要针对泛型做修改的话，就需要在jvm中增加4种字节码文件，对于jvm改动太大，
+ 所以Oracle就只在 javac 编译阶段做了兼容。这个也就是为什么我们说java的泛型是伪泛型，因为jvm并不支持泛型。
+
+### Q：简单说一下 Java Type 体系？
+### A：
+Java Type 体系 完整测试代码：JavaGenericDemo#Demo1()
+
+先看一下 Java Type 体系中相关类的类图
 
  <img src="image/java_type_relationship.png"/>
 
-###### 测试代码：
+从类图中我们可以清晰看到它们的继承关系，下面详细介绍一下这几种类型的用途以及各自类型中的主要方法：
+- 泛型数组类型(GenericArrayType): 表示一种元素类型是参数化类型或者类型变量的数组类型，如 GenericClass<T>[]；
+    - getGenericComponentType()：
+      返回泛型数组中元素的Type类型，如：List<String>[] 中的 List<String>（ParameterizedTypeImpl）、T[] 中的T（TypeVariableImpl）；
+      无论是几维数组，getGenericComponentType()方法都只会脱去最右边的[]，返回剩下的值。
+- 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<String>、Map<String,Integer>；
+     - Type[] getActualTypeArguments()：获取泛型中的实际类型的对象的数组，该方法只会脱去最外层的<> 返回剩下的值。如：Map<String, Integer> 中的[String,Integer], List<Map<String, Integer>>中的[Map<String, Integer>]
+     - Type getRawType(); 获取声明泛型的类或者接口，也就是泛型中<>前面的那个值；如：Map<String, Integer> 中的 Map
+     - Type getOwnerType(): 获取泛型的拥有者，拥有者表示的含义是内部类的父类如：Map.Entry<String, Integer> 中的 Map
+- 泛型变量(TypeVariable): 是各种泛型类型变量的公共高级接口，如 T,K,V
+     -  Type[] getBounds() 获得该类型变量的上限，也就是泛型中 extends 右边的值；例如 List<T extends Number> ，Number就是类型变量T的上限；如果只是简单的声明了List<T>（无显式定义extends），那么默认为返回Object。如：TypeVariableTest<T extends Number & Serializable & Comparable> 中的[Number,Serializable,Comparable]
+     -  getGenericDeclaration() 获取声明该类型变量实体类型，如：TypeVariableTest<T>中的TypeVariableTest
+     -  getName() 获取类型变量在源码中定义的名称；TypeVariableTest<T>中的 T
 
-```
+- 泛型通配符类型(WildcardType): 通配符类型, 如 <?>, <? extends T> ；
+  - getUpperBounds() 获取泛型变量的上边界（extends 后面的类） 如：List<? extends Number>  中的 Number
+  - getLowerBounds() 获取泛型变量的下边界（super后面的类）如：List<? super Integer> 中的 Integer
 
-```
+
+
 ### Q：什么是参数化类型？
 ### A：
 把类型当参数一样传递,类似于方法中的形参和实惨，就是将类型也定义成参数形式，例如：GenericClass<T>，
