@@ -25,6 +25,8 @@ public class WildcardTypeTest {
      * 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<T> 、Map<String,Integer>；
      */
     public void testWildcardType() throws NoSuchFieldException {
+        System.out.println("------------------------------------ 泛型数组类型(WildcardType)");
+
         //反射获取成员变量的实例对象
         Field field = WildcardTypeTest.class.getDeclaredField("listNum");
         Type typeField = field.getGenericType();

@@ -1,6 +1,7 @@
 package com.jay.java.generic.demo;
 
 
+import com.jay.java.generic.demo.type.ClassTest;
 import com.jay.java.generic.demo.type.GenericArrayTypeTest;
 import com.jay.java.generic.demo.type.ParameterizedTypeTest;
 import com.jay.java.generic.demo.type.TypeVariableTest;
@@ -43,20 +44,20 @@ public class JavaGenericDemo {
      * 泛型通配符类型(WildcardType): 通配符类型, 如 <?>, <? extends T> ；
      */
     private static void Demo1() throws NoSuchFieldException {
+        // 原始类型(Class)
+        ClassTest classTest = new ClassTest();
+        classTest.testClass(classTest);
+        // 参数化类型(ParameterizedType)
         ParameterizedTypeTest<String> parameterizedTypeTest = new ParameterizedTypeTest<>();
-        System.out.println("---- 参数化类型(ParameterizedType)");
-        //parameterizedTypeTest.testParameterizedType();
-
+        parameterizedTypeTest.testParameterizedType();
+        // 泛型数组类型(GenericArrayType)
         GenericArrayTypeTest<String> genericArrayTypeTest = new GenericArrayTypeTest<>();
-        System.out.println("---- 泛型数组类型(GenericArrayType)");
-        //genericArrayTypeTest.testGenericArrayType();
-
+        genericArrayTypeTest.testGenericArrayType();
+        // 泛型变量(TypeVariable)
         TypeVariableTest<Integer> typeVariableTest = new TypeVariableTest<>();
-        System.out.println("---- 泛型数组类型(GenericArrayType)");
-        //typeVariableTest.testTypeVariable();
-
+        typeVariableTest.testTypeVariable();
+        // 泛型通配符类型(WildcardType)
         WildcardTypeTest wildcardTypeTest = new WildcardTypeTest();
-        System.out.println("---- 泛型数组类型(WildcardType)");
         wildcardTypeTest.testWildcardType();
 
 

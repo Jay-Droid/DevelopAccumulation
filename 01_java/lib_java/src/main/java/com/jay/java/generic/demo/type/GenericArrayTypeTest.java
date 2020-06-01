@@ -1,5 +1,7 @@
 package com.jay.java.generic.demo.type;
 
+import com.jay.java.generic.demo.GenericClass;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
@@ -16,28 +18,38 @@ import java.util.List;
 public class GenericArrayTypeTest<T> {
 
     private List<T>[] listArray = null;
-    private T[] t = null;
+    private T[] tArray = null;
+    private GenericClass<T>[] genericClassArray = null;
 
     /**
      * 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<T> 、Map<String,Integer>；
      */
     public void testGenericArrayType() throws NoSuchFieldException {
+        System.out.println("----------------------------------- 泛型数组类型(GenericArrayType)");
+
         //反射获取成员变量的实例对象
-        Field fieldList = GenericArrayTypeTest.class.getDeclaredField("listArray");
+//        Field fieldList = GenericArrayTypeTest.class.getDeclaredField("listArray");
+        Field fieldList = GenericArrayTypeTest.class.getDeclaredField("genericClassArray");
+//        Field fieldList = GenericArrayTypeTest.class.getDeclaredField("tArray");
         //获取该属性的泛型类型
         Type typeList = fieldList.getGenericType();
         //获取泛型类型的类名
         System.out.println(typeList);
         System.out.println(typeList.getClass().getName());
 
-        // listArray 运行结果：
+        // List<T>[] listArray 运行结果：
         //java.util.List<T>[]
         //sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl
-        // t 运行结果：
+
+        // T[] tArray 运行结果：
         //T[]
         //sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl
 
-        // 测试 GenericArrayType#getGenericComponentType()方法
+        // GenericClass<T>[] genericClassArray 运行结果：
+        //com.jay.java.generic.demo.GenericClass<T>[]
+        //sun.reflect.generics.reflectiveObjects.GenericArrayTypeImpl
+
+        // 在GenericArrayType接口中有一个 getGenericComponentType()方法
         System.out.println("---- 参数化类型(GenericArrayType#getGenericComponentType())");
         testGetGenericComponentType();
 
@@ -51,7 +63,7 @@ public class GenericArrayTypeTest<T> {
      */
     public void testGetGenericComponentType() throws NoSuchFieldException {
         getActualTypeArguments("listArray");
-        getActualTypeArguments("t");
+        getActualTypeArguments("tArray");
     }
 
     private void getActualTypeArguments(String fieldName) throws NoSuchFieldException {

@@ -34,6 +34,8 @@ public class TypeVariableTest<T extends Number & Serializable & Comparable> {
      * 泛型变量(TypeVariable): 是各种类型变量的公共高级接口，如 T,K,V
      */
     public void testTypeVariable() throws NoSuchFieldException {
+        System.out.println("----------------------------------- 泛型数组类型(TypeVariableType)");
+
         //反射获取成员变量的实例对象
         Field field = TypeVariableTest.class.getDeclaredField("t");
         //获取该属性的泛型类型
@@ -46,7 +48,7 @@ public class TypeVariableTest<T extends Number & Serializable & Comparable> {
         //sun.reflect.generics.reflectiveObjects.TypeVariableImpl
 
 
-        // 测试 TypeVariable 成员方法
+        // 在TypeVariable 接口中有三个成员方法。分别是 getBounds(), getGenericDeclaration(), getName(),
         System.out.println("---- 泛型数组类型(TypeVariable#getBounds())");
         testGetBounds();
 

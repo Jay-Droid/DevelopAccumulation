@@ -1,9 +1,9 @@
 package com.jay.java.generic.demo.type;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,16 +11,17 @@ import java.util.Set;
 
 /**
  * ParameterizedTypeTest
- * https://cloud.tencent.com/developer/article/1121266
+ * 参考：https://cloud.tencent.com/developer/article/1121266
  * @author wangxuejie
  * @version 1.0
  * @date 2020/5/18
  */
 public class ParameterizedTypeTest<T> {
 
-    private List<T> list = null;
+    private List<T> list = new ArrayList<>();
     private List<T>[] listArray = null;
     private Set<T> set = null;
+    private ClassTest classTest = null;
     private Map<String, Integer> map = new HashMap<>();
     private List<Map<String, Integer>> listMap = null;
     private List<Map<T, T>> listMapGeneric = null;
@@ -30,17 +31,18 @@ public class ParameterizedTypeTest<T> {
      * 参数化类型(ParameterizedType): 就是用了泛型的类，如 List<T> 、Map<String,Integer>；
      */
     public void testParameterizedType() throws NoSuchFieldException {
+        System.out.println("----------------------------------- 参数化类型(ParameterizedType)");
         //反射获取成员变量的实例对象
         Field fieldList = ParameterizedTypeTest.class.getDeclaredField("list");
         //获取该属性的泛型类型
         Type typeList = fieldList.getGenericType();
-        System.out.println("List<T> 的类型：");
+        System.out.println("List<T> 的泛型类型：");
         //获取泛型类型的类名
         System.out.println(typeList.getClass().getName());
         // 运行结果：
         //sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
 
-        // 测试ParameterizedType三个方法
+        // 在 ParameterizedType 接口中，有3个方法，分别为 getActualTypeArguments()、getRawType()、getOwnerType();
         System.out.println("---- 参数化类型(ParameterizedType#getActualTypeArguments())");
         testGetActualTypeArguments();
 
@@ -53,17 +55,19 @@ public class ParameterizedTypeTest<T> {
     }
 
     /**
-     * Type[] getActualTypeArguments();//获取泛型中的实际类型的对象的数组
-     * getActualTypeArguments()方法永远都是脱去最外层的<> Type
-     * getRawType(); 获取声明泛型的类或者接口，也就是泛型中<>前面的那个值；
-     * Type getOwnerType();
+     * Type[] getActualTypeArguments();
+     * 获取泛型中的实际类型的对象的数组
+     * getActualTypeArguments()方法永远都是脱去最外层的<>
      */
     public void testGetActualTypeArguments() throws NoSuchFieldException {
+        getActualTypeArguments("classTest");
+        getActualTypeArguments("list");
         getActualTypeArguments("set");
         getActualTypeArguments("map");
+        getActualTypeArguments("mapEntry");
+        getActualTypeArguments("listArray");
         getActualTypeArguments("listMap");
         getActualTypeArguments("listMapGeneric");
-        getActualTypeArguments("listArray");
     }
 
     private void getActualTypeArguments(String fieldName) throws NoSuchFieldException {
@@ -71,30 +75,32 @@ public class ParameterizedTypeTest<T> {
         Field field = ParameterizedTypeTest.class.getDeclaredField(fieldName);
         //获取该属性的泛型类型
         Type typeField = field.getGenericType();
+        System.out.println("===== typeField: "+typeField);
         //将Type类型强转为 ParameterizedType
         if (typeField instanceof ParameterizedType) {
             ParameterizedType parameterizedTypeMap = (ParameterizedType) typeField;
             //获取泛型中的实际类型的对象的数组
             Type[] types = parameterizedTypeMap.getActualTypeArguments();
+            System.out.println("fieldName "+fieldName);
             for (Type type : types) {
                 System.out.println(type);
                 System.out.println(type.getClass().getName());
 
-                // set 运行结果：
+                // Set<T> set 运行结果：
                 // T
                 // sun.reflect.generics.reflectiveObjects.TypeVariableImpl //泛型变量类型
 
-                // map 运行结果：
+                // Map<String, Integer> map 运行结果：
                 // class java.lang.String
                 // java.lang.Class //原始类型
                 // class java.lang.Integer
                 // java.lang.Class
 
-                // listMap 运行结果：
+                // List<Map<String, Integer>> listMap 运行结果：
                 // java.util.Map<java.lang.String, java.lang.Integer>
                 // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl //参数化类型
 
-                // listMapGeneric 运行结果：
+                // List<Map<T, T>> listMapGeneric 运行结果：
                 // java.util.Map<T, T>
                 // sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl
             }
