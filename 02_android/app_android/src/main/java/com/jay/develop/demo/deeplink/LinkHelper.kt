@@ -1,14 +1,9 @@
 package com.jay.develop.demo.deeplink
 
-import android.app.Activity
 import android.app.Application
 import android.util.Log
 import com.jay.develop.BuildConfig
-import com.jay.develop.java.JavaListActivity
 import com.microquation.linkedme.android.LinkedME
-import com.mob.moblink.MobLink
-import com.mob.moblink.RestoreSceneListener
-import com.mob.moblink.Scene
 
 
 /**
@@ -26,13 +21,12 @@ class LinkHelper {
     fun init(demoApplication: Application) {
         Log.d(TAG, "初始化deeplink")
         initLinkedMe(demoApplication)
-        initMobLink(demoApplication)
-
     }
 
     private fun initLinkedMe(demoApplication: Application) {
         // 初始化SDK，为了提高初始化效率，linkedme key不再在AndroidManifest.xml文件中配置
-        LinkedME.getInstance(demoApplication,
+        LinkedME.getInstance(
+            demoApplication,
             LinkedME_Key
         )
 
@@ -47,34 +41,4 @@ class LinkHelper {
     }
 
 
-    fun initMobLink(demoApplication: Application) {
-
-        MobLink.skipRestoreSceneFromWx(JavaListActivity::class.java)
-        MobLink.setRestoreSceneListener(SceneListener())
-    }
-
-    internal inner class SceneListener : Any(), RestoreSceneListener {
-
-        override fun willRestoreScene(scene: Scene): Class<out Activity>? {
-            val path = scene.getPath()
-            Log.d("jay", "---" + path)
-            var pathMap = CommonUtils.PATH_MAP_LOCAL
-            if (pathMap.keys.contains(path)) {
-                return pathMap.get(path)
-            }
-
-            // 后台配置, 让moblik sdk去处理
-            pathMap = CommonUtils.PATH_SERVER_MAP
-            return if (pathMap.keys.contains(path)) {
-                null
-            } else null
-
-        }
-
-        override fun notFoundScene(scene: Scene) {}
-
-        override fun completeRestore(scene: Scene) {
-
-        }
-    }
 }

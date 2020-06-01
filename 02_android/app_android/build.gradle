@@ -4,9 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-// 添加插件
-apply plugin: 'com.mob.sdk'
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -84,15 +81,3 @@ dependencies {
     /** ======================== deeplink =========================== */
     implementation "cc.linkedme.deeplinks:link-page:1.1.6"
 }
-
-// 在MobSDK的扩展中注册MobLink的相关信息
-MobSDK {
-    appKey "2cfba72eac264"
-    appSecret "de9956e055a8b1a520848b731c79367b"
-    MobLink {
-        uriScheme "mlink"
-        appLinkHost "as7w.t4m.cn"
-    }
-}
-
-

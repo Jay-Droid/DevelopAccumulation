@@ -2,7 +2,6 @@ package com.jay.develop.android
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +9,6 @@ import com.jay.develop.R
 import com.jay.develop.android.activity.lifecycle.LifecycleActivity
 import com.jay.develop.android.broadcastReceiver.BroadcastReceiverActivity
 import com.jay.develop.android.camera.QRCodeActivity
-import com.jay.develop.android.edittext.InputFilterUtils.getChineseFilter
-import com.jay.develop.android.edittext.InputFilterUtils.getEnglishFilter
 import com.jay.develop.android.fragment.FragmentTestActivity
 import com.jay.develop.android.handler.HandlerActivity
 import com.jay.develop.android.recycleview.XAdapterActivity
@@ -19,7 +16,6 @@ import com.jay.develop.android.service.ServiceActivity
 import com.jay.develop.android.view.ViewActivity
 import com.jay.develop.android.webview.WebViewActivity
 import com.jay.develop.demo.baiduface.BaiduFaceActivity
-import com.jay.develop.demo.deeplink.DeepLinkWebActivity
 import com.jay.develop.main.DemoListAdapter
 import com.jay.develop.main.DemoListAdapter.DemoItem
 import java.util.*
@@ -32,12 +28,6 @@ class AndroidListActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-
-
-
-
-
-
 
         val recyclerview =
             findViewById<RecyclerView>(R.id.recyclerview)
@@ -76,9 +66,6 @@ class AndroidListActivity : AppCompatActivity() {
                 DemoItem("WebViewActivity", "WebViewActivity", WebViewActivity::class.java)
             )
             demoList.add(DemoItem("QRCodeActivity", "相机相关", QRCodeActivity::class.java))
-            demoList.add(
-                DemoItem("DeepLinkWebActivity", "深度链接", DeepLinkWebActivity::class.java)
-            )
             demoList.add(
                 DemoItem("BaiduFaceActivity", "百度人脸识别", BaiduFaceActivity::class.java)
             )

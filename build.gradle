@@ -3,10 +3,12 @@
 buildscript {
     //使用config.gradle统一管理项目的依赖库
     apply from: "buildgradle/config.gradle"
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.3.71'
     repositories {
-        google()
         jcenter()
+        google()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven {
@@ -14,20 +16,19 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
 
-        classpath 'com.mob.sdk:MobSDK:2018.0319.1724'
 
     }
 }
 
 allprojects {
     repositories {
-        google()
         jcenter()
+        google()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
         maven { url 'https://jitpack.io' }
         maven { url 'https://dl.bintray.com/umsdk/release' }
         maven {
