@@ -1,6 +1,7 @@
 package com.jay.java.a_generic.demo.type;
 
-import com.jay.java.generic.demo.GenericClass;
+
+import com.jay.java.a_generic.demo.GenericClass;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;

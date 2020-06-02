@@ -78,8 +78,18 @@ public class JavaGenericDemo {
     wildcardTypeTest.testWildcardType();
   }
 
-  /** */
+  /**
+   * Demo2: 测试 泛型类/泛型接口/泛型方法
+   */
   private static void Demo2() {
+
+  }
+
+  /** Demo3: */
+  private static void Demo3() {}
+
+  /** Demo4: */
+  private static void Demo4() {
     Gson gson = new Gson();
     List<CommonClass> commonClassList = new ArrayList<>();
     commonClassList.add(new CommonClass("A"));
@@ -87,14 +97,9 @@ public class JavaGenericDemo {
     commonClassList.add(new CommonClass("C"));
     String jsonStr = gson.toJson(commonClassList);
     System.out.println("jsonStr:" + jsonStr);
-    Type type = new TypeToken<List<CommonClass>>() {}.getType();
+    Type type = new TypeToken<List<CommonClass>>() {
+    }.getType();
     commonClassList = gson.fromJson(jsonStr.replace("A", "B"), type);
     System.out.println("commonClassList:" + commonClassList.toString());
   }
-
-  /** Demo3: */
-  private static void Demo3() {}
-
-  /** Demo4: */
-  private static void Demo4() {}
 }
